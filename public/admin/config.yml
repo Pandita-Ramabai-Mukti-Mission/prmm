@@ -1,0 +1,35 @@
+backend:
+  name: github
+  repo: Pandita-Ramabai-Mukti-Mission/PRMM
+  branch: main
+  base_url: https://your-vercel-app.vercel.app # TODO: replace with your deployed site URL
+  auth_endpoint: api/decap/auth
+
+# When running locally with `npx decap-server`, uncomment the line below
+# and run the proxy server alongside `npm run dev`.
+# local_backend: true
+
+media_folder: public/images/uploads
+public_folder: /images/uploads
+
+collections:
+  - name: pages
+    label: Pages
+    folder: content/pages
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Body, name: body, widget: markdown }
+
+  - name: posts
+    label: Posts
+    folder: content/posts
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Publish Date, name: date, widget: datetime }
+      - { label: Description, name: description, widget: text, required: false }
+      - { label: Featured Image, name: image, widget: image, required: false }
+      - { label: Body, name: body, widget: markdown }
