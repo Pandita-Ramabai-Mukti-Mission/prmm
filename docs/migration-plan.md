@@ -49,6 +49,7 @@ Living document — update as decisions are made. Source material:
 | `reports` | Reports page PDFs | Fields: file, year, type (Accounts/Certificate) — makes missing-year gaps visible as empty entries instead of silent omissions. |
 | `newsletters` | Mukti Kiran PDFs | File + issue date. |
 | `contacts` | 6 regional contacts | Structured: name, address, phone, email — fixes today's inconsistent per-region formatting. |
+| `testimonials` | Testimonials page | Added when the Testimonials page was scaffolded — missing from the original plan; quote, name, optional photo. |
 | `donate` | Donate page | Likely a page + separate payment integration, not pure markdown (see blocking items). |
 
 ## Branching strategy

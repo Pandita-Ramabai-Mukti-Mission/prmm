@@ -80,6 +80,13 @@ export type RegionalContact = {
   email: string;
 };
 
+export type Testimonial = {
+  slug: string;
+  quote: string;
+  name: string;
+  image?: ImageWithAlt;
+};
+
 function readMarkdownFile(filePath: string) {
   const raw = fs.readFileSync(filePath, "utf8");
   return matter(raw);
@@ -279,6 +286,19 @@ export function getAllContacts(): RegionalContact[] {
       address: data.address,
       phone: data.phone,
       email: data.email,
+    };
+  });
+}
+
+export function getAllTestimonials(): Testimonial[] {
+  return getSlugsIn("testimonials").map((slug) => {
+    const filePath = path.join(CONTENT_DIR, "testimonials", `${slug}.md`);
+    const { data } = readMarkdownFile(filePath);
+    return {
+      slug,
+      quote: data.quote,
+      name: data.name,
+      image: data.image,
     };
   });
 }
