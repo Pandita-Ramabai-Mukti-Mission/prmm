@@ -136,3 +136,19 @@ collections:
       - { label: Address, name: address, widget: text }
       - { label: Phone, name: phone, widget: string }
       - { label: Email, name: email, widget: string }
+
+  - name: testimonials
+    label: Testimonials
+    folder: content/testimonials
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: Quote, name: quote, widget: text }
+      - { label: Name, name: name, widget: string }
+      - label: Photo
+        name: image
+        widget: object
+        required: false
+        fields:
+          - { label: Image, name: src, widget: image }
+          - { label: Alt Text, name: alt, widget: string, hint: "Required — describe the image for screen reader users" }
