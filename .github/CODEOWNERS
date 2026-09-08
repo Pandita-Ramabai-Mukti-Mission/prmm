@@ -1,0 +1,5 @@
+# The Decap CMS schema and the content loader must change together —
+# see docs/migration-plan.md, Branching strategy. Any PR touching either
+# file requires sign-off from whoever owns this pairing.
+public/admin/config.yml @vinay-avadhutatech
+src/lib/content.ts      @vinay-avadhutatech
