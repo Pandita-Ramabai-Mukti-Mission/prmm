@@ -39,3 +39,100 @@ collections:
       - { label: Description, name: description, widget: text, required: false }
       - { label: Featured Image, name: image, widget: image, required: false }
       - { label: Body, name: body, widget: markdown }
+
+  - name: programs
+    label: Programs
+    folder: content/programs
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: Title, name: title, widget: string }
+      - label: Category
+        name: category
+        widget: select
+        options:
+          [Boys Home, Church and Bible College, Farming, Home for Aged and Blind, Hospital, School]
+      - label: Theme
+        name: theme
+        widget: select
+        required: false
+        hint: "Groups this program under one of the 'Shaping the…' narrative pages"
+        options: [Mind, Spirit, Heart, Environment, Destiny]
+      - label: Photo
+        name: image
+        widget: object
+        fields:
+          - { label: Image, name: src, widget: image }
+          - { label: Alt Text, name: alt, widget: string, hint: "Required — describe the image for screen reader users" }
+      - { label: Short Description, name: description, widget: text }
+      - { label: Body, name: body, widget: markdown }
+
+  - name: news
+    label: News
+    folder: content/news
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Publish Date, name: date, widget: datetime }
+      - { label: Description, name: description, widget: text, required: false }
+      - label: Photo
+        name: image
+        widget: object
+        required: false
+        fields:
+          - { label: Image, name: src, widget: image }
+          - { label: Alt Text, name: alt, widget: string, hint: "Required — describe the image for screen reader users" }
+      - { label: Body, name: body, widget: markdown }
+
+  - name: gallery
+    label: Gallery
+    folder: content/gallery
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Event Date, name: date, widget: datetime }
+      - label: Photos
+        name: images
+        widget: list
+        fields:
+          - { label: Image, name: src, widget: image }
+          - { label: Alt Text, name: alt, widget: string, hint: "Required — describe the image for screen reader users" }
+      - { label: Body, name: body, widget: markdown, required: false }
+
+  - name: reports
+    label: Reports
+    folder: content/reports
+    create: true
+    slug: "{{year}}-{{slug}}"
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Year, name: year, widget: number, value_type: int }
+      - label: Type
+        name: type
+        widget: select
+        options: [Accounts, Certificate, "Signed Accounts"]
+      - { label: File, name: file, widget: file }
+
+  - name: newsletters
+    label: Newsletters
+    folder: content/newsletters
+    create: true
+    slug: "{{year}}-{{month}}-{{slug}}"
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Issue Date, name: date, widget: datetime }
+      - { label: File, name: file, widget: file }
+
+  - name: contacts
+    label: Regional Contacts
+    folder: content/contacts
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: Region, name: region, widget: string }
+      - { label: Contact Name, name: name, widget: string }
+      - { label: Address, name: address, widget: text }
+      - { label: Phone, name: phone, widget: string }
+      - { label: Email, name: email, widget: string }
