@@ -66,7 +66,29 @@ Living document — update as decisions are made. Source material:
   ongoing rebase.
 - `CODEOWNERS` entry for `public/admin/config.yml` and `src/lib/content.ts`
   — these two files must change together; any PR touching either requires
-  sign-off from whoever owns the content-schema pairing.
+  sign-off from whoever owns the content-schema pairing. **Currently lists
+  only @vinay-avadhutatech** (the sole collaborator on the repo as of
+  2026-09) — do not turn on "Require review from Code Owners" branch
+  protection until a second developer is added, or every PR touching either
+  file deadlocks (GitHub blocks self-approval).
+- **Branch protection status (2026-09): not yet applied.** The GitHub
+  account used from this session (`vinay-avadhutatech`) has write access to
+  the repo, not admin — branch protection is an admin-only setting and the
+  API call was refused. Needs to be set up manually (Settings → Branches)
+  or by granting that account admin. Target config for both `main` and
+  `develop`, given it's a solo developer for now:
+  - Require a pull request before merging — **on**.
+  - Require approvals (1) — **on**.
+  - "Do not allow bypassing the above settings" — **off**. With it off, the
+    repo admin can still merge their own PRs (GitHub can't enforce a
+    second approver when none exists); checking it would lock out the only
+    developer entirely.
+  - "Require review from Code Owners" — **off**, per the CODEOWNERS note
+    above.
+  - **When a second developer is added**: revisit both — check "Do not
+    allow bypassing" so the rule actually binds admins too, and turn on
+    "Require review from Code Owners" now that CODEOWNERS review is
+    enforceable.
 - Tags: reserve for (a) immediately before/after any change to the
   `config.yml`/`content.ts` schema pairing, so a broken CMS can be bisected
   quickly, and (b) client-facing milestones (e.g. `v1.0-launch`). Skip
