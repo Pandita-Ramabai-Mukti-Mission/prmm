@@ -133,8 +133,9 @@ export async function getPostBySlug(slug: string): Promise<Post> {
   };
 }
 
-export async function getPageBySlug(slug: string): Promise<Page> {
+export async function getPageBySlug(slug: string): Promise<Page | null> {
   const filePath = path.join(CONTENT_DIR, "pages", `${slug}.md`);
+  if (!fs.existsSync(filePath)) return null;
   const { data, content } = readMarkdownFile(filePath);
   const contentHtml = await markdownToHtml(content);
   return {

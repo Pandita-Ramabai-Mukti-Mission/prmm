@@ -1,5 +1,5 @@
 ---
-title: Welcome
+title: 130 Years of Shaping Lives
 ---
 
-This is the homepage content, editable from **Decap CMS** at `/admin`.
+Pandita Ramabai Mukti Mission cares for orphaned, destitute and vulnerable women and children across 14 ministries in Kedgaon and beyond.
