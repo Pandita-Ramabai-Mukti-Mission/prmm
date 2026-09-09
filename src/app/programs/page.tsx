@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getAllProgramsMeta } from "@/lib/content";
 import { EmptyState } from "@/components/EmptyState";
+import { PhotoBox } from "@/components/content-views/PhotoBox";
 
 // Must match the `category` select options in public/admin/config.yml.
 const CATEGORIES = [
@@ -68,9 +69,7 @@ export default async function ProgramsIndex({
         <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {programs.map((p) => (
             <div key={p.slug} className="flex flex-col overflow-hidden rounded-lg border border-black/10 bg-white">
-              <div className="flex h-32 items-center justify-center bg-[repeating-linear-gradient(45deg,#ece7dd,#ece7dd_10px,#dfd9cc_10px,#dfd9cc_20px)] text-center text-xs text-[#8a8170]">
-                {p.image?.alt ?? p.title}
-              </div>
+              <PhotoBox image={p.image} placeholderLabel={p.title} className="flex h-32 text-center text-xs" />
               <div className="p-4">
                 <span className="inline-block rounded-full bg-[#e7ecf1] px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-[#3f5268]">
                   {p.category}

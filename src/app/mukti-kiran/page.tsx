@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getAllNewsletters } from "@/lib/content";
 import { EmptyState } from "@/components/EmptyState";
+import { NewsletterRow } from "@/components/content-views/NewsletterRow";
 
 export default function Newsletters() {
   const issues = getAllNewsletters();
@@ -33,15 +34,7 @@ export default function Newsletters() {
       ) : (
         <div className="flex flex-col gap-3">
           {issues.map((i) => (
-            <div key={i.slug} className="flex items-center justify-between rounded-lg border border-black/10 bg-white p-4">
-              <div>
-                <div className="text-sm font-semibold">{i.title}</div>
-                <div className="text-xs text-ink-soft">{i.date && new Date(i.date).toLocaleDateString()}</div>
-              </div>
-              <a href={i.file} className="text-sm font-semibold hover:text-coral">
-                Download PDF &rarr;
-              </a>
-            </div>
+            <NewsletterRow key={i.slug} title={i.title} date={i.date} file={i.file} />
           ))}
         </div>
       )}

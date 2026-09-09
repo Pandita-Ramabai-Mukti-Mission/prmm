@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getAllGalleryPosts } from "@/lib/content";
 import { EmptyState } from "@/components/EmptyState";
+import { PhotoBox } from "@/components/content-views/PhotoBox";
 
 export default async function GalleryIndex() {
   const events = await getAllGalleryPosts();
@@ -27,9 +28,7 @@ export default async function GalleryIndex() {
               href={`/happenings-at-mukti/${g.slug}/`}
               className="overflow-hidden rounded-lg border border-black/10 bg-white"
             >
-              <div className="flex h-40 items-center justify-center bg-[repeating-linear-gradient(45deg,#ece7dd,#ece7dd_10px,#dfd9cc_10px,#dfd9cc_20px)] text-xs text-[#8a8170]">
-                {g.images[0]?.alt ?? g.title}
-              </div>
+              <PhotoBox image={g.images[0]} placeholderLabel={g.title} className="flex h-40 text-xs" />
               <div className="p-4">
                 <div className="text-xs text-ink-soft">{g.date && new Date(g.date).toLocaleDateString()}</div>
                 <h3 className="mt-1.5 text-base font-semibold">{g.title}</h3>

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getAllNewsMeta } from "@/lib/content";
 import { EmptyState } from "@/components/EmptyState";
+import { PhotoBox } from "@/components/content-views/PhotoBox";
 
 export default function NewsIndex() {
   const posts = getAllNewsMeta();
@@ -31,9 +32,7 @@ export default function NewsIndex() {
               href={`/news/${n.slug}/`}
               className="overflow-hidden rounded-lg border border-black/10 bg-white"
             >
-              <div className="flex h-36 items-center justify-center bg-[repeating-linear-gradient(45deg,#ece7dd,#ece7dd_10px,#dfd9cc_10px,#dfd9cc_20px)] text-xs text-[#8a8170]">
-                {n.image?.alt ?? "News photo"}
-              </div>
+              <PhotoBox image={n.image} placeholderLabel="News photo" className="flex h-36 text-xs" />
               <div className="p-4">
                 <div className="text-xs text-ink-soft">{n.date && new Date(n.date).toLocaleDateString()}</div>
                 <h3 className="mt-1.5 text-base font-semibold">{n.title}</h3>

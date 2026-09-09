@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { getPageBySlug, getAllContacts } from "@/lib/content";
 import { EmptyState } from "@/components/EmptyState";
+import { PageTitleBody } from "@/components/content-views/PageTitleBody";
 
 export default async function WhereWeWork() {
   const page = await getPageBySlug("reach");
@@ -14,8 +15,12 @@ export default async function WhereWeWork() {
       <div className="text-sm text-ink-soft">
         <Link href="/">Home</Link> / Where We Work
       </div>
-      <h1 className="mt-3 font-serif text-4xl">{page.title}</h1>
-      <div className="prose mt-3 max-w-[70ch]" dangerouslySetInnerHTML={{ __html: page.contentHtml }} />
+      <PageTitleBody
+        title={page.title}
+        headingClassName="mt-3 font-serif text-4xl"
+        bodyClassName="prose mt-3 max-w-[70ch]"
+        body={<div dangerouslySetInnerHTML={{ __html: page.contentHtml }} />}
+      />
 
       <div className="mt-8 flex h-64 items-center justify-center rounded-xl border border-dashed border-black/15 bg-[repeating-linear-gradient(45deg,#ece7dd,#ece7dd_10px,#dfd9cc_10px,#dfd9cc_20px)] text-xs text-[#8a8170]">
         Map of India — locations

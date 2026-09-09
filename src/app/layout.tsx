@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { SiteHeader } from "@/components/SiteHeader";
-import { SiteFooter } from "@/components/SiteFooter";
+import { ChromeGate } from "@/components/ChromeGate";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -27,9 +26,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col bg-paper text-ink">
-        <SiteHeader />
-        {children}
-        <SiteFooter />
+        <ChromeGate>{children}</ChromeGate>
       </body>
     </html>
   );

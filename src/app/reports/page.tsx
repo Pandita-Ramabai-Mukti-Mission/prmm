@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getAllReports } from "@/lib/content";
 import { EmptyState } from "@/components/EmptyState";
+import { ReportsTable } from "@/components/content-views/ReportsTable";
 
 // Gap-highlighting (dev-backlog.md #30 — e.g. flagging a missing 2023
 // Accounts row) needs a confirmed expected report calendar from the
@@ -22,28 +23,7 @@ export default function Reports() {
           <EmptyState>Reports are being migrated from the current site.</EmptyState>
         </div>
       ) : (
-        <table className="mt-8 w-full overflow-hidden rounded-lg border border-black/10 bg-white text-sm">
-          <thead>
-            <tr className="bg-[#f3efe7] text-left text-xs uppercase tracking-wide text-ink-soft">
-              <th className="px-4 py-3">Year</th>
-              <th className="px-4 py-3">Type</th>
-              <th className="px-4 py-3">File</th>
-            </tr>
-          </thead>
-          <tbody>
-            {reports.map((r) => (
-              <tr key={r.slug} className="border-t border-black/10">
-                <td className="px-4 py-3">{r.year}</td>
-                <td className="px-4 py-3">{r.type}</td>
-                <td className="px-4 py-3">
-                  <a href={r.file} className="font-semibold hover:text-coral">
-                    Download PDF
-                  </a>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <ReportsTable reports={reports} />
       )}
     </main>
   );

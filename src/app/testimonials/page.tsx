@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getAllTestimonials } from "@/lib/content";
 import { EmptyState } from "@/components/EmptyState";
+import { TestimonialCardView } from "@/components/content-views/TestimonialCardView";
 
 export default function Testimonials() {
   const quotes = getAllTestimonials();
@@ -22,13 +23,7 @@ export default function Testimonials() {
       ) : (
         <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-3">
           {quotes.map((q) => (
-            <div key={q.slug} className="rounded-lg border border-black/10 bg-white p-5">
-              <div className="mb-3.5 flex h-14 w-14 items-center justify-center rounded-full border border-dashed border-black/15 bg-[repeating-linear-gradient(45deg,#ece7dd,#ece7dd_10px,#dfd9cc_10px,#dfd9cc_20px)] text-[9px] text-[#8a8170]">
-                {q.image?.alt ?? "Photo"}
-              </div>
-              <p className="text-sm italic text-ink-soft">&ldquo;{q.quote}&rdquo;</p>
-              <div className="mt-3 text-sm font-semibold">{q.name}</div>
-            </div>
+            <TestimonialCardView key={q.slug} quote={q.quote} name={q.name} image={q.image} />
           ))}
         </div>
       )}

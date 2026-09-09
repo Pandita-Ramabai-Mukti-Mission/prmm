@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { getPageBySlug } from "@/lib/content";
+import { PageTitleBody } from "@/components/content-views/PageTitleBody";
 
 export default async function PrivacyPolicy() {
   const page = await getPageBySlug("privacy-policy");
@@ -11,8 +12,11 @@ export default async function PrivacyPolicy() {
       <div className="text-sm text-ink-soft">
         <Link href="/">Home</Link> / Privacy Policy
       </div>
-      <h1 className="mt-3 font-serif text-3xl">{page.title}</h1>
-      <div className="prose mt-5" dangerouslySetInnerHTML={{ __html: page.contentHtml }} />
+      <PageTitleBody
+        title={page.title}
+        bodyClassName="prose mt-5"
+        body={<div dangerouslySetInnerHTML={{ __html: page.contentHtml }} />}
+      />
     </main>
   );
 }

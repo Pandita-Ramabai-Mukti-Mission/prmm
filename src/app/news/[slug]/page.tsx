@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getAllNewsSlugs, getAllNewsMeta, getNewsBySlug } from "@/lib/content";
+import { NewsDetailCore } from "@/components/content-views/NewsDetailCore";
 
 export async function generateStaticParams() {
   return getAllNewsSlugs().map((slug) => ({ slug }));
@@ -29,16 +30,12 @@ export default async function NewsDetail({
         <Link href="/">Home</Link> / <Link href="/news/">News</Link> / {post.title}
       </div>
 
-      <article className="mx-auto w-full max-w-3xl px-6 py-8 sm:px-12">
-        <h1 className="font-serif text-3xl">{post.title}</h1>
-        <div className="mt-2.5 text-sm text-ink-soft">
-          {post.date && new Date(post.date).toLocaleDateString()} &middot; Pandita Ramabai Mukti Mission
-        </div>
-        <div className="mt-6 flex h-72 items-center justify-center rounded-xl border border-dashed border-black/15 bg-[repeating-linear-gradient(45deg,#ece7dd,#ece7dd_10px,#dfd9cc_10px,#dfd9cc_20px)] text-xs text-[#8a8170]">
-          {post.image?.alt ?? "Article photo"}
-        </div>
-        <div className="prose mt-6 max-w-none" dangerouslySetInnerHTML={{ __html: post.contentHtml }} />
-      </article>
+      <NewsDetailCore
+        title={post.title}
+        date={post.date}
+        image={post.image}
+        body={<div dangerouslySetInnerHTML={{ __html: post.contentHtml }} />}
+      />
 
       {related.length > 0 && (
         <section className="bg-[#f3efe7] px-6 py-10 sm:px-12">

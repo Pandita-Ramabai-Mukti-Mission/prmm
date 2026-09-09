@@ -9,12 +9,21 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "decap-cms-app": "3.16.1",
     "gray-matter": "^4.0.3",
     "next": "16.3.4",
     "react": "19.2.8",
     "react-dom": "19.2.8",
     "remark": "^15.0.1",
     "remark-html": "^16.0.1"
+  },
+  "overrides": {
+    "decap-cms-app": {
+      "decap-cms-lib-widgets": "3.4.0",
+      "decap-cms-lib-util": "3.7.1",
+      "decap-cms-editor-component-image": "3.4.0",
+      "ajv": "^8.17.1"
+    }
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

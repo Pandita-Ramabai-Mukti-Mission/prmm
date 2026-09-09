@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getPageBySlug } from "@/lib/content";
+import { PageTitleBody } from "@/components/content-views/PageTitleBody";
 
 export default async function AboutRamabai() {
   const page = await getPageBySlug("about-pandita-ramabai");
@@ -17,10 +18,11 @@ export default async function AboutRamabai() {
           Portrait — Pandita Ramabai
         </div>
         <div className="flex-1">
-          <h1 className="font-serif text-4xl">{page.title}</h1>
-          <div
-            className="prose mt-3 max-w-none text-ink"
-            dangerouslySetInnerHTML={{ __html: page.contentHtml }}
+          <PageTitleBody
+            title={page.title}
+            headingClassName="font-serif text-4xl"
+            bodyClassName="prose mt-3 max-w-none text-ink"
+            body={<div dangerouslySetInnerHTML={{ __html: page.contentHtml }} />}
           />
         </div>
       </section>

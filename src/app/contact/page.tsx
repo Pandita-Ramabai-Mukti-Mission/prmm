@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getAllContacts } from "@/lib/content";
 import { EmptyState } from "@/components/EmptyState";
+import { ContactCardView } from "@/components/content-views/ContactCardView";
 
 export default function Contact() {
   const regions = getAllContacts();
@@ -73,14 +74,14 @@ export default function Contact() {
           ) : (
             <div className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
               {regions.map((r) => (
-                <div key={r.slug} className="rounded-lg border border-black/10 bg-white p-5">
-                  <h3 className="font-semibold">{r.region}</h3>
-                  <p className="mt-2 text-sm text-ink-soft">{r.name}</p>
-                  <p className="mt-0.5 text-sm text-ink-soft">{r.address}</p>
-                  <p className="mt-0.5 text-sm text-ink-soft">
-                    {r.phone} &middot; {r.email}
-                  </p>
-                </div>
+                <ContactCardView
+                  key={r.slug}
+                  region={r.region}
+                  name={r.name}
+                  address={r.address}
+                  phone={r.phone}
+                  email={r.email}
+                />
               ))}
             </div>
           )}
