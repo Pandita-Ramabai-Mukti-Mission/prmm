@@ -28,7 +28,12 @@ export default async function GalleryIndex() {
               href={`/happenings-at-mukti/${g.slug}/`}
               className="overflow-hidden rounded-lg border border-black/10 bg-white"
             >
-              <PhotoBox image={g.images[0]} placeholderLabel={g.title} className="flex h-40 text-xs" />
+              <PhotoBox
+                image={g.images[0]}
+                placeholderLabel={g.title}
+                recommendedSize="800×600"
+                className="flex h-40 text-xs"
+              />
               <div className="p-4">
                 <div className="text-xs text-ink-soft">{g.date && new Date(g.date).toLocaleDateString()}</div>
                 <h3 className="mt-1.5 text-base font-semibold">{g.title}</h3>

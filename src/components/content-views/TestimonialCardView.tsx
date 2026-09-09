@@ -15,6 +15,7 @@ export function TestimonialCardView({
       <PhotoBox
         image={image}
         placeholderLabel="Photo"
+        recommendedSize="200×200"
         className="mb-3.5 flex h-14 w-14 rounded-full border border-dashed border-black/15 text-[9px]"
       />
       <p className="text-sm italic text-ink-soft">&ldquo;{quote}&rdquo;</p>

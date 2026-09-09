@@ -51,7 +51,12 @@ export default async function ProgramDetail({
                   href={`/programs/${r.slug}/`}
                   className="overflow-hidden rounded-lg border border-black/10 bg-white"
                 >
-                  <PhotoBox image={r.image} placeholderLabel={r.title} className="flex h-24 text-xs" />
+                  <PhotoBox
+                    image={r.image}
+                    placeholderLabel={r.title}
+                    recommendedSize="400×300"
+                    className="flex h-24 text-xs"
+                  />
                   <div className="p-3.5">
                     <span className="inline-block rounded-full bg-[#e7ecf1] px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-[#3f5268]">
                       {r.category}

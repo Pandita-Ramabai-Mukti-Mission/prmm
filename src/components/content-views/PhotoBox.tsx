@@ -8,10 +8,15 @@ import type { ImageWithAlt } from "@/lib/content";
 export function PhotoBox({
   image,
   placeholderLabel,
+  recommendedSize,
   className,
 }: {
   image?: ImageWithAlt;
   placeholderLabel?: string;
+  /** Recommended upload dimensions, e.g. "1200×800" — shown on the
+   * placeholder so an editor knows what to upload. Not the box's actual
+   * rendered size, which is responsive and set by `className`. */
+  recommendedSize?: string;
   className: string;
 }) {
   if (image?.src) {
@@ -26,9 +31,10 @@ export function PhotoBox({
 
   return (
     <div
-      className={`${className} flex items-center justify-center bg-[repeating-linear-gradient(45deg,#ece7dd,#ece7dd_10px,#dfd9cc_10px,#dfd9cc_20px)] text-center text-[#8a8170]`}
+      className={`${className} flex-col items-center justify-center gap-1 bg-gray-200 text-center text-gray-500`}
     >
-      {image?.alt || placeholderLabel || "Photo"}
+      <span>{image?.alt || placeholderLabel || "Photo"}</span>
+      {recommendedSize && <span className="text-gray-400">{recommendedSize}</span>}
     </div>
   );
 }

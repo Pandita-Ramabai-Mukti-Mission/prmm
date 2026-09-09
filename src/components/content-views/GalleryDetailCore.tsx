@@ -27,6 +27,7 @@ export function GalleryDetailCore({
               <PhotoBox
                 key={i}
                 image={img}
+                recommendedSize="800×600"
                 className="flex h-36 rounded-md text-center text-[11px]"
               />
             ))}

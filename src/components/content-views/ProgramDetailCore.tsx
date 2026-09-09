@@ -33,6 +33,7 @@ export function ProgramDetailCore({
       <PhotoBox
         image={image}
         placeholderLabel="Program photograph"
+        recommendedSize="1200×800"
         className="flex h-80 flex-1 rounded-xl border border-dashed border-black/15 text-xs"
       />
     </section>

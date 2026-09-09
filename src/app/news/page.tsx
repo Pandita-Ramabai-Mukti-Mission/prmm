@@ -32,7 +32,12 @@ export default function NewsIndex() {
               href={`/news/${n.slug}/`}
               className="overflow-hidden rounded-lg border border-black/10 bg-white"
             >
-              <PhotoBox image={n.image} placeholderLabel="News photo" className="flex h-36 text-xs" />
+              <PhotoBox
+                image={n.image}
+                placeholderLabel="News photo"
+                recommendedSize="800×450"
+                className="flex h-36 text-xs"
+              />
               <div className="p-4">
                 <div className="text-xs text-ink-soft">{n.date && new Date(n.date).toLocaleDateString()}</div>
                 <h3 className="mt-1.5 text-base font-semibold">{n.title}</h3>

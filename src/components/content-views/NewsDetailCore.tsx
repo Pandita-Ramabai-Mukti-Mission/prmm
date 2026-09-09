@@ -21,6 +21,7 @@ export function NewsDetailCore({
       <PhotoBox
         image={image}
         placeholderLabel="Article photo"
+        recommendedSize="1200×675"
         className="mt-6 flex h-72 rounded-xl border border-dashed border-black/15 text-xs"
       />
       <div className="prose mt-6 max-w-none">{body}</div>
