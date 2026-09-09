@@ -4,6 +4,29 @@ Session handoff notes. Not a task list (that's `dev-backlog.md`) or a
 decisions doc (that's `migration-plan.md`) — this is "what happened, what's
 live, where to pick up," kept short and dated.
 
+## 2026-09-09 — Google Sheets credentials live, verified
+
+User provided real service-account credentials
+(`sheets-integration@prmm-website.iam.gserviceaccount.com`) and the target
+spreadsheet ID in chat — written straight to `.env.local` (gitignored,
+confirmed via `git check-ignore`), never committed, not re-displayed after
+the initial write. Flagged once that pasting a live private key into chat
+means it now lives in conversation history too; rotating it at some point
+is the user's call, not urgent.
+
+First test attempt failed with `403 PERMISSION_DENIED` — auth itself
+succeeded (real handshake with Google), but the spreadsheet hadn't been
+shared with the service account yet. User shared it as Editor and added the
+`Donations` tab; re-running the same test then succeeded: a
+clearly-labeled test row (`TEST_<timestamp>`) was appended and then had its
+status updated, both against the real live sheet, confirming
+`appendDonationRow`/`updateDonationStatus` genuinely work end-to-end, not
+just that they fail gracefully. Tested via a standalone `tsx --env-file`
+script importing `src/lib/googleSheets.ts` directly, since the real
+`/api/payu/initiate` route only calls it after PayU's own config check
+passes — with PayU still unconfigured, the real form can't reach this code
+path yet (see dev-backlog #13/#14).
+
 ## 2026-09-09 — branch protection dropped (solo developer)
 
 User confirmed they're the only developer on this repo and asked to drop

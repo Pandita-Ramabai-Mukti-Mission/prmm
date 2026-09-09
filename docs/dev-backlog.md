@@ -61,16 +61,20 @@ client input listed) · **Depends on #N**.
     non-technical staff. `/api/payu/initiate` appends a row with the full
     donor-submitted fields (only trustworthy point for phone/address, which
     aren't part of PayU's signed hash); `/api/payu/callback` reconciles that
-    row's status once PayU's response hash is verified. **Blocked on
-    client/ops**: needs a Google Cloud service account (Sheets API enabled,
-    shared onto the target spreadsheet — restrict sharing to specific staff,
-    not "anyone with link," given PAN/address/phone are in every row) and
-    three env vars (`GOOGLE_SHEETS_SPREADSHEET_ID`,
-    `GOOGLE_SHEETS_CLIENT_EMAIL`, `GOOGLE_SHEETS_PRIVATE_KEY`) — without
-    them, logging is silently skipped (checkout itself still works; see
-    `docs/progress-log.md`). **Still open even once configured**: actual
-    receipt *generation and emailing* isn't built — this only gets the data
-    into a sheet someone can work from.
+    row's status once PayU's response hash is verified. **Google Sheets
+    logging is done and verified (2026-09-09)** — service account created,
+    spreadsheet shared with it, `Donations` tab set up, all three env vars
+    (`GOOGLE_SHEETS_SPREADSHEET_ID`, `GOOGLE_SHEETS_CLIENT_EMAIL`,
+    `GOOGLE_SHEETS_PRIVATE_KEY`) set in local `.env.local` (never committed
+    — see `.gitignore`) and confirmed working with a real test row
+    (append + status update both succeeded against the live sheet, then
+    deleted). **Still blocked**: PayU itself (`PAYU_MERCHANT_KEY`/
+    `PAYU_SALT`, item #13 above) — Sheets logging only runs after PayU
+    config is confirmed present, so it can't be exercised through the real
+    form yet, only verified directly. Also still open regardless of PayU:
+    same env vars need setting in Vercel for any deployed environment, not
+    just local; and actual receipt *generation and emailing* isn't built —
+    this only gets the data into a sheet someone can work from.
 15. **Blocked — decision needed** — Pick contact-form backend (serverless
     function + email API vs. third-party form service).
 16. **Blocked — decision needed** — Pick newsletter-signup provider (ESP vs.
