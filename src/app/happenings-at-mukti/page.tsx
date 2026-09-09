@@ -32,7 +32,7 @@ export default async function GalleryIndex() {
               </div>
               <div className="p-4">
                 <div className="text-xs text-ink-soft">{g.date && new Date(g.date).toLocaleDateString()}</div>
-                <h3 className="mt-1.5 text-base font-semibold">{g.title}</h3>
+                <h2 className="mt-1.5 text-base font-semibold">{g.title}</h2>
               </div>
             </Link>
           ))}

@@ -105,24 +105,42 @@ so implement once and reuse rather than per-page.
 
 ## Phase 4 — Accessibility & quality (close sitewide issues from the audit)
 
-35. Fix heading hierarchy — real `h1` per page, proper nesting (currently
-    most titles render as `h3`).
-36. Add skip-navigation link.
-37. Remove or fix dead social/share links (`href="#"`) instead of porting them.
-38. Reconcile founding-date inconsistency ("since 1889" vs. Ramabai's dates)
-    — content decision, flag to client.
+35. **Done** — Fix heading hierarchy. The `h3`-titles issue was specific to
+    the old WordPress site (*site-audit.md*); the Next.js codebase already
+    had a real `h1` per page. Fixed heading-level skips (h1 → h3 with no h2)
+    in card grids on `programs`, `news`, `happenings-at-mukti`, `site-map`,
+    and in `SiteFooter`'s column headings (`h4` → `h2`).
+36. **Done** — Skip-navigation link. Already implemented in `SiteHeader`;
+    fixed one gap — the orphan `posts/[slug]` route had no `id="main-content"`
+    target (see note below on that route).
+37. **Done** — Dead social/share links. No literal `href="#"` remained (that
+    was WP-site-specific too). Found and fixed one equivalent: the "Spread
+    the Word" tile in `GetInvolvedBand` linked to a nonexistent `/share/`
+    route (404). Pointed it at a `mailto:` referral for now — swap for real
+    share-intent URLs once a production domain exists (blocked on Vercel
+    setup, see progress-log.md).
+38. **Blocked — client decision** — Reconcile founding-date inconsistency
+    ("since 1889" vs. Ramabai's 1858–1922 dates). `about-mukti-mission`'s
+    History timeline still asserts 1889 as founding year independent of
+    the "since 1889" copy in `layout.tsx` metadata and the homepage stats
+    tile — not resolved, needs a client-confirmed date/framing.
+39. **New, ready** — `src/app/posts/[slug]/page.tsx` + the `posts` content
+    collection appear to be a leftover from before the `news` collection was
+    added in Phase 1 (unstyled, not linked from nav/footer/sitemap, uses
+    demo-scaffold styling unlike the rest of the site). Confirm with the
+    user whether to delete it or repurpose it — don't delete unilaterally.
 
 ## Phase 5 — Migration & launch
 
-39. **Blocked — client review** — Manually curate genuine posts from WP
+40. **Blocked — client review** — Manually curate genuine posts from WP
     `/news-and-updates/` before import; exclude injected spam entirely
     (*site-audit.md, Security* — do not automate this step).
-40. **Ready to plan, execute near launch** — Build a redirect map: every
+41. **Ready to plan, execute near launch** — Build a redirect map: every
     indexed WordPress URL → its new route, as 301s. IA is changing (e.g.
     `programs` replacing the scattered `/impact/` + footer structure), so
     without this the site loses existing SEO/backlinks on cutover.
-41. Content freeze window plan for cutover (coordinate with Decap Editorial
+42. Content freeze window plan for cutover (coordinate with Decap Editorial
     Workflow, #3).
-42. DNS/domain cutover to Vercel production.
-43. Post-launch: verify redirects (#40) resolve correctly, verify donation
+43. DNS/domain cutover to Vercel production.
+44. Post-launch: verify redirects (#41) resolve correctly, verify donation
     flow (#14) end-to-end with a real test transaction.

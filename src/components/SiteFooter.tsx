@@ -91,9 +91,9 @@ export function SiteFooter() {
 function FooterColumn({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div>
-      <h4 className="mb-3.5 text-[11px] font-semibold uppercase tracking-wide text-[#9aa6b4]">
+      <h2 className="mb-3.5 text-[11px] font-semibold uppercase tracking-wide text-[#9aa6b4]">
         {title}
-      </h4>
+      </h2>
       <ul className="flex flex-col gap-2">{children}</ul>
     </div>
   );

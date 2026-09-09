@@ -36,7 +36,7 @@ export default function NewsIndex() {
               </div>
               <div className="p-4">
                 <div className="text-xs text-ink-soft">{n.date && new Date(n.date).toLocaleDateString()}</div>
-                <h3 className="mt-1.5 text-base font-semibold">{n.title}</h3>
+                <h2 className="mt-1.5 text-base font-semibold">{n.title}</h2>
                 {n.description && <p className="mt-1.5 text-sm text-ink-soft">{n.description}</p>}
               </div>
             </Link>
