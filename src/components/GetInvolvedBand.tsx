@@ -17,7 +17,15 @@ const SECONDARY_ACTIONS = [
     ),
   },
   {
-    href: "/share/",
+    // No `/share/` page exists, and share-intent links need a known
+    // production domain (Vercel setup is on hold — see docs/progress-log.md).
+    // A mailto referral works without one; swap for real share-intent URLs
+    // once the domain is fixed.
+    href: `mailto:?subject=${encodeURIComponent(
+      "Support Pandita Ramabai Mukti Mission"
+    )}&body=${encodeURIComponent(
+      "I wanted to share the work of Pandita Ramabai Mukti Mission with you — an organisation caring for orphaned, destitute and vulnerable women and children in Kedgaon, India. Learn more or donate at their website."
+    )}`,
     label: "Spread the Word",
     icon: (
       <>

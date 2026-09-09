@@ -4,6 +4,30 @@ Session handoff notes. Not a task list (that's `dev-backlog.md`) or a
 decisions doc (that's `migration-plan.md`) — this is "what happened, what's
 live, where to pick up," kept short and dated.
 
+## 2026-09-09 — session summary
+
+**Done:**
+- Phase 4 accessibility items (dev-backlog #35-37): survey found the "most
+  titles are h3" and "dead `href=\"#\"` links" issues described in
+  `site-audit.md` were specific to the **old WordPress site** — the Next.js
+  codebase already had a real `h1` per page and the skip-link (`SiteHeader`)
+  was already implemented. Fixed the real remaining gaps: heading-level
+  skips (h1 → h3 with no h2) in card grids on `programs`, `news`,
+  `happenings-at-mukti`, `site-map`, and `SiteFooter`'s `h4` column
+  headings; a missing `id="main-content"` on the orphan `posts/[slug]`
+  route; and a dead `/share/` link on the "Spread the Word" tile
+  (`GetInvolvedBand`), now a `mailto:` referral pending a real domain.
+- Lint clean, production build green after changes.
+
+**New finding, not yet actioned:**
+- `src/app/posts/[slug]/page.tsx` + the `posts` Decap collection look like a
+  pre-Phase-1 leftover, superseded by `news` — unstyled, unlinked from
+  nav/footer/sitemap. Filed as dev-backlog #39; needs your call on
+  delete vs. repurpose before anyone touches it.
+
+**Still open:** #38 (founding-date inconsistency) is a content decision,
+not code — flagged to client, unchanged this session.
+
 ## 2026-09-08 — session summary
 
 **Done:**

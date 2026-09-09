@@ -75,7 +75,7 @@ export default async function ProgramsIndex({
                 <span className="inline-block rounded-full bg-[#e7ecf1] px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-[#3f5268]">
                   {p.category}
                 </span>
-                <h3 className="mt-2.5 text-base font-semibold">{p.title}</h3>
+                <h2 className="mt-2.5 text-base font-semibold">{p.title}</h2>
                 {p.description && <p className="mt-1.5 text-sm text-ink-soft">{p.description}</p>}
                 <div className="mt-3 flex flex-wrap gap-3 text-sm font-semibold">
                   <Link href={`/programs/${p.slug}/`} className="hover:text-coral">

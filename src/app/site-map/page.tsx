@@ -50,7 +50,7 @@ export default function Sitemap() {
 function SitemapColumn({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div>
-      <h3 className="mb-3 text-xs font-semibold uppercase tracking-wide text-ink-soft">{title}</h3>
+      <h2 className="mb-3 text-xs font-semibold uppercase tracking-wide text-ink-soft">{title}</h2>
       <ul className="flex flex-col gap-2">{children}</ul>
     </div>
   );
