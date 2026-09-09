@@ -4,6 +4,37 @@ Session handoff notes. Not a task list (that's `dev-backlog.md`) or a
 decisions doc (that's `migration-plan.md`) — this is "what happened, what's
 live, where to pick up," kept short and dated.
 
+## 2026-09-09 — session summary (blank /admin bug — FIXED)
+
+**Root cause found and fixed** (see prior entry below for full context on
+what this refactor is and why): the bug was a React 18 Strict Mode
+dev-only double-effect race in `src/app/admin/page.tsx`, not a
+`decap-cms-app` API mismatch. Sequence: mount #1 sets `initialized.current
+= true` and starts the async `import()` chain with a `cancelled` flag
+closed over as `false`; its cleanup (fired immediately by Strict Mode's
+mount→cleanup→mount) flips *that* closure's `cancelled` to `true`; mount #2
+sees `initialized.current` already `true` and no-ops. Mount #1's async
+chain then resolves with `cancelled` now `true`, so `CMS.init()` is never
+called — `decap-cms-app`'s version log still fires (confirming the module
+loaded), but `decap-cms-core`'s bootstrap log never does, and `#nc-root`
+never appears. Fix: drop the `cancelled`/cleanup pair entirely — the
+`initialized` ref alone already prevents double-init, so the surviving
+in-flight run just finishes uninterrupted (`src/app/admin/page.tsx`,
+commit `67c61b7`).
+
+**Verified in a real headless-browser session** (Playwright, ad hoc, not
+committed as a test): `/admin` boots, `#nc-root` mounts, login works, all 9
+collections list correctly, and opening a Programs entry shows the live
+preview rendering through the shared `content-views` components
+(`ProgramDetailCore` — title, category, donate CTA, description all
+correct). The component-reuse architecture is confirmed working end to
+end, not just building cleanly.
+
+**Still not done** (carried forward from the entry below, unchanged):
+re-verify the other 8 collections' previews individually (only Programs
+spot-checked this session); decide on the `next/image` warning in
+`PhotoBox`; keep `local_backend: true` commented in any commit.
+
 ## 2026-09-09 — session summary (CMS component-reuse refactor — IN PROGRESS, BROKEN)
 
 **Context:** after shipping the hand-maintained CSS preview (previous entry
