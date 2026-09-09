@@ -10,9 +10,17 @@ client input listed) · **Depends on #N**.
 
 ## Phase 0 — Infra & repo setup
 
-1. **Ready** — Add branch protection on `main` + `develop` (PR review required).
-2. **Ready** — Add `CODEOWNERS` entry for `public/admin/config.yml` and
-   `src/lib/content.ts` (must change together — *migration-plan.md, Branching strategy*).
+1. **Dropped** — Branch protection (PR review required) was only ever
+   valuable with more than one contributor; user is the sole developer on
+   this repo, so it's not being applied. Confirmed neither `main` nor
+   `develop` currently has protection configured on GitHub (checked via
+   `gh api .../branches/<branch>/protection`, both 404) — nothing to turn
+   off, this just removes the item from the plan.
+2. **Done, now informational only** — `.github/CODEOWNERS` still documents
+   that `public/admin/config.yml` and `src/lib/content.ts` must change
+   together (*migration-plan.md, Branching strategy*), but with #1 dropped
+   there's no PR-review gate to enforce it — it's a comment for future-you,
+   not a control.
 3. **Ready** — Enable Decap `publish_mode: editorial_workflow` in `config.yml`,
    pointed at `main`.
 4. **Ready** — Set up a Vercel preview alias for `develop` for client review.

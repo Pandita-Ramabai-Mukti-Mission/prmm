@@ -4,6 +4,17 @@ Session handoff notes. Not a task list (that's `dev-backlog.md`) or a
 decisions doc (that's `migration-plan.md`) — this is "what happened, what's
 live, where to pick up," kept short and dated.
 
+## 2026-09-09 — branch protection dropped (solo developer)
+
+User confirmed they're the only developer on this repo and asked to drop
+branch protection (dev-backlog #1) entirely rather than keep chasing admin
+access to apply it. Nothing needed undoing on GitHub — confirmed via `gh
+api` that neither `main` nor `develop` ever actually had protection
+configured, so this was a documentation change only (dev-backlog.md,
+migration-plan.md). `.github/CODEOWNERS` stays as an informational note
+(the config.yml/content.ts pairing still matters), just unenforced.
+Revisit both if a second developer is ever added.
+
 ## 2026-09-09 — session summary (donate form: functional, validated, PayU + reCAPTCHA wired)
 
 **Client decisions landed this session**: PayU is the payment gateway

@@ -74,12 +74,13 @@ Living document — update as decisions are made. Source material:
   2026-09) — do not turn on "Require review from Code Owners" branch
   protection until a second developer is added, or every PR touching either
   file deadlocks (GitHub blocks self-approval).
-- **Branch protection status (2026-09): not yet applied.** The GitHub
-  account used from this session (`vinay-avadhutatech`) has write access to
-  the repo, not admin — branch protection is an admin-only setting and the
-  API call was refused. Needs to be set up manually (Settings → Branches)
-  or by granting that account admin. Target config for both `main` and
-  `develop`, given it's a solo developer for now:
+- **Branch protection status (2026-09): deliberately not applied.**
+  Confirmed via `gh api .../branches/<branch>/protection` that neither
+  `main` nor `develop` has it configured. Dropped from dev-backlog.md (#1)
+  at the user's explicit call — a PR-review gate only has value with more
+  than one contributor, and this is a solo project for now. Target config
+  below is kept for **when a second developer joins**, not as a current
+  to-do:
   - Require a pull request before merging — **on**.
   - Require approvals (1) — **on**.
   - "Do not allow bypassing the above settings" — **off**. With it off, the
