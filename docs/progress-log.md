@@ -4,6 +4,37 @@ Session handoff notes. Not a task list (that's `dev-backlog.md`) or a
 decisions doc (that's `migration-plan.md`) — this is "what happened, what's
 live, where to pick up," kept short and dated.
 
+## 2026-09-09 — Contact-form backend decided, blocked before any code
+
+Discussed contact-form backend (dev-backlog #15). Recommended and user
+agreed: serverless function (own API route) + transactional email API, not
+a third-party form service — avoids adding a third-party script/origin to
+the page, reuses the reCAPTCHA v3 + server-side validation pattern already
+built for Donate. Reassured the user separately that the WordPress-style
+compromise (plugin/theme code execution injecting spam posts) can't recur
+the same way here regardless of this choice — this site has no
+admin-panel/plugin execution surface, content only changes via git commits
+through Decap's GitHub-authenticated flow.
+
+Email vendor: user specified **MSG91** (client's call, likely consolidating
+with an existing SMS/OTP relationship). Two blockers hit immediately,
+before any code was written:
+- MSG91 account creation itself stuck waiting on an OTP from the client.
+- Independently, MSG91's Email API technical reference couldn't be
+  retrieved even to prepare the integration ahead of time — their docs site
+  (docs.msg91.com) is a JS-rendered SPA; every URL tried (the send-email
+  reference, their help-center walkthrough, the docs.msg91.com/p/...
+  page it links to) returned only navigation-shell content, never the
+  actual endpoint/headers/schema. No official Email SDK exists on GitHub
+  either (their public repos are all SMS/OTP). Deliberately did not guess
+  the request shape — same standard as PayU's hash formula, which was
+  fetched from real docs rather than reconstructed from memory.
+
+**Nothing committed this entry covers code-wise** — working tree was
+already clean; this is a decision/blocker log only. Next session: either
+the MSG91 account unblocks (copy the dashboard's generated code snippet
+directly) or someone pastes the actual API reference content in manually.
+
 ## 2026-09-09 — Sitemap fixed to actually list real content
 
 Fixed dev-backlog #32: the sitemap page's own comment claimed it was

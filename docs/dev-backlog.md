@@ -75,8 +75,26 @@ client input listed) · **Depends on #N**.
     same env vars need setting in Vercel for any deployed environment, not
     just local; and actual receipt *generation and emailing* isn't built —
     this only gets the data into a sheet someone can work from.
-15. **Blocked — decision needed** — Pick contact-form backend (serverless
-    function + email API vs. third-party form service).
+15. **Decided, blocked on setup** — Serverless function (own Next.js API
+    route) + transactional email API, not a third-party form service —
+    keeps everything first-party (no embedded third-party script/origin on
+    the page), reuses the same reCAPTCHA v3 + server-side validation
+    pattern already proven on Donate. Email vendor: **MSG91**, client's
+    call (they likely already use it for SMS/OTP elsewhere; consolidating
+    vendors rather than adding a new one). **Currently blocked twice
+    over**: (a) MSG91 account creation itself is stuck waiting on an OTP
+    from the client, so no API key/template exists yet; (b) MSG91's Email
+    API technical reference couldn't be verified even once an account
+    exists — their docs site is a JS-rendered SPA that only returned
+    navigation shell content on every URL tried (docs.msg91.com/*,
+    msg91.com/help/*, their linked docs.msg91.com/p/... page), and no
+    official Email SDK exists on GitHub to read the request shape from
+    code instead (their public repos are all SMS/OTP-only). **Do not guess
+    MSG91's request shape** (endpoint, auth header, field names) — same
+    standard applied to PayU's hash formula, verified from real docs rather
+    than reconstructed from memory. Next session needs either the account
+    unblocked so the dashboard's generated code snippet can be copied
+    directly, or the actual API reference page content pasted in manually.
 16. **Blocked — decision needed** — Pick newsletter-signup provider (ESP vs.
     custom) — current form has no visible ESP integration.
 17. **Depends on #13, partially done** — Bot/spam prevention: Google
