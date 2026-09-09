@@ -121,13 +121,34 @@ client input listed) · **Depends on #N**.
     floating badge Google's script injects itself — **do not remove or hide
     that badge without adding the attribution text their Terms of Service
     require in its place** (already present as a fallback line in the form
-    regardless). Currently running on Google's published test key pair,
-    which always passes — **blocked on client/ops** for a real v3 site key +
-    secret (`NEXT_PUBLIC_RECAPTCHA_SITE_KEY` / `RECAPTCHA_SECRET`, both must
-    be registered as **v3 type** in the reCAPTCHA admin console, not v2)
-    before launch, or it verifies nothing against real traffic. Contact form
-    (#15) and newsletter signup (#16) will need the same treatment once
-    their backends are chosen.
+    regardless). **Real v3 credentials live and verified (2026-09-09)** —
+    registered a v3-type site in the reCAPTCHA admin console (no Google
+    Cloud project/billing needed, confirmed empirically — the registration
+    page just redirects to a normal Google account sign-in), both keys set
+    in `.env.local` (never committed). Tested a real token end-to-end: a
+    live browser-generated token verified against Google's siteverify API
+    returned `success: true, score: 0.9, action: "donate"` — well clear of
+    the 0.5 threshold — and the same token passed through the actual
+    `/api/payu/initiate/` route in a real browser session (reached the
+    PayU-not-configured stop, one step *after* the captcha check, proving
+    verification genuinely passed rather than short-circuiting). Same env
+    vars still need setting in Vercel for any deployed environment, not
+    just local.
+    **Made sitewide-reusable (2026-09-09)**, not Donate-only: the token-
+    fetch logic is now `useRecaptchaToken()` (`src/lib/recaptchaClient.ts`),
+    the script load is a single `<RecaptchaScript />` in the root layout
+    (`src/app/layout.tsx`, confirmed present on every page, not just
+    Donate), and the required attribution text is
+    `<RecaptchaAttribution />` (`src/components/RecaptchaAttribution.tsx`).
+    `DonateForm.tsx` now consumes all three instead of owning its own copy.
+    Contact form (#15) and newsletter signup (#16) can wire in real
+    protection with a couple of lines each the moment their backends exist
+    — no need to re-derive the pattern, just import the hook/components and
+    call `verifyRecaptcha(token, { expectedAction: "contact" })` /
+    `"newsletter"` server-side (`src/lib/recaptcha.ts`, already generic).
+    Did **not** add captcha UI to Contact/Newsletter themselves yet — both
+    are still non-functional stubs (placeholder fields, no server route),
+    so there's nothing for a token to protect until #15/#16 unblock.
 
 ## Phase 3 — Pages
 

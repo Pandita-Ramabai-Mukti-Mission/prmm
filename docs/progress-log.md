@@ -4,6 +4,57 @@ Session handoff notes. Not a task list (that's `dev-backlog.md`) or a
 decisions doc (that's `migration-plan.md`) — this is "what happened, what's
 live, where to pick up," kept short and dated.
 
+## 2026-09-09 — Real reCAPTCHA v3 credentials live, verified
+
+User asked whether v3 needs anything from Google Cloud Console — confirmed
+empirically (not assumed) that it doesn't: `google.com/recaptcha/admin/
+create` just redirects to a normal Google account sign-in, no Cloud
+project/billing involved. That's a separate, simpler flow from "reCAPTCHA
+Enterprise," which Google's newer docs push toward but which is a
+different, Cloud-billed product with a different verification API — not
+what this site uses.
+
+User then provided a real v3 site key + secret, written straight to
+`.env.local` (gitignored, not re-displayed). Tested for real rather than
+trusting a "should work" verified live: fetched a genuine token from the
+donate page in a real browser via `grecaptcha.execute()`, verified it
+directly against Google's siteverify API — `success: true, score: 0.9,
+action: "donate"`, comfortably clear of the 0.5 threshold — then separately
+ran the actual form through the real `/api/payu/initiate/` route in a
+browser session and confirmed it reached the PayU-not-configured stop
+(the step *after* the captcha check), proving the real keys work inside
+the live route, not just in isolation. Sitewide reCAPTCHA infrastructure
+from the previous entry needed no changes — same env var names,
+same code path.
+
+
+## 2026-09-09 — reCAPTCHA v3 made sitewide-reusable, not just Donate
+
+User asked to configure v3 "wherever required in the website, not only on
+donation." Audited every public-input surface on the site (grepped for
+forms/disabled-stub buttons): only three exist — Donate, Contact, and the
+Newsletter signup. Contact and Newsletter are both still non-functional
+stubs (placeholder divs instead of real inputs, no server route — blocked
+on MSG91 and the ESP decision respectively), so there was nothing real for
+a captcha widget to protect on either yet; declined to bolt one onto dead
+fields just to look like progress.
+
+What was real, valuable work instead: reCAPTCHA v3 lived entirely inside
+`DonateForm.tsx`, not reusable. Extracted it into shared infrastructure —
+`useRecaptchaToken()` (`src/lib/recaptchaClient.ts`), a single
+`<RecaptchaScript />` moved into the root layout (`src/app/layout.tsx`, so
+it loads once sitewide instead of per-form — confirmed present in the
+homepage's HTML, a page with no form at all), and `<RecaptchaAttribution />`
+(`src/components/RecaptchaAttribution.tsx`) for the Terms-of-Service-
+required notice. `DonateForm.tsx` refactored to consume all three instead
+of owning its own copy. `src/lib/recaptcha.ts` (server-side verification)
+was already generic enough to reuse as-is. Net effect: Contact and
+Newsletter can each add real v3 protection in a couple of lines the moment
+their backends unblock, instead of re-deriving the whole pattern.
+Re-verified the full Donate flow end-to-end after the refactor (browser
+test, same as prior sessions) — works identically; build/lint/
+`tsc --noEmit` all clean.
+
 ## 2026-09-09 — Newsletter ESP: discussed, deferred to client
 
 Confirmed the old WordPress site's newsletter subscribe form was never

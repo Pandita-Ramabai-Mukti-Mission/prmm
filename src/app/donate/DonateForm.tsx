@@ -1,28 +1,15 @@
 "use client";
 
 import { useRef, useState } from "react";
-import Script from "next/script";
 import { validateDonationFields, type DonationFieldErrors } from "@/lib/donationValidation";
+import { useRecaptchaToken } from "@/lib/recaptchaClient";
+import { RecaptchaAttribution } from "@/components/RecaptchaAttribution";
 
-// Google's own published test key pair — always verifies successfully, so
-// the form works out of the box in dev/preview before real keys exist.
-// NEXT_PUBLIC_RECAPTCHA_SITE_KEY must be set to the real (v3-type) site key
-// before launch (see docs/dev-backlog.md — bot-prevention item), or every
-// visitor sails through unchallenged. v3 is invisible — no checkbox, no
-// visible challenge — so the only UI is the small floating badge Google's
-// script injects itself; do not hide that badge without adding the
-// attribution text their terms require in its place.
-const RECAPTCHA_TEST_SITE_KEY = "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI";
+// v3 is invisible — no checkbox, no visible challenge — so the only UI is
+// the small floating badge Google's script injects itself; do not hide
+// that badge without keeping <RecaptchaAttribution /> visible somewhere,
+// which their Terms of Service require regardless.
 const RECAPTCHA_ACTION = "donate";
-
-declare global {
-  interface Window {
-    grecaptcha?: {
-      ready: (callback: () => void) => void;
-      execute: (siteKey: string, options: { action: string }) => Promise<string>;
-    };
-  }
-}
 
 function impactFor(amount: number) {
   if (amount <= 500) return "provides a month of school supplies for one child.";
@@ -91,8 +78,7 @@ export function DonateForm({
 
   const formRef = useRef<HTMLFormElement>(null);
   const captchaFieldRef = useRef<HTMLInputElement>(null);
-
-  const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || RECAPTCHA_TEST_SITE_KEY;
+  const getRecaptchaToken = useRecaptchaToken();
 
   const total = `₹${amount.toLocaleString("en-IN")}`;
 
@@ -114,18 +100,9 @@ export function DonateForm({
     setErrors(nextErrors);
     if (Object.keys(nextErrors).length > 0) return;
 
-    if (!window.grecaptcha) {
-      setErrors((prev) => ({ ...prev, captcha: "Verification hasn't finished loading — please try again." }));
-      return;
-    }
-
     setSubmitting(true);
     try {
-      const token = await new Promise<string>((resolve, reject) => {
-        window.grecaptcha!.ready(() => {
-          window.grecaptcha!.execute(siteKey, { action: RECAPTCHA_ACTION }).then(resolve).catch(reject);
-        });
-      });
+      const token = await getRecaptchaToken(RECAPTCHA_ACTION);
       if (captchaFieldRef.current) captchaFieldRef.current.value = token;
       formRef.current?.submit();
     } catch {
@@ -136,10 +113,6 @@ export function DonateForm({
 
   return (
     <>
-      <Script
-        src={`https://www.google.com/recaptcha/api.js?render=${siteKey}`}
-        strategy="afterInteractive"
-      />
       <form
         ref={formRef}
         method="POST"
@@ -292,17 +265,7 @@ export function DonateForm({
                 </button>
               </div>
             </div>
-            <p className="mt-3 text-[11px] text-ink-soft">
-              This site is protected by reCAPTCHA and the Google{" "}
-              <a href="https://policies.google.com/privacy" className="underline">
-                Privacy Policy
-              </a>{" "}
-              and{" "}
-              <a href="https://policies.google.com/terms" className="underline">
-                Terms of Service
-              </a>{" "}
-              apply.
-            </p>
+            <RecaptchaAttribution className="mt-3 text-[11px] text-ink-soft" />
           </div>
         </div>
 
