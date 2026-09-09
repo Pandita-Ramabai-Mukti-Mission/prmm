@@ -232,6 +232,26 @@ export function getAllGallerySlugs(): string[] {
   return getSlugsIn("gallery");
 }
 
+export type GalleryMeta = { slug: string; title: string; date: string };
+
+// Lightweight sibling of getAllGalleryPosts() for callers that only need
+// title/date (e.g. the sitemap) — skips the markdown-to-HTML render every
+// full gallery post pays for, and stays sync so it's cheap to call from
+// anywhere.
+export function getAllGalleryMeta(): GalleryMeta[] {
+  return getAllGallerySlugs()
+    .map((slug) => {
+      const filePath = path.join(CONTENT_DIR, "gallery", `${slug}.md`);
+      const { data } = readMarkdownFile(filePath);
+      return {
+        slug,
+        title: data.title ?? slug,
+        date: data.date ? new Date(data.date).toISOString() : "",
+      };
+    })
+    .sort((a, b) => (a.date < b.date ? 1 : -1));
+}
+
 export async function getAllGalleryPosts(): Promise<GalleryPost[]> {
   const posts = await Promise.all(
     getAllGallerySlugs().map((slug) => getGalleryPostBySlug(slug))

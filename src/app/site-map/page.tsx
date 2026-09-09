@@ -1,12 +1,17 @@
 import Link from "next/link";
-import { getAllProgramsMeta } from "@/lib/content";
+import { getAllProgramsMeta, getAllNewsMeta, getAllGalleryMeta } from "@/lib/content";
 
-// Generated from the real route structure at build time, not
+// Generated from the real content collections at build time, not
 // hand-maintained — the current site's sitemap is already out of sync
 // (missing all 14 Impact projects and the gallery posts, per
-// docs/site-audit.md).
+// docs/site-audit.md). Static structural pages (About, Legal, etc. — one
+// per route, not a collection) are still listed by hand below since
+// there's no data source to generate them from; only the parts backed by
+// a content collection are pulled dynamically.
 export default function Sitemap() {
-  const programCount = getAllProgramsMeta().length;
+  const programs = getAllProgramsMeta();
+  const news = getAllNewsMeta();
+  const gallery = getAllGalleryMeta();
 
   return (
     <main id="main-content" className="mx-auto w-full max-w-4xl flex-1 px-6 py-10 sm:px-12">
@@ -23,17 +28,32 @@ export default function Sitemap() {
           <SitemapLink href="/reports/">Reports &amp; Transparency</SitemapLink>
           <SitemapLink href="/testimonials/">Testimonials</SitemapLink>
         </SitemapColumn>
-        <SitemapColumn title={`Programs (${programCount})`}>
+        <SitemapColumn title={`Programs (${programs.length})`}>
           <SitemapLink href="/programs/">View all programs</SitemapLink>
           <SitemapLink href="/shaping-the-mind/">Shaping the Mind</SitemapLink>
           <SitemapLink href="/shaping-the-spirit/">Shaping the Spirit</SitemapLink>
           <SitemapLink href="/shaping-the-heart/">Shaping the Heart</SitemapLink>
           <SitemapLink href="/shaping-the-environment/">Shaping the Environment</SitemapLink>
           <SitemapLink href="/shaping-the-destiny/">Shaping the Destiny</SitemapLink>
+          {programs.map((p) => (
+            <SitemapLink key={p.slug} href={`/programs/${p.slug}/`}>
+              {p.title}
+            </SitemapLink>
+          ))}
         </SitemapColumn>
-        <SitemapColumn title="News & Media">
+        <SitemapColumn title={`News & Media (${news.length + gallery.length})`}>
           <SitemapLink href="/news/">News &amp; Updates</SitemapLink>
+          {news.map((n) => (
+            <SitemapLink key={n.slug} href={`/news/${n.slug}/`}>
+              {n.title}
+            </SitemapLink>
+          ))}
           <SitemapLink href="/happenings-at-mukti/">Happenings at Mukti</SitemapLink>
+          {gallery.map((g) => (
+            <SitemapLink key={g.slug} href={`/happenings-at-mukti/${g.slug}/`}>
+              {g.title}
+            </SitemapLink>
+          ))}
           <SitemapLink href="/mukti-kiran/">Mukti Kiran Newsletter</SitemapLink>
         </SitemapColumn>
         <SitemapColumn title="Get Involved / Legal">

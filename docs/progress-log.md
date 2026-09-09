@@ -4,6 +4,24 @@ Session handoff notes. Not a task list (that's `dev-backlog.md`) or a
 decisions doc (that's `migration-plan.md`) — this is "what happened, what's
 live, where to pick up," kept short and dated.
 
+## 2026-09-09 — Sitemap fixed to actually list real content
+
+Fixed dev-backlog #32: the sitemap page's own comment claimed it was
+"generated from the real route structure," but only the program *count*
+was dynamic — individual programs, news posts, and gallery posts weren't
+listed anywhere. Added `getAllGalleryMeta()` (`src/lib/content.ts`, a
+lightweight sync sibling of `getAllGalleryPosts()` that skips the
+markdown-to-HTML render since the sitemap only needs slug/title/date), then
+rewrote `src/app/site-map/page.tsx` to map over
+`getAllProgramsMeta`/`getAllNewsMeta`/`getAllGalleryMeta` and list every
+real entry with a working link, not just a count. Column headers now show
+accurate live counts. Verified in a real browser — both programs, both news
+posts, and the one gallery post all render as correct links; build/lint/
+`tsc --noEmit` clean. Deliberately left the "posts" collection
+(`content/posts/`) out — it has no index page and isn't linked from
+nav/footer anywhere, so it isn't part of the real site IA, just a leftover
+from the initial scaffold.
+
 ## 2026-09-09 — Google Sheets credentials live, verified
 
 User provided real service-account credentials

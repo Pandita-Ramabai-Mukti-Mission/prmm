@@ -145,9 +145,15 @@ so implement once and reuse rather than per-page.
 31. "Where We Work" page, repurposing the current `/reach/`, which is
     near-empty on the live site. **Flag to client**: confirm the rename/
     repurpose rather than assuming it.
-32. Sitemap page — generated from the real IA at build time, not
-    hand-maintained, so it can't drift out of sync the way the current one
-    has (it's already missing all 14 programs and the gallery posts).
+32. **Done (2026-09-09)** — Sitemap page now generates its Programs and
+    News & Media columns from `getAllProgramsMeta`/`getAllNewsMeta`/the new
+    `getAllGalleryMeta` (`src/lib/content.ts`) at build time, listing every
+    real program/news/gallery entry individually rather than just a
+    program count next to hand-authored category links (which is all the
+    prior version actually did, despite its own comment claiming otherwise —
+    caught during a doc-vs-code audit, not reported by anyone). Static
+    structural pages (About, Legal, etc.) stay hand-listed since there's no
+    collection backing them.
 33. Terms of Use page — straight content port, no layout decisions.
 34. Privacy Policy page — **not** a straight port: needs legal review
     against the actual rebuilt data flows, especially the Donate PAN field
