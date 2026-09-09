@@ -4,6 +4,41 @@ Session handoff notes. Not a task list (that's `dev-backlog.md`) or a
 decisions doc (that's `migration-plan.md`) — this is "what happened, what's
 live, where to pick up," kept short and dated.
 
+## 2026-09-09 — session summary (CMS editor UX)
+
+**Done, on `feature/decap-cms-ux` (separate from the Phase 4 accessibility
+branch/PR):**
+- Flattened the nested "Photo" object field (`programs`, `news`,
+  `testimonials`) into two plain top-level fields (Photo, Photo Description)
+  in `config.yml` — no more collapsible sub-form for a non-technical editor
+  to discover. `gallery`'s photo list stays a repeating list (inherent to
+  "multiple photos each with a caption") but now defaults expanded with a
+  descriptive summary per row. `content.ts` updated to match the new flat
+  frontmatter shape (`image` + `image_alt` instead of a nested `image: {src,
+  alt}` object) — safe with no migration needed since no real content
+  existed yet in these collections.
+- Added Decap CMS live preview templates (`public/admin/preview-templates.js`
+  + `preview.css`) for all 9 collections, approximating the real site's look
+  (colors/fonts hand-matched to `globals.css`) so editors see roughly what
+  they're publishing before they publish. Built as plain JS/React.createElement
+  (no build step — `/admin` is static, outside the Next.js build), with hand
+  written CSS rather than a Tailwind CDN, since `/admin` doesn't get the
+  app's compiled Tailwind v4 styles.
+- **Known limits, called out in the preview UI itself**: no shared header/
+  footer around the preview; no "related items" (depends on sitewide data,
+  not just the one entry); the generic `pages` collection preview only
+  covers the small part of some pages it actually controls (e.g. Home's
+  hero heading/intro) — most of Home, About Mukti Mission's history/
+  leadership sections, and all 5 "Shaping the…" pages are hardcoded in TSX,
+  not CMS-editable at all. That last point is a real gap, not just a
+  preview limitation — flagged to the user, not yet actioned.
+- Added Lorem-ipsum placeholder entries to every previously-empty collection
+  (`programs`, `news`, `gallery`, `reports`, `newsletters`, `contacts`,
+  `testimonials`) at the user's request, so listing pages and the new
+  preview templates have something real to render against instead of just
+  empty states. All clearly marked "Lorem Ipsum" / "placeholder" in title
+  and body — must be deleted before launch, not mistaken for real content.
+
 ## 2026-09-08 — session summary
 
 **Done:**

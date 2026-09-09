@@ -58,12 +58,11 @@ collections:
         required: false
         hint: "Groups this program under one of the 'Shaping the…' narrative pages"
         options: [Mind, Spirit, Heart, Environment, Destiny]
-      - label: Photo
-        name: image
-        widget: object
-        fields:
-          - { label: Image, name: src, widget: image }
-          - { label: Alt Text, name: alt, widget: string, hint: "Required — describe the image for screen reader users" }
+      - { label: Photo, name: image, widget: image }
+      - label: Photo Description
+        name: image_alt
+        widget: string
+        hint: "Describe the photo in one short sentence — this is read aloud to visitors using a screen reader, and shown if the photo fails to load."
       - { label: Short Description, name: description, widget: text }
       - { label: Body, name: body, widget: markdown }
 
@@ -76,13 +75,12 @@ collections:
       - { label: Title, name: title, widget: string }
       - { label: Publish Date, name: date, widget: datetime }
       - { label: Description, name: description, widget: text, required: false }
-      - label: Photo
-        name: image
-        widget: object
+      - { label: Photo, name: image, widget: image, required: false }
+      - label: Photo Description
+        name: image_alt
+        widget: string
         required: false
-        fields:
-          - { label: Image, name: src, widget: image }
-          - { label: Alt Text, name: alt, widget: string, hint: "Required — describe the image for screen reader users" }
+        hint: "Describe the photo in one short sentence — this is read aloud to visitors using a screen reader, and shown if the photo fails to load. Required if you added a photo above."
       - { label: Body, name: body, widget: markdown }
 
   - name: gallery
@@ -96,9 +94,13 @@ collections:
       - label: Photos
         name: images
         widget: list
+        collapsed: false
+        summary: "{{fields.alt}}"
+        label_singular: Photo
+        hint: "Add one entry per photo. Each photo needs a short description for screen-reader visitors."
         fields:
-          - { label: Image, name: src, widget: image }
-          - { label: Alt Text, name: alt, widget: string, hint: "Required — describe the image for screen reader users" }
+          - { label: Photo, name: src, widget: image }
+          - { label: Photo Description, name: alt, widget: string }
       - { label: Body, name: body, widget: markdown, required: false }
 
   - name: reports
@@ -145,10 +147,9 @@ collections:
     fields:
       - { label: Quote, name: quote, widget: text }
       - { label: Name, name: name, widget: string }
-      - label: Photo
-        name: image
-        widget: object
+      - { label: Photo, name: image, widget: image, required: false }
+      - label: Photo Description
+        name: image_alt
+        widget: string
         required: false
-        fields:
-          - { label: Image, name: src, widget: image }
-          - { label: Alt Text, name: alt, widget: string, hint: "Required — describe the image for screen reader users" }
+        hint: "Describe the photo in one short sentence — this is read aloud to visitors using a screen reader. Required if you added a photo above."

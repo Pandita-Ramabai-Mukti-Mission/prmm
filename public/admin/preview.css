@@ -1,0 +1,163 @@
+/* Hand-written approximation of the live site's look for the Decap CMS
+   preview pane. Not Tailwind — this loads inside the CMS admin iframe,
+   which isn't part of the Next.js build, so it can't reuse the app's
+   compiled styles. Keep colors/fonts in sync with src/app/globals.css by
+   hand if the site's palette changes. */
+
+.pv {
+  font-family: Arial, Helvetica, sans-serif;
+  color: #262523;
+  background: #faf7f3;
+  padding: 0;
+  margin: 0;
+  max-width: 720px;
+}
+
+.pv-note {
+  background: #fff8e6;
+  border: 1px solid #e8d8a8;
+  color: #6b5f2f;
+  font-size: 12px;
+  padding: 10px 14px;
+  margin-bottom: 20px;
+  border-radius: 6px;
+}
+
+.pv-crumb {
+  font-size: 13px;
+  color: #6b6862;
+  margin-bottom: 10px;
+}
+
+.pv-h1 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 32px;
+  margin: 0 0 10px;
+  line-height: 1.2;
+}
+
+.pv-h2 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 20px;
+  margin: 24px 0 10px;
+}
+
+.pv-meta {
+  font-size: 13px;
+  color: #6b6862;
+  margin-bottom: 14px;
+}
+
+.pv-tag {
+  display: inline-block;
+  background: #e7ecf1;
+  color: #3f5268;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  padding: 3px 10px;
+  border-radius: 999px;
+  margin-bottom: 10px;
+}
+
+.pv-photo {
+  width: 100%;
+  max-height: 280px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin: 14px 0;
+  display: block;
+}
+
+.pv-photo-placeholder {
+  width: 100%;
+  height: 160px;
+  border-radius: 10px;
+  border: 1px dashed rgba(0, 0, 0, 0.15);
+  background: repeating-linear-gradient(45deg, #ece7dd, #ece7dd 10px, #dfd9cc 10px, #dfd9cc 20px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #8a8170;
+  font-size: 12px;
+  text-align: center;
+  margin: 14px 0;
+}
+
+.pv-body {
+  font-size: 15px;
+  line-height: 1.6;
+}
+.pv-body p { margin: 0 0 12px; }
+.pv-body h1, .pv-body h2, .pv-body h3 { font-family: Georgia, "Times New Roman", serif; }
+
+.pv-card {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: #fff;
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 12px;
+}
+
+.pv-card-title {
+  font-weight: 600;
+  font-size: 15px;
+  margin: 6px 0 0;
+}
+
+.pv-donate-cta {
+  margin-top: 20px;
+  padding: 16px;
+  background: #fbeaea;
+  border: 1px solid #f0c6c5;
+  border-radius: 10px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.pv-donate-cta a {
+  background: #f66867;
+  color: #fff;
+  padding: 8px 18px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.pv-quote {
+  font-style: italic;
+  color: #6b6862;
+  font-size: 14px;
+}
+
+.pv-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  margin-top: 10px;
+}
+.pv-table th {
+  text-align: left;
+  background: #f3efe7;
+  color: #6b6862;
+  font-size: 11px;
+  text-transform: uppercase;
+  padding: 8px 10px;
+}
+.pv-table td {
+  padding: 8px 10px;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.pv-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-top: 12px;
+}

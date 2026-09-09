@@ -92,6 +92,14 @@ function readMarkdownFile(filePath: string) {
   return matter(raw);
 }
 
+// Decap stores each photo as two flat frontmatter fields (`image` +
+// `image_alt`) rather than a nested object, so editors see two plain
+// fields instead of a collapsible sub-form — see docs/dev-backlog.md.
+function readImageWithAlt(data: Record<string, unknown>): ImageWithAlt | undefined {
+  if (!data.image) return undefined;
+  return { src: data.image as string, alt: (data.image_alt as string) ?? "" };
+}
+
 async function markdownToHtml(markdown: string) {
   const processed = await remark().use(html).process(markdown);
   return processed.toString();
@@ -165,7 +173,7 @@ export function getAllProgramsMeta(): ProgramMeta[] {
       title: data.title ?? slug,
       category: data.category,
       theme: data.theme,
-      image: data.image,
+      image: readImageWithAlt(data),
       description: data.description,
     };
   });
@@ -180,7 +188,7 @@ export async function getProgramBySlug(slug: string): Promise<Program> {
     title: data.title ?? slug,
     category: data.category,
     theme: data.theme,
-    image: data.image,
+    image: readImageWithAlt(data),
     description: data.description,
     contentHtml,
   };
@@ -200,7 +208,7 @@ export function getAllNewsMeta(): NewsMeta[] {
         title: data.title ?? slug,
         date: data.date ? new Date(data.date).toISOString() : "",
         description: data.description,
-        image: data.image,
+        image: readImageWithAlt(data),
       };
     })
     .sort((a, b) => (a.date < b.date ? 1 : -1));
@@ -215,7 +223,7 @@ export async function getNewsBySlug(slug: string): Promise<NewsPost> {
     title: data.title ?? slug,
     date: data.date ? new Date(data.date).toISOString() : "",
     description: data.description,
-    image: data.image,
+    image: readImageWithAlt(data),
     contentHtml,
   };
 }
@@ -298,7 +306,7 @@ export function getAllTestimonials(): Testimonial[] {
       slug,
       quote: data.quote,
       name: data.name,
-      image: data.image,
+      image: readImageWithAlt(data),
     };
   });
 }
