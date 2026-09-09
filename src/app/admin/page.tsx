@@ -24,20 +24,19 @@ export default function AdminPage() {
     configLink.href = "/admin/config.yml";
     document.head.appendChild(configLink);
 
-    let cancelled = false;
     (async () => {
       const [{ default: CMS }, { registerPreviewTemplates }] = await Promise.all([
         import("decap-cms-app"),
         import("@/lib/cms-preview-templates"),
       ]);
-      if (cancelled) return;
+      // No cancellation check here: `initialized` (not a per-run local) is
+      // the only guard, so React 18 Strict Mode's dev-only double-invoke
+      // (mount -> cleanup -> mount) can't race this against itself — the
+      // second mount sees initialized.current already true and no-ops,
+      // leaving this in-flight run as the sole one to call CMS.init().
       registerPreviewTemplates(CMS as unknown as Parameters<typeof registerPreviewTemplates>[0]);
       CMS.init();
     })();
-
-    return () => {
-      cancelled = true;
-    };
   }, []);
 
   return null;
