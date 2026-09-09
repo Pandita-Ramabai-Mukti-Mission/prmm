@@ -1,8 +1,13 @@
 /* Custom Decap CMS preview templates so editors see an approximation of
    the real page while they write, instead of Decap's generic default
    preview. This file is plain ES5-ish JS (no build step — it's loaded
-   directly by the static /admin page), using React.createElement instead
-   of JSX. Keep new templates in the same style.
+   directly by the static /admin page), using Decap's global `h`
+   (hyperscript) helper instead of JSX. Decap does NOT expose a global
+   `React`/`ReactDOM` (only `window.h`), even though it renders with React
+   internally — using `React.createElement` here throws "React is not
+   defined" and silently breaks every preview. Keep new templates in the
+   same style, and always test this file's globals against the actual
+   Decap version (window.h vs window.React) if it doesn't render.
 
    Known limits (call these out in the UI, don't let them surprise editors):
    - No shared header/footer/navigation around the preview.
@@ -12,8 +17,6 @@
      Home's hero heading/intro) — the rest is fixed template content. */
 
 CMS.registerPreviewStyle("preview.css");
-
-var h = React.createElement;
 
 function text(entry, field, fallback) {
   var v = entry.getIn(["data", field]);

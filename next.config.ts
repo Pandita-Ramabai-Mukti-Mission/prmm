@@ -5,6 +5,15 @@ const nextConfig: NextConfig = {
   // current WordPress site's URL convention, which the eventual redirect
   // map in docs/dev-backlog.md #40 relies on to minimize slug changes).
   trailingSlash: true,
+
+  async rewrites() {
+    // Next's static file serving only matches exact paths under public/ —
+    // it does not resolve a directory request to its index.html the way a
+    // conventional web server does. Without this, /admin/ (the documented,
+    // conventional Decap CMS URL) 404s into this app's own not-found page
+    // instead of loading public/admin/index.html.
+    return [{ source: "/admin/", destination: "/admin/index.html" }];
+  },
 };
 
 export default nextConfig;
