@@ -4,6 +4,81 @@ Session handoff notes. Not a task list (that's `dev-backlog.md`) or a
 decisions doc (that's `migration-plan.md`) — this is "what happened, what's
 live, where to pick up," kept short and dated.
 
+## 2026-09-09 — session summary (donate form: functional, validated, PayU + reCAPTCHA wired)
+
+**Client decisions landed this session**: PayU is the payment gateway
+(dev-backlog #13); the current WordPress site's ongoing spam compromise
+(see below) is the reason bot-prevention (reCAPTCHA) was requested for this
+form specifically, ahead of contact-form (#15) and newsletter-signup (#16),
+which will need the same treatment once their backends are chosen.
+
+**Done, on `feature/decap-cms-ux`:**
+- `DonateForm.tsx` rebuilt: removed the cause/frequency/amount chip UI from
+  the prior session's simplification pass in favor of real, clickable
+  inputs (name, email, phone, address, PAN) plus a "Donating To" `<select>`
+  (General Fund / each program / Other-with-a-required-specify-field) — the
+  dropdown the user asked to bring back, now a real form control rather
+  than a chip picker.
+- Client + server validation sharing one rule set
+  (`src/lib/donationValidation.ts`) — required fields, email/phone/PAN
+  format — so the browser gives instant feedback and the API route
+  (reachable directly, not just via the form) re-checks the same rules
+  rather than trusting the client.
+- reCAPTCHA **v3** (invisible, score-based — user explicitly wanted no
+  visible checkbox) added (`src/lib/recaptcha.ts` verifies server-side
+  against `https://www.google.com/recaptcha/api/siteverify`, rejecting
+  scores below 0.5 or an `action` mismatch), currently on Google's published
+  test key pair (always passes) — **must be swapped for a real v3-type site
+  key/secret before launch** (dev-backlog #17) or it verifies nothing.
+  Confirmed empirically (not assumed) that the v2 test key pair also works
+  through v3's `execute()` API, but its siteverify response omits
+  `score`/`action` entirely — `recaptcha.ts` only enforces those when
+  Google actually returns them, so the always-pass test behavior isn't
+  accidentally broken by the new score check. Client-side, v3 requires a
+  fresh single-use token fetched asynchronously right before submit —
+  `DonateForm.tsx`'s submit handler now always `preventDefault`s, awaits
+  `grecaptcha.execute()`, writes the token into a hidden field, then calls
+  the DOM form's own `.submit()` (bypassing React's `onSubmit`, avoiding
+  re-entering this same handler) for a genuine browser POST. (Started the
+  session on hCaptcha, then Google reCAPTCHA v2 checkbox, then v3 at the
+  user's request — no hCaptcha or v2-checkbox code remains.)
+- PayU hosted-checkout integration: `src/lib/payu.ts` (request/response hash
+  formulas — fetched from PayU's own docs this session, not reconstructed
+  from memory, since a wrong field order silently breaks or fakes a
+  payment), `src/app/api/payu/initiate/route.ts` (re-validates, verifies
+  captcha, signs, auto-submits to PayU), `src/app/api/payu/callback/route.ts`
+  (verifies PayU's response hash before trusting `status`, redirects to a
+  new `/donate/thank-you/` result page). **Fails closed** with a clear
+  "gateway not configured" page when `PAYU_MERCHANT_KEY`/`PAYU_SALT` aren't
+  set (they aren't yet — no real credentials exist) — verified end-to-end
+  in a real browser up to that point (fill form → pass captcha → server
+  validates → reaches the not-configured stop), so the only missing piece
+  is real credentials, not untested code.
+- Donation record-keeping decided: a **Google Sheet**, not a database — user
+  explicitly rejected storing this in Decap CMS (right call: Decap has no
+  server-side write path, and PII/PAN in git history is close to a
+  compliance problem, not just a style issue) and picked Sheets over
+  Supabase for cost/familiarity given non-technical NGO staff.
+  `src/lib/googleSheets.ts` (service-account JWT auth via
+  `google-auth-library`, added as a real dependency — installed with
+  `--legacy-peer-deps`, same pre-existing decap-cms-app peer conflict as
+  last session, not a new issue) appends a full donor-detail row from
+  `/api/payu/initiate` (the only point phone/address are trustworthy — not
+  part of PayU's signed hash) and reconciles just the status from
+  `/api/payu/callback` after hash verification. Fails silently (logs
+  server-side, never blocks the payment) without
+  `GOOGLE_SHEETS_SPREADSHEET_ID`/`GOOGLE_SHEETS_CLIENT_EMAIL`/
+  `GOOGLE_SHEETS_PRIVATE_KEY` set, same as PayU/reCAPTCHA — verified this
+  still reaches the same "gateway not configured" stop end-to-end with
+  Sheets unconfigured.
+- Build, lint, and `tsc --noEmit` all clean.
+
+**Not yet done**: real PayU, reCAPTCHA, and Google Sheets credentials (none
+exist yet — a Google Cloud service account needs creating and sharing onto
+a real spreadsheet, dev-backlog #14); actual receipt generation/emailing
+from the sheet isn't built, only getting data into it; deciding the PAN/80G
+threshold (still a bracketed placeholder in the UI copy).
+
 ## 2026-09-09 — session summary (blank /admin bug — FIXED)
 
 **Root cause found and fixed** (see prior entry below for full context on

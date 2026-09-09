@@ -36,15 +36,54 @@ client input listed) · **Depends on #N**.
 
 ## Phase 2 — Integrations (blocked on client/product decisions)
 
-13. **Blocked — client decision** — Confirm whether the current donate form
-    reaches a working payment processor at all; pick a gateway (Razorpay/
-    Instamojo/PayU) for the rebuild.
-14. **Depends on #13** — Build compliant donation flow, incl. PAN field
-    handling (no plaintext-through-contact-form pipeline).
+13. **Done** — Gateway chosen: **PayU**. Hosted-checkout redirect flow built
+    (`src/app/api/payu/initiate/route.ts` signs and redirects to PayU;
+    `src/app/api/payu/callback/route.ts` verifies PayU's response hash and
+    hands off to `/donate/thank-you/`) — see `src/lib/payu.ts` for the hash
+    formulas, sourced from PayU's docs directly, not memory. **Blocked on
+    client/ops**: needs real `PAYU_MERCHANT_KEY` / `PAYU_SALT` (and
+    `PAYU_MODE=production` when ready) set as env vars — without them the
+    flow fails closed with a clear "gateway not configured" page rather than
+    silently pretending to work.
+14. **Depends on #13, mostly done** — PAN is now a real (optional,
+    format-validated) form field, sent to PayU as `udf1` rather than through
+    a contact-form-style pipeline. Storage decided: a **Google Sheet**
+    (`src/lib/googleSheets.ts`), not a database — a fuller-fledged donor
+    account/receipt system was judged overkill for this NGO's scale and
+    non-technical staff. `/api/payu/initiate` appends a row with the full
+    donor-submitted fields (only trustworthy point for phone/address, which
+    aren't part of PayU's signed hash); `/api/payu/callback` reconciles that
+    row's status once PayU's response hash is verified. **Blocked on
+    client/ops**: needs a Google Cloud service account (Sheets API enabled,
+    shared onto the target spreadsheet — restrict sharing to specific staff,
+    not "anyone with link," given PAN/address/phone are in every row) and
+    three env vars (`GOOGLE_SHEETS_SPREADSHEET_ID`,
+    `GOOGLE_SHEETS_CLIENT_EMAIL`, `GOOGLE_SHEETS_PRIVATE_KEY`) — without
+    them, logging is silently skipped (checkout itself still works; see
+    `docs/progress-log.md`). **Still open even once configured**: actual
+    receipt *generation and emailing* isn't built — this only gets the data
+    into a sheet someone can work from.
 15. **Blocked — decision needed** — Pick contact-form backend (serverless
     function + email API vs. third-party form service).
 16. **Blocked — decision needed** — Pick newsletter-signup provider (ESP vs.
     custom) — current form has no visible ESP integration.
+17. **Depends on #13, partially done** — Bot/spam prevention: Google
+    reCAPTCHA **v3** (invisible — no checkbox, scores each submission
+    0.0–1.0 in the background) added to the donate form and verified
+    server-side (`src/app/api/payu/initiate/route.ts` calls
+    `src/lib/recaptcha.ts`, which enforces a minimum score of 0.5 and checks
+    the `action` name matches) given the current WordPress site's spam
+    compromise (*progress-log.md*). The only visible trace is the small
+    floating badge Google's script injects itself — **do not remove or hide
+    that badge without adding the attribution text their Terms of Service
+    require in its place** (already present as a fallback line in the form
+    regardless). Currently running on Google's published test key pair,
+    which always passes — **blocked on client/ops** for a real v3 site key +
+    secret (`NEXT_PUBLIC_RECAPTCHA_SITE_KEY` / `RECAPTCHA_SECRET`, both must
+    be registered as **v3 type** in the reCAPTCHA admin console, not v2)
+    before launch, or it verifies nothing against real traffic. Contact form
+    (#15) and newsletter signup (#16) will need the same treatment once
+    their backends are chosen.
 
 ## Phase 3 — Pages
 

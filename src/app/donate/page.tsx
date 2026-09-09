@@ -15,6 +15,7 @@ export default async function Donate({
       <div className="text-sm text-ink-soft">
         <Link href="/">Home</Link> / Donate
       </div>
+      <h1 className="mt-3 font-serif text-3xl">Donate</h1>
 
       <div className="mt-4 flex flex-wrap gap-3">
         <span className="rounded-full bg-[#e7ecf1] px-3 py-1 text-xs font-semibold text-[#3f5268]">
@@ -26,8 +27,8 @@ export default async function Donate({
         <span className="rounded-full bg-[#e7ecf1] px-3 py-1 text-xs font-semibold text-[#3f5268]">
           Secure Payment
         </span>
-        <span className="rounded-full bg-[#f4ead4] px-3 py-1 text-xs font-semibold italic text-[#8f6a0a]">
-          [Payment partner — gateway pending selection, see docs/dev-backlog.md #13]
+        <span className="rounded-full bg-[#e7ecf1] px-3 py-1 text-xs font-semibold text-[#3f5268]">
+          Payments via PayU
         </span>
       </div>
 

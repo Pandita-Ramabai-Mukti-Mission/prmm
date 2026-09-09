@@ -20,14 +20,16 @@ Living document — update as decisions are made. Source material:
 - **Security incident** (site-audit.md): WordPress compromised, 100+ spam
   posts live. Client needs to rotate admin credentials / audit plugins now,
   independent of rebuild timeline.
-- **Donate flow**: confirm whether the current form actually reaches a
-  working payment processor (no gateway script detected). Decide on a real
-  gateway for the rebuild (Razorpay/Instamojo/PayU are standard for Indian
-  nonprofits with 80G receipting) — this is a backend integration
-  workstream, not part of the Decap content migration.
-- **PAN number handling**: currently collected in plaintext via a generic
-  form. Must go through a compliant flow in the rebuild, not a
-  contact-form-style pipeline.
+- **Donate flow**: gateway decided — **PayU**, hosted-checkout redirect,
+  implemented in `src/app/api/payu/initiate` + `.../callback` (see
+  dev-backlog.md #13). Blocked on real `PAYU_MERCHANT_KEY`/`PAYU_SALT` from
+  the client before it can process a real transaction; fails closed without
+  them. Donation record storage decided — a **Google Sheet**, not a
+  database (dev-backlog.md #14) — but actual 80G receipt generation/emailing
+  off that sheet still isn't built; the checkout working doesn't by itself
+  solve receipting.
+- **PAN number handling**: now a real, format-validated form field sent to
+  PayU as `udf1`, not a contact-form-style pipeline (dev-backlog.md #14).
 - **Brand assets**: no vector logo exists on the current front end (two
   inconsistent raster files, wordmark baked in). Request original
   vector/print files from the client rather than re-deriving from the JPG.
