@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { ChromeGate } from "@/components/ChromeGate";
 import { RecaptchaScript } from "@/components/RecaptchaScript";
+import { getHeadquartersContact } from "@/lib/content";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -21,6 +22,8 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
+  const hq = getHeadquartersContact();
+
   return (
     <html
       lang="en"
@@ -28,7 +31,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="flex min-h-full flex-col bg-paper text-ink">
         <RecaptchaScript />
-        <ChromeGate>{children}</ChromeGate>
+        <ChromeGate hq={hq}>{children}</ChromeGate>
       </body>
     </html>
   );

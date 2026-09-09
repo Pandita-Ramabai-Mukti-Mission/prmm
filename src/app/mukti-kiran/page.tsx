@@ -11,7 +11,7 @@ export default function Newsletters() {
       <div className="text-sm text-ink-soft">
         <Link href="/">Home</Link> / Mukti Kiran
       </div>
-      <h1 className="mt-3 font-serif text-4xl">Mukti Kiran Newsletter</h1>
+      <h1 className="mt-3 text-4xl">Mukti Kiran Newsletter</h1>
       <p className="mt-2 text-ink-soft">Our quarterly newsletter and prayer updates, archived by issue.</p>
 
       <div className="mt-6 flex gap-3">
@@ -28,7 +28,7 @@ export default function Newsletters() {
         </button>
       </div>
 
-      <h2 className="mt-8 mb-3 font-serif text-lg">Archive</h2>
+      <h2 className="mt-8 mb-3 text-lg">Archive</h2>
       {issues.length === 0 ? (
         <EmptyState>Back issues are being migrated from the current site.</EmptyState>
       ) : (

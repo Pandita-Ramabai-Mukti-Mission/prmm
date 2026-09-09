@@ -34,6 +34,7 @@ export type ProgramMeta = {
   theme?: string;
   image?: ImageWithAlt;
   description?: string;
+  featured?: boolean;
 };
 
 export type Program = ProgramMeta & { contentHtml: string };
@@ -78,6 +79,7 @@ export type RegionalContact = {
   address: string;
   phone: string;
   email: string;
+  isHeadquarters?: boolean;
 };
 
 export type Testimonial = {
@@ -175,6 +177,7 @@ export function getAllProgramsMeta(): ProgramMeta[] {
       theme: data.theme,
       image: readImageWithAlt(data),
       description: data.description,
+      featured: data.featured ?? false,
     };
   });
 }
@@ -190,6 +193,7 @@ export async function getProgramBySlug(slug: string): Promise<Program> {
     theme: data.theme,
     image: readImageWithAlt(data),
     description: data.description,
+    featured: data.featured ?? false,
     contentHtml,
   };
 }
@@ -314,8 +318,24 @@ export function getAllContacts(): RegionalContact[] {
       address: data.address,
       phone: data.phone,
       email: data.email,
+      isHeadquarters: data.is_headquarters ?? false,
     };
   });
+}
+
+// Sitewide header/footer contact details (phone, address) come from whichever
+// contacts entry is flagged is_headquarters, not a hardcoded string — so a
+// non-technical editor can correct it from the CMS without a code change.
+export function getHeadquartersContact(): RegionalContact | undefined {
+  return getAllContacts().find((c) => c.isHeadquarters);
+}
+
+// For views that specifically enumerate *regional* representatives
+// (contact page, "Where We Work") — excludes the headquarters entry so it
+// doesn't show up as a bogus extra "region" alongside those pages' own
+// dedicated Kedgaon-campus/HQ treatment.
+export function getRegionalContacts(): RegionalContact[] {
+  return getAllContacts().filter((c) => !c.isHeadquarters);
 }
 
 export function getAllTestimonials(): Testimonial[] {

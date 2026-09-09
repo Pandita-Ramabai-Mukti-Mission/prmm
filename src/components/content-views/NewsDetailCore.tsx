@@ -14,7 +14,7 @@ export function NewsDetailCore({
 }) {
   return (
     <article className="mx-auto w-full max-w-3xl px-6 py-8 sm:px-12">
-      <h1 className="font-serif text-3xl">{title}</h1>
+      <h1 className="text-3xl">{title}</h1>
       <div className="mt-2.5 text-sm text-ink-soft">
         {date && new Date(date).toLocaleDateString()} &middot; Pandita Ramabai Mukti Mission
       </div>

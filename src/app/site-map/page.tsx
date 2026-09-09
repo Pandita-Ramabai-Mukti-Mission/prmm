@@ -18,7 +18,7 @@ export default function Sitemap() {
       <div className="text-sm text-ink-soft">
         <Link href="/">Home</Link> / Sitemap
       </div>
-      <h1 className="mt-3 font-serif text-3xl">Sitemap</h1>
+      <h1 className="mt-3 text-3xl">Sitemap</h1>
 
       <div className="mt-8 grid grid-cols-2 gap-8 sm:grid-cols-4">
         <SitemapColumn title="About">

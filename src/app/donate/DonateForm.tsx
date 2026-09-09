@@ -11,12 +11,15 @@ import { RecaptchaAttribution } from "@/components/RecaptchaAttribution";
 // which their Terms of Service require regardless.
 const RECAPTCHA_ACTION = "donate";
 
-function impactFor(amount: number) {
-  if (amount <= 500) return "provides a month of school supplies for one child.";
-  if (amount <= 1000) return "covers a week of nutritious meals for five children.";
-  if (amount <= 2500) return "supports a month of medical care at Krishnabai Memorial Hospital.";
-  return "funds a month of vocational training for one resident.";
-}
+// No specific "₹X buys Y" unit-cost claims here — the amount-tiered
+// versions this replaced (school supplies, meals, a named hospital's
+// "month of medical care") had no source anywhere: not the live site, not
+// any doc. Naming a real facility (Krishnabai Memorial Hospital is real,
+// per site-audit.md) doesn't make an invented cost-per-rupee figure real.
+// A genuine amount-tied version needs actual unit costs from the client
+// first — see dev-backlog.md #55.
+const IMPACT_STATEMENT =
+  "goes directly toward Mukti Mission's work caring for orphaned, destitute and vulnerable women and children across 14 ministries in Kedgaon and beyond.";
 
 type Errors = DonationFieldErrors & { captcha?: string };
 
@@ -123,8 +126,8 @@ export function DonateForm({
       >
         <input ref={captchaFieldRef} type="hidden" name="g-recaptcha-response" />
         <div className="flex flex-col gap-5 md:flex-[2]">
-          <div className="rounded-lg border border-black/10 bg-white p-5">
-            <h2 className="font-serif text-lg">Your Details</h2>
+          <div className="rounded-lg border border-black/10 bg-white shadow-md p-5">
+            <h2 className="text-lg">Your Details</h2>
 
             <div className="mt-3 grid grid-cols-1 gap-3.5 sm:grid-cols-2">
               <div className="sm:col-span-2">
@@ -224,8 +227,8 @@ export function DonateForm({
             </p>
           </div>
 
-          <div className="rounded-lg border border-black/10 bg-white p-5">
-            <h2 className="font-serif text-lg">Payment Details</h2>
+          <div className="rounded-lg border border-black/10 bg-white shadow-md p-5">
+            <h2 className="text-lg">Payment Details</h2>
             <TextField
               id="donate-pan"
               label="PAN number (optional)"
@@ -270,13 +273,13 @@ export function DonateForm({
         </div>
 
         <div className="flex flex-col gap-4 md:flex-1">
-          <div className="rounded-lg border border-black/10 bg-white p-5">
+          <div className="rounded-lg border border-black/10 bg-white shadow-md p-5">
             <h3 className="font-semibold">Your Impact</h3>
             <p className="mt-2 text-sm">
-              {total} {impactFor(amount)}
+              {total} {IMPACT_STATEMENT}
             </p>
           </div>
-          <div className="rounded-lg border border-black/10 bg-white p-5">
+          <div className="rounded-lg border border-black/10 bg-white shadow-md p-5">
             <h3 className="font-semibold">Secure &amp; Compliant</h3>
             <p className="mt-2 text-sm text-ink-soft">
               256-bit encrypted checkout via PayU, India&rsquo;s PCI-DSS compliant payment gateway.

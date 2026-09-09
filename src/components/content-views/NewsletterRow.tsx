@@ -1,6 +1,6 @@
 export function NewsletterRow({ title, date, file }: { title: string; date?: string; file?: string }) {
   return (
-    <div className="flex items-center justify-between rounded-lg border border-black/10 bg-white p-4">
+    <div className="flex items-center justify-between rounded-lg border border-black/10 bg-white shadow-md p-4">
       <div>
         <div className="text-sm font-semibold">{title}</div>
         <div className="text-xs text-ink-soft">{date && new Date(date).toLocaleDateString()}</div>

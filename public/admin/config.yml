@@ -65,6 +65,12 @@ collections:
         hint: "Describe the photo in one short sentence — this is read aloud to visitors using a screen reader, and shown if the photo fails to load."
       - { label: Short Description, name: description, widget: text }
       - { label: Body, name: body, widget: markdown }
+      - label: Feature on homepage
+        name: featured
+        widget: boolean
+        default: false
+        required: false
+        hint: "At most one program should be featured at a time — it becomes the homepage's single-cause spotlight. Only turn this on for a cause with real, current, specific details (not a generic description)."
 
   - name: news
     label: News
@@ -138,6 +144,12 @@ collections:
       - { label: Address, name: address, widget: text }
       - { label: Phone, name: phone, widget: string }
       - { label: Email, name: email, widget: string }
+      - label: Use as sitewide headquarters contact
+        name: is_headquarters
+        widget: boolean
+        default: false
+        required: false
+        hint: "Exactly one entry should have this on — it's what the header/footer show sitewide. Leave off for regional-only contacts."
 
   - name: testimonials
     label: Testimonials

@@ -15,7 +15,7 @@ export default async function Donate({
       <div className="text-sm text-ink-soft">
         <Link href="/">Home</Link> / Donate
       </div>
-      <h1 className="mt-3 font-serif text-3xl">Donate</h1>
+      <h1 className="mt-3 text-3xl">Donate</h1>
 
       <div className="mt-4 flex flex-wrap gap-3">
         <span className="rounded-full bg-[#e7ecf1] px-3 py-1 text-xs font-semibold text-[#3f5268]">

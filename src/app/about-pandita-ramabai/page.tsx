@@ -20,7 +20,7 @@ export default async function AboutRamabai() {
         <div className="flex-1">
           <PageTitleBody
             title={page.title}
-            headingClassName="font-serif text-4xl"
+            headingClassName="text-4xl"
             bodyClassName="prose mt-3 max-w-none text-ink"
             body={<div dangerouslySetInnerHTML={{ __html: page.contentHtml }} />}
           />
@@ -28,7 +28,7 @@ export default async function AboutRamabai() {
       </section>
 
       <section className="mx-auto w-full max-w-6xl px-6 pb-10 sm:px-12">
-        <blockquote className="border-l-4 border-coral pl-5 font-serif text-xl italic">
+        <blockquote className="border-l-4 border-coral pl-5 text-xl italic">
           &ldquo;[A Ramabai quote — distinct from the one used on the Mukti Mission page]&rdquo;
         </blockquote>
       </section>

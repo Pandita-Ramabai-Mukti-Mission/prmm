@@ -23,6 +23,10 @@ This is a Next.js (App Router) site whose content is authored through **Decap CM
 - **Decap GitHub OAuth**: implemented as two Next.js route handlers instead of a separate OAuth service — `src/app/api/decap/auth/route.ts` (starts the flow, sets a short-lived `decap_oauth_state` cookie) and `src/app/api/decap/callback/route.ts` (validates state, exchanges the code for a token, `postMessage`s it back to the CMS popup window). Requires `GITHUB_OAUTH_CLIENT_ID` / `GITHUB_OAUTH_CLIENT_SECRET` env vars.
 - For local content editing without GitHub auth, run `npx decap-server` alongside `npm run dev` and uncomment `local_backend: true` in `public/admin/config.yml`.
 
+## Design system
+
+Before making visual/UI changes (card styling, typography, color, motion, or generating any imagery), read `docs/design-system.md` — it records the actual conventions in use (color tokens, typography scale, card pattern, the two motion components, and the imagery policy). The imagery policy is a hard boundary, not a style preference: AI-generated images are fine for decorative/non-representational elements, never as a stand-in for a real beneficiary/facility/portrait/testimonial photo — see that doc's "Decorative elements" section before generating or placing any image.
+
 ## Next.js version note
 
 This project pins a Next.js version whose APIs/conventions may differ from training data (see `node_modules/next/dist/docs/` for the version-specific guide, resolved relative to this repo — not the monorepo root if there is one).

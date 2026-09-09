@@ -40,10 +40,10 @@ export default async function NewsDetail({
       {related.length > 0 && (
         <section className="bg-[#f3efe7] px-6 py-10 sm:px-12">
           <div className="mx-auto max-w-6xl">
-            <h2 className="font-serif text-xl">More Updates</h2>
+            <h2 className="text-xl">More Updates</h2>
             <div className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
               {related.map((n) => (
-                <Link key={n.slug} href={`/news/${n.slug}/`} className="rounded-lg border border-black/10 bg-white p-4">
+                <Link key={n.slug} href={`/news/${n.slug}/`} className="rounded-lg border border-black/10 bg-white shadow-md p-4">
                   <h3 className="text-sm font-semibold">{n.title}</h3>
                   <div className="mt-1 text-xs text-ink-soft">
                     {n.date && new Date(n.date).toLocaleDateString()}

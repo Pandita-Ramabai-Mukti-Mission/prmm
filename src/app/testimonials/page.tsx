@@ -11,7 +11,7 @@ export default function Testimonials() {
       <div className="text-sm text-ink-soft">
         <Link href="/">Home</Link> / Testimonials
       </div>
-      <h1 className="mt-3 font-serif text-4xl">Testimonials</h1>
+      <h1 className="mt-3 text-4xl">Testimonials</h1>
       <p className="mt-2 max-w-[60ch] text-ink-soft">
         Voices from residents, alumni and associates whose lives have crossed paths with Mukti Mission.
       </p>

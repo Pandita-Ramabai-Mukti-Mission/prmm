@@ -2,7 +2,7 @@ export type ReportRowData = { slug: string; year: number; type: string; file: st
 
 export function ReportsTable({ reports }: { reports: ReportRowData[] }) {
   return (
-    <table className="mt-8 w-full overflow-hidden rounded-lg border border-black/10 bg-white text-sm">
+    <table className="mt-8 w-full overflow-hidden rounded-lg border border-black/10 bg-white shadow-md text-sm">
       <thead>
         <tr className="bg-[#f3efe7] text-left text-xs uppercase tracking-wide text-ink-soft">
           <th className="px-4 py-3">Year</th>

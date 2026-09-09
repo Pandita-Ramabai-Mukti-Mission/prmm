@@ -3,9 +3,17 @@ import Link from "next/link";
 // Donate is deliberately the dominant tile here, not one of four equal
 // actions — donations are this NGO's primary income source. See
 // docs/site-audit.md and the wireframe canvas for the reasoning.
+//
+// "Volunteer" routes to /contact/ rather than a dedicated page: no real
+// volunteer process/requirements exist anywhere in the org's documented
+// content (this label was invented at the wireframe stage with nothing
+// behind it, then wired to a URL that was never built — see
+// docs/dev-backlog.md #52). Sending it to the real Contact page with a
+// query flag is honest ("get in touch about volunteering") without
+// fabricating a program that doesn't exist yet.
 const SECONDARY_ACTIONS = [
   {
-    href: "/volunteer/",
+    href: "/contact/?interest=volunteer",
     label: "Volunteer",
     icon: (
       <>
@@ -42,7 +50,7 @@ const SECONDARY_ACTIONS = [
 
 export function GetInvolvedBand() {
   return (
-    <div className="flex items-center gap-4 bg-slate px-6 py-3.5 sm:px-12">
+    <div className="flex items-center gap-4 bg-ink px-6 py-3.5 sm:px-12">
       <Link
         href="/donate/"
         className="flex flex-[1.3] items-center justify-center gap-3 rounded-lg bg-coral px-4 py-4 font-bold text-white hover:bg-coral-dark"

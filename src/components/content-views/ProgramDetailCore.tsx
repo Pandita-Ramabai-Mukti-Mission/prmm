@@ -26,7 +26,7 @@ export function ProgramDetailCore({
         <span className="inline-block rounded-full bg-[#e7ecf1] px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-[#3f5268]">
           {category}
         </span>
-        <h1 className="mt-3 font-serif text-3xl">{title}</h1>
+        <h1 className="mt-3 text-3xl">{title}</h1>
         <div className="prose mt-4 max-w-none text-ink">{body}</div>
         <DonateCta programTitle={title} programSlug={slug} />
       </div>

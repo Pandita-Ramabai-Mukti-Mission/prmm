@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { getPageBySlug, getAllContacts } from "@/lib/content";
+import { getPageBySlug, getRegionalContacts } from "@/lib/content";
 import { EmptyState } from "@/components/EmptyState";
 import { PageTitleBody } from "@/components/content-views/PageTitleBody";
 
@@ -8,7 +8,7 @@ export default async function WhereWeWork() {
   const page = await getPageBySlug("reach");
   if (!page) notFound();
 
-  const contacts = getAllContacts();
+  const contacts = getRegionalContacts();
 
   return (
     <main id="main-content" className="mx-auto w-full max-w-6xl flex-1 px-6 py-10 sm:px-12">
@@ -17,7 +17,7 @@ export default async function WhereWeWork() {
       </div>
       <PageTitleBody
         title={page.title}
-        headingClassName="mt-3 font-serif text-4xl"
+        headingClassName="mt-3 text-4xl"
         bodyClassName="prose mt-3 max-w-[70ch]"
         body={<div dangerouslySetInnerHTML={{ __html: page.contentHtml }} />}
       />
@@ -27,7 +27,7 @@ export default async function WhereWeWork() {
       </div>
 
       <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
-        <div className="rounded-lg border border-black/10 bg-white p-4">
+        <div className="rounded-lg border border-black/10 bg-white shadow-md p-4">
           <div className="text-sm font-semibold">Kedgaon Campus</div>
           <div className="mt-1 text-sm text-ink-soft">Founding campus &amp; headquarters</div>
         </div>
@@ -37,7 +37,7 @@ export default async function WhereWeWork() {
           </div>
         ) : (
           contacts.map((c) => (
-            <div key={c.slug} className="rounded-lg border border-black/10 bg-white p-4">
+            <div key={c.slug} className="rounded-lg border border-black/10 bg-white shadow-md p-4">
               <div className="text-sm font-semibold">{c.region}</div>
               <div className="mt-1 text-sm text-ink-soft">Regional representative</div>
             </div>

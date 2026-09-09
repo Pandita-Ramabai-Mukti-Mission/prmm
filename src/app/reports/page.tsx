@@ -15,7 +15,7 @@ export default function Reports() {
       <div className="text-sm text-ink-soft">
         <Link href="/">Home</Link> / Reports
       </div>
-      <h1 className="mt-3 font-serif text-4xl">Reports &amp; Transparency</h1>
+      <h1 className="mt-3 text-4xl">Reports &amp; Transparency</h1>
       <p className="mt-2 text-ink-soft">Audited accounts and trust certificates, published in full.</p>
 
       {reports.length === 0 ? (

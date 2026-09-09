@@ -11,7 +11,7 @@ export default function NewsIndex() {
       <div className="text-sm text-ink-soft">
         <Link href="/">Home</Link> / News
       </div>
-      <h1 className="mt-3 font-serif text-4xl">News &amp; Updates</h1>
+      <h1 className="mt-3 text-4xl">News &amp; Updates</h1>
       <p className="mt-2 max-w-[60ch] text-ink-soft">
         Mission updates, milestones and stories from Kedgaon and beyond. Every post here goes through
         Decap&apos;s editorial workflow before publishing.
@@ -30,7 +30,7 @@ export default function NewsIndex() {
             <Link
               key={n.slug}
               href={`/news/${n.slug}/`}
-              className="overflow-hidden rounded-lg border border-black/10 bg-white"
+              className="overflow-hidden rounded-lg border border-black/10 bg-white shadow-md"
             >
               <PhotoBox
                 image={n.image}

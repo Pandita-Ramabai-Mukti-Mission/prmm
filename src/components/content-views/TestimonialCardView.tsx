@@ -11,7 +11,7 @@ export function TestimonialCardView({
   image?: ImageWithAlt;
 }) {
   return (
-    <div className="rounded-lg border border-black/10 bg-white p-5">
+    <div className="rounded-lg border border-black/10 bg-white shadow-md p-5">
       <PhotoBox
         image={image}
         placeholderLabel="Photo"

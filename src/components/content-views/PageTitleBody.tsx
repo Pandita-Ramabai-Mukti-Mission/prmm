@@ -7,7 +7,7 @@
 export function PageTitleBody({
   title,
   body,
-  headingClassName = "mt-3 font-serif text-3xl",
+  headingClassName = "mt-3 text-3xl",
   bodyClassName = "prose mt-5 max-w-none",
 }: {
   title: string;

@@ -3,7 +3,10 @@ import { getAllProgramsMeta } from "@/lib/content";
 import { EmptyState } from "@/components/EmptyState";
 
 const THEME_META = {
-  Mind: { label: "Education", blurb: "Education has been central to Mukti Mission since Sharada Sadan opened in 1891." },
+  // "1891" was previously stated here with no source anywhere (not the live
+  // site, not any doc) — a specific, checkable date shouldn't be invented,
+  // so this stays unpinned until the client confirms an opening year.
+  Mind: { label: "Education", blurb: "Education has been central to Mukti Mission since Sharada Sadan's earliest days." },
   Spirit: { label: "Health", blurb: "Physical care and healing, from the Mission's earliest days to Krishnabai Memorial Hospital today." },
   Heart: { label: "Care for the vulnerable", blurb: "A home for those the world overlooks — the aged, the blind, the abandoned." },
   Environment: { label: "Agriculture & sustainability", blurb: "The land at Kedgaon has fed and employed the mission's community for over a century." },
@@ -25,11 +28,11 @@ export function ShapingThemeTemplate({ theme }: { theme: ShapingTheme }) {
         <span className="mt-3 inline-block rounded-full bg-coral px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-white">
           {meta.label}
         </span>
-        <h1 className="mt-3 font-serif text-4xl">Shaping the {theme}</h1>
+        <h1 className="mt-3 text-4xl">Shaping the {theme}</h1>
       </section>
 
       <section className="mx-auto w-full max-w-6xl px-6 pb-10 sm:px-12">
-        <blockquote className="border-l-4 border-coral pl-5 font-serif text-xl italic">
+        <blockquote className="border-l-4 border-coral pl-5 text-xl italic">
           &ldquo;[Isaiah 61:1&amp;4 citation]&rdquo;
         </blockquote>
         <p className="mt-5 max-w-[70ch] text-ink-soft">
@@ -39,7 +42,7 @@ export function ShapingThemeTemplate({ theme }: { theme: ShapingTheme }) {
 
       <section className="bg-[#f3efe7] px-6 py-10 sm:px-12">
         <div className="mx-auto max-w-6xl">
-          <h2 className="font-serif text-xl">Programs in this theme</h2>
+          <h2 className="text-xl">Programs in this theme</h2>
           {programs.length === 0 ? (
             <div className="mt-5">
               <EmptyState>Programs for this theme are being migrated from the current site.</EmptyState>
@@ -50,7 +53,7 @@ export function ShapingThemeTemplate({ theme }: { theme: ShapingTheme }) {
                 <Link
                   key={p.slug}
                   href={`/programs/${p.slug}/`}
-                  className="flex items-center gap-4 rounded-lg border border-black/10 bg-white p-4"
+                  className="flex items-center gap-4 rounded-lg border border-black/10 bg-white shadow-md p-4"
                 >
                   <div className="flex h-[70px] w-[70px] flex-shrink-0 items-center justify-center rounded-md bg-[repeating-linear-gradient(45deg,#ece7dd,#ece7dd_10px,#dfd9cc_10px,#dfd9cc_20px)] text-[10px] text-[#8a8170]">
                     Photo

@@ -12,7 +12,7 @@ export function ContactCardView({
   email?: string;
 }) {
   return (
-    <div className="rounded-lg border border-black/10 bg-white p-5">
+    <div className="rounded-lg border border-black/10 bg-white shadow-md p-5">
       <h3 className="font-semibold">{region}</h3>
       {name && <p className="mt-2 text-sm text-ink-soft">{name}</p>}
       {address && <p className="mt-0.5 text-sm text-ink-soft">{address}</p>}

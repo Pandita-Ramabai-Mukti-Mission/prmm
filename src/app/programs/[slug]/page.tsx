@@ -43,13 +43,13 @@ export default async function ProgramDetail({
       {related.length > 0 && (
         <section className="bg-[#f3efe7] px-6 py-10 sm:px-12">
           <div className="mx-auto max-w-6xl">
-            <h2 className="font-serif text-xl">Similar Programs</h2>
+            <h2 className="text-xl">Similar Programs</h2>
             <div className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
               {related.map((r) => (
                 <Link
                   key={r.slug}
                   href={`/programs/${r.slug}/`}
-                  className="overflow-hidden rounded-lg border border-black/10 bg-white"
+                  className="overflow-hidden rounded-lg border border-black/10 bg-white shadow-md"
                 >
                   <PhotoBox
                     image={r.image}
