@@ -95,8 +95,22 @@ client input listed) · **Depends on #N**.
     than reconstructed from memory. Next session needs either the account
     unblocked so the dashboard's generated code snippet can be copied
     directly, or the actual API reference page content pasted in manually.
-16. **Blocked — decision needed** — Pick newsletter-signup provider (ESP vs.
-    custom) — current form has no visible ESP integration.
+16. **Blocked — client discussion pending.** Confirmed the old site's
+    "email subscribe form" was never wired to any real ESP (no vendor to
+    migrate from — a genuinely open choice, like the old Donate form's
+    missing payment gateway). Candidates discussed: **MailerLite**
+    (verified this session — 250 contacts/2,500 emails-month free, real
+    documented API, campaign composer included) vs. **Brevo** (couldn't
+    verify current free-tier limits — pricing page is JS-rendered like
+    MSG91's docs, didn't render for automated fetching) vs. Mailchimp
+    (free tier publicly known to have shrunk significantly, weaker fit) vs.
+    MSG91 Segmento (not really free, usage-based; same doc-access problems
+    already hit for their transactional Email API). Planned integration
+    shape regardless of vendor: our own subscribe form (styled to match the
+    site, same reCAPTCHA v3 + validation pattern as Donate/Contact) posting
+    to our own API route, which calls the ESP's API server-side — not an
+    embedded third-party signup form/iframe. User is taking the vendor
+    choice to the client rather than deciding now.
 17. **Depends on #13, partially done** — Bot/spam prevention: Google
     reCAPTCHA **v3** (invisible — no checkbox, scores each submission
     0.0–1.0 in the background) added to the donate form and verified

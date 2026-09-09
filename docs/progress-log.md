@@ -4,6 +4,22 @@ Session handoff notes. Not a task list (that's `dev-backlog.md`) or a
 decisions doc (that's `migration-plan.md`) — this is "what happened, what's
 live, where to pick up," kept short and dated.
 
+## 2026-09-09 — Newsletter ESP: discussed, deferred to client
+
+Confirmed the old WordPress site's newsletter subscribe form was never
+wired to any real ESP (checked `site-audit.md` again — no vendor to
+migrate from). Compared MailerLite, Brevo, Mailchimp, and MSG91 on cost —
+only got real, verified free-tier numbers for MailerLite (250 contacts,
+2,500 emails/month, real documented API); Brevo's pricing page is
+JS-rendered and wouldn't return actual content via automated fetch, same
+failure mode as MSG91's docs, so its current limits are explicitly
+unconfirmed rather than guessed. User is taking the vendor choice to the
+client rather than deciding now — dev-backlog #16 has the full comparison
+for whoever picks this back up. Planned integration shape (regardless of
+vendor) already agreed: own styled form + reCAPTCHA v3 + validation,
+posting to our own API route, which calls the ESP server-side — not an
+embedded third-party signup widget.
+
 ## 2026-09-09 — Contact-form backend decided, blocked before any code
 
 Discussed contact-form backend (dev-backlog #15). Recommended and user
