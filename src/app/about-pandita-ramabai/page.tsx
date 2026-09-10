@@ -40,18 +40,24 @@ export default async function AboutRamabai() {
 
       {/* Story → Exploration & the Ask, so this page doesn't dead-end
           after the biography — confirmed missing during today's
-          artifact-vs-dev review. */}
+          artifact-vs-dev review. The donate ask was previously just a
+          third text link, easy to miss next to the two "read more" links
+          — promoted to a real button so it reads as the primary CTA it
+          is, per feedback that this page's CTA wasn't landing. */}
       <Reveal>
       <section className="mx-auto w-full max-w-6xl px-6 pb-14 sm:px-12">
-        <div className="flex flex-wrap gap-6 text-sm font-semibold">
-          <Link href="/about-mukti-mission/" className="hover:text-coral">
+        <div className="flex flex-wrap items-center gap-x-8 gap-y-4">
+          <Link
+            href="/donate/"
+            className="inline-block rounded-md bg-coral px-7 py-3 text-sm font-semibold text-white hover:bg-coral-dark"
+          >
+            Support This Legacy &rarr;
+          </Link>
+          <Link href="/about-mukti-mission/" className="text-sm font-semibold hover:text-coral">
             Read About Mukti Mission &rarr;
           </Link>
-          <Link href="/programs/" className="hover:text-coral">
+          <Link href="/programs/" className="text-sm font-semibold hover:text-coral">
             See Her Legacy in Action &rarr;
-          </Link>
-          <Link href="/donate/" className="text-coral hover:text-coral-dark">
-            Support This Legacy &rarr;
           </Link>
         </div>
       </section>
