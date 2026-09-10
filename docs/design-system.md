@@ -15,14 +15,21 @@ one edit, not a grep-and-replace.
 
 | Token | Hex | Use |
 |---|---|---|
-| `coral` | `#f66867` | Primary action color — Donate buttons, links-on-hover, stat numbers |
-| `coral-dark` | `#e2504f` | Hover state for coral buttons |
+| `coral` | `#db5e5e` | Primary action color — Donate buttons, links-on-hover, stat numbers |
+| `coral-dark` | `#c74646` | Hover state for coral buttons |
 | `paper` | `#faf7f3` | Page background |
-| `ink` | `#262523` | Primary text, **and the one dark background color sitewide** (Stats strip, Get Involved band, footer, skip-link) |
-| `ink-soft` | `#6b6862` | Secondary/muted text |
+| `ink` | `#2e2620` | Primary text, **and the one dark background color sitewide** (Stats strip, Get Involved band, footer, skip-link, Our Foundation band) |
+| `ink-soft` | `#6b5d4f` | Secondary/muted text |
+| `tertiary` | `#d97b2b` | Reserved warm accent — not yet placed in any section; use sparingly if a highlight color distinct from coral is ever needed |
+
+Retuned 2026-09-10 to the client's brand palette (Primary `#db5e5e` /
+Secondary `#6b5d4f` / Tertiary `#d97b2b` / Neutral `#2e2620`) — the prior
+`ink` (`#262523`) read as a flat near-black, which felt off against the
+warm palette everywhere else; `#2e2620` is the same role (one dark
+background/text color sitewide) but warmed to match.
 
 **One dark color only.** Until 2026-09-09 there were three different dark
-backgrounds in use — `ink` (#262523), a `slate` token (#2d5c6b, Get
+backgrounds in use — `ink`, a `slate` token (#2d5c6b, Get
 Involved band), and the footer's own one-off `#2b3541` (never even a
 token) — which read as mismatched rather than one cohesive dark identity
 (client feedback). Consolidated everything to `bg-ink`; `slate` was
