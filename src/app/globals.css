@@ -14,7 +14,8 @@
   --color-paper: #faf7f3;
   --color-ink: #262523;
   --color-ink-soft: #6b6862;
-  --font-sans: var(--font-geist-sans);
+  --font-sans: var(--font-ibm-plex-sans);
+  --font-serif: var(--font-source-serif-4);
   --font-mono: var(--font-geist-mono);
 }
 
@@ -28,5 +29,14 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
+
+/* Headings get the serif family; body/UI text stays on the sans family.
+   Scoped to h1-h3 (the primary display headings) rather than every
+   heading level, matching the wireframe canvas's convention. */
+h1,
+h2,
+h3 {
+  font-family: var(--font-serif), Georgia, "Times New Roman", serif;
 }

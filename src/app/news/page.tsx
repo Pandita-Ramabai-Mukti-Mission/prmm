@@ -2,12 +2,13 @@ import Link from "next/link";
 import { getAllNewsMeta } from "@/lib/content";
 import { EmptyState } from "@/components/EmptyState";
 import { PhotoBox } from "@/components/content-views/PhotoBox";
+import { Reveal } from "@/components/Reveal";
 
 export default function NewsIndex() {
   const posts = getAllNewsMeta();
 
   return (
-    <main id="main-content" className="mx-auto w-full max-w-6xl flex-1 px-6 py-10 sm:px-12">
+    <main id="main-content" className="mx-auto w-full max-w-6xl flex-1 px-6 py-14 sm:px-12">
       <div className="text-sm text-ink-soft">
         <Link href="/">Home</Link> / News
       </div>
@@ -17,6 +18,7 @@ export default function NewsIndex() {
         Decap&apos;s editorial workflow before publishing.
       </p>
 
+      <Reveal>
       {posts.length === 0 ? (
         <div className="mt-8">
           <EmptyState>
@@ -25,7 +27,7 @@ export default function NewsIndex() {
           </EmptyState>
         </div>
       ) : (
-        <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-3">
+        <div className="mt-10 grid grid-cols-1 gap-7 sm:grid-cols-3">
           {posts.map((n) => (
             <Link
               key={n.slug}
@@ -47,6 +49,26 @@ export default function NewsIndex() {
           ))}
         </div>
       )}
+      </Reveal>
+
+      {/* Keeps a visitor reading News from becoming a dead end — routes
+          them back toward Programs (Exploration) or Donate (the Ask). */}
+      <Reveal>
+      <div className="mt-16 flex flex-wrap items-center justify-between gap-4 rounded-lg border border-black/10 bg-[#f3efe7] p-7">
+        <div>
+          <h2 className="text-lg font-semibold">Want to see the work behind the updates?</h2>
+          <p className="mt-1 text-sm text-ink-soft">Every story here traces back to one of our 14 ministries.</p>
+        </div>
+        <div className="flex gap-4">
+          <Link href="/programs/" className="text-sm font-semibold hover:text-coral">
+            Explore Our Programs &rarr;
+          </Link>
+          <Link href="/donate/" className="text-sm font-semibold text-coral hover:text-coral-dark">
+            Donate Now &rarr;
+          </Link>
+        </div>
+      </div>
+      </Reveal>
     </main>
   );
 }

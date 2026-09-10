@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getAllProgramsMeta } from "@/lib/content";
 import { DonateForm } from "./DonateForm";
+import { Reveal } from "@/components/Reveal";
 
 export default async function Donate({
   searchParams,
@@ -8,16 +9,21 @@ export default async function Donate({
   searchParams: Promise<{ cause?: string }>;
 }) {
   const { cause } = await searchParams;
-  const causes = getAllProgramsMeta().map((p) => ({ slug: p.slug, title: p.title }));
+  const causes = getAllProgramsMeta().map((p) => ({
+    slug: p.slug,
+    title: p.title,
+    donateVerb: p.donateVerb,
+  }));
 
   return (
-    <main id="main-content" className="mx-auto w-full max-w-6xl flex-1 px-6 py-8 sm:px-12">
+    <main id="main-content" className="mx-auto w-full max-w-6xl flex-1 px-6 py-12 sm:px-12">
       <div className="text-sm text-ink-soft">
         <Link href="/">Home</Link> / Donate
       </div>
       <h1 className="mt-3 text-3xl">Donate</h1>
 
-      <div className="mt-4 flex flex-wrap gap-3">
+      <Reveal>
+      <div className="mt-5 flex flex-wrap gap-3">
         <span className="rounded-full bg-[#e7ecf1] px-3 py-1 text-xs font-semibold text-[#3f5268]">
           80G Tax Exempt
         </span>
@@ -31,10 +37,13 @@ export default async function Donate({
           Payments via PayU
         </span>
       </div>
+      </Reveal>
 
-      <div className="mt-6">
+      <Reveal>
+      <div className="mt-8">
         <DonateForm causes={causes} initialCause={cause} />
       </div>
+      </Reveal>
     </main>
   );
 }

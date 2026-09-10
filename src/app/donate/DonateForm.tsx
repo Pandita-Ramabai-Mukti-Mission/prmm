@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import { validateDonationFields, type DonationFieldErrors } from "@/lib/donationValidation";
 import { useRecaptchaToken } from "@/lib/recaptchaClient";
 import { RecaptchaAttribution } from "@/components/RecaptchaAttribution";
+import { RootGrowthMotif } from "@/components/RootGrowthMotif";
 
 // v3 is invisible — no checkbox, no visible challenge — so the only UI is
 // the small floating badge Google's script injects itself; do not hide
@@ -63,7 +64,7 @@ export function DonateForm({
   causes,
   initialCause,
 }: {
-  causes: { slug: string; title: string }[];
+  causes: { slug: string; title: string; donateVerb?: string }[];
   initialCause?: string;
 }) {
   const [cause, setCause] = useState(
@@ -122,27 +123,82 @@ export function DonateForm({
         action="/api/payu/initiate/"
         onSubmit={handleSubmit}
         noValidate
-        className="flex flex-col gap-5 md:flex-row md:items-start"
+        className="flex flex-col gap-7 md:flex-row md:items-start"
       >
         <input ref={captchaFieldRef} type="hidden" name="g-recaptcha-response" />
-        <div className="flex flex-col gap-5 md:flex-[2]">
-          <div className="rounded-lg border border-black/10 bg-white shadow-md p-5">
+        <div className="flex flex-col gap-7 md:flex-[2]">
+          <div className="rounded-lg border border-black/10 bg-white shadow-md p-7">
             <h2 className="text-lg">Your Details</h2>
 
-            <div className="mt-3 grid grid-cols-1 gap-3.5 sm:grid-cols-2">
+            <div className="mt-4 grid grid-cols-1 gap-5 sm:grid-cols-2">
               <div className="sm:col-span-2">
-                <label
-                  htmlFor="donate-cause"
+                <span
+                  id="donate-cause-label"
                   className="mb-1.5 block text-[11px] font-semibold uppercase tracking-wide text-ink-soft"
                 >
                   Donating To
-                </label>
+                </span>
+                {/* Outcome-framed chips, not a plain dropdown listing program
+                    titles — isha.sadhguru.org's donation hub segments giving
+                    by specific outcome ("Educate a Child") rather than
+                    repeating a generic label across every cause. Each
+                    program's `donateVerb` (Decap field `donate_verb`) is
+                    optional and falls back to "Support {title}" so a new
+                    program never blocks this UI. A real <select name="cause">
+                    stays behind the chips (visually hidden, not display:none)
+                    so /api/payu/initiate/ keeps receiving `cause` as a plain
+                    form field — no client-side JS required server-side. */}
+                <div role="radiogroup" aria-labelledby="donate-cause-label" className="flex flex-wrap gap-2">
+                  <button
+                    type="button"
+                    role="radio"
+                    aria-checked={cause === "general"}
+                    onClick={() => setCause("general")}
+                    className={`rounded-md border px-4 py-2 text-sm font-semibold ${
+                      cause === "general"
+                        ? "border-coral bg-coral text-white"
+                        : "border-black/15 bg-white text-ink hover:border-coral/50"
+                    }`}
+                  >
+                    Where Most Needed
+                  </button>
+                  {causes.map((c) => (
+                    <button
+                      key={c.slug}
+                      type="button"
+                      role="radio"
+                      aria-checked={cause === c.slug}
+                      onClick={() => setCause(c.slug)}
+                      className={`rounded-md border px-4 py-2 text-sm font-semibold ${
+                        cause === c.slug
+                          ? "border-coral bg-coral text-white"
+                          : "border-black/15 bg-white text-ink hover:border-coral/50"
+                      }`}
+                    >
+                      {c.donateVerb || `Support ${c.title}`}
+                    </button>
+                  ))}
+                  <button
+                    type="button"
+                    role="radio"
+                    aria-checked={cause === "other"}
+                    onClick={() => setCause("other")}
+                    className={`rounded-md border px-4 py-2 text-sm font-semibold ${
+                      cause === "other"
+                        ? "border-coral bg-coral text-white"
+                        : "border-black/15 bg-white text-ink hover:border-coral/50"
+                    }`}
+                  >
+                    Other
+                  </button>
+                </div>
                 <select
-                  id="donate-cause"
+                  aria-hidden
+                  tabIndex={-1}
                   name="cause"
                   value={cause}
-                  onChange={(e) => setCause(e.target.value)}
-                  className="w-full rounded-md border border-black/15 bg-white px-3.5 py-2.5 text-sm text-ink"
+                  onChange={() => {}}
+                  className="pointer-events-none absolute h-px w-px overflow-hidden opacity-0"
                 >
                   <option value="general">General Fund</option>
                   {causes.map((c) => (
@@ -227,7 +283,7 @@ export function DonateForm({
             </p>
           </div>
 
-          <div className="rounded-lg border border-black/10 bg-white shadow-md p-5">
+          <div className="rounded-lg border border-black/10 bg-white shadow-md p-7">
             <h2 className="text-lg">Payment Details</h2>
             <TextField
               id="donate-pan"
@@ -272,14 +328,16 @@ export function DonateForm({
           </div>
         </div>
 
-        <div className="flex flex-col gap-4 md:flex-1">
-          <div className="rounded-lg border border-black/10 bg-white shadow-md p-5">
-            <h3 className="font-semibold">Your Impact</h3>
-            <p className="mt-2 text-sm">
+        <div className="flex flex-col gap-6 md:flex-1">
+          <div className="relative overflow-hidden rounded-lg border border-black/10 bg-white shadow-md p-7">
+            {/* This page's one decorative motif — see RootGrowthMotif.tsx */}
+            <RootGrowthMotif className="pointer-events-none absolute -bottom-8 -right-8 h-40 w-40 text-[#2d5c6b]/[0.12]" />
+            <h3 className="relative font-semibold">Your Impact</h3>
+            <p className="relative mt-2 text-sm">
               {total} {IMPACT_STATEMENT}
             </p>
           </div>
-          <div className="rounded-lg border border-black/10 bg-white shadow-md p-5">
+          <div className="rounded-lg border border-black/10 bg-white shadow-md p-7">
             <h3 className="font-semibold">Secure &amp; Compliant</h3>
             <p className="mt-2 text-sm text-ink-soft">
               256-bit encrypted checkout via PayU, India&rsquo;s PCI-DSS compliant payment gateway.

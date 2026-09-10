@@ -71,6 +71,11 @@ collections:
         default: false
         required: false
         hint: "At most one program should be featured at a time — it becomes the homepage's single-cause spotlight. Only turn this on for a cause with real, current, specific details (not a generic description)."
+      - label: Donate CTA verb
+        name: donate_verb
+        widget: string
+        required: false
+        hint: "An outcome-framed donate button label for this program, e.g. \"Educate a Child\" or \"Shelter a Boy\" — shown instead of the program title on the Donate page. Leave blank to fall back to \"Support {Title}\"."
 
   - name: news
     label: News

@@ -35,6 +35,12 @@ export type ProgramMeta = {
   image?: ImageWithAlt;
   description?: string;
   featured?: boolean;
+  // Outcome-framed donate CTA (e.g. "Educate a Child") — optional per
+  // isha.sadhguru.org's cause-segmented giving pattern: a specific-outcome
+  // label reads as higher-impact than reusing the program title on every
+  // cause. Falls back to `Support {title}` in the UI when unset, so this
+  // never blocks adding a new program before someone writes the verb.
+  donateVerb?: string;
 };
 
 export type Program = ProgramMeta & { contentHtml: string };
@@ -178,6 +184,7 @@ export function getAllProgramsMeta(): ProgramMeta[] {
       image: readImageWithAlt(data),
       description: data.description,
       featured: data.featured ?? false,
+      donateVerb: data.donate_verb,
     };
   });
 }
@@ -194,6 +201,7 @@ export async function getProgramBySlug(slug: string): Promise<Program> {
     image: readImageWithAlt(data),
     description: data.description,
     featured: data.featured ?? false,
+    donateVerb: data.donate_verb,
     contentHtml,
   };
 }

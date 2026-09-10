@@ -50,7 +50,7 @@ export default async function Home() {
           makes those sites feel rich, real large-format photography is, and
           faking that with line-art icons was the wrong lever. See
           dev-backlog.md #56.) */}
-      <section className="mx-auto flex w-full max-w-6xl flex-col items-center gap-10 px-6 py-16 sm:px-12 md:flex-row">
+      <section className="mx-auto flex w-full max-w-6xl flex-col items-center gap-14 px-6 py-20 sm:px-12 md:flex-row">
         <div className="flex-1">
           <h1 className="max-w-[14ch] text-4xl leading-tight text-ink sm:text-5xl">
             {page.title}
@@ -93,8 +93,8 @@ export default async function Home() {
           value shown at rest is identical to the source string, animation
           never changes what's actually claimed. */}
       <Reveal>
-        <section className="bg-ink px-6 py-14 sm:px-12">
-          <div className="mx-auto grid max-w-6xl grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-6">
+        <section className="bg-ink px-6 py-20 sm:px-12">
+          <div className="mx-auto grid max-w-6xl grid-cols-2 gap-8 sm:grid-cols-3 md:grid-cols-6">
             {STATS.map((s) => (
               <div key={s.label} className="text-center">
                 <div className="text-3xl font-bold leading-tight tracking-tight text-coral">
@@ -123,9 +123,9 @@ export default async function Home() {
           instead of restating it, so the two pages can't drift apart. */}
       {ramabaiPage && (
         <Reveal>
-        <section className="relative overflow-hidden bg-[#f3efe7] px-6 py-14 sm:px-12">
+        <section className="relative overflow-hidden bg-[#f3efe7] px-6 py-20 sm:px-12">
           <LegacyMotif className="pointer-events-none absolute -right-16 -top-16 h-80 w-80 text-coral/[0.14] md:h-96 md:w-96" />
-          <div className="relative z-10 mx-auto flex max-w-6xl flex-col items-center gap-10 md:flex-row">
+          <div className="relative z-10 mx-auto flex max-w-6xl flex-col items-center gap-14 md:flex-row">
             <div className="flex h-56 w-full flex-shrink-0 items-center justify-center rounded-xl border border-dashed border-black/15 bg-[repeating-linear-gradient(45deg,#ece7dd,#ece7dd_10px,#dfd9cc_10px,#dfd9cc_20px)] text-center text-xs text-[#8a8170] md:h-64 md:w-64">
               Portrait of Pandita Ramabai
             </div>
@@ -152,7 +152,7 @@ export default async function Home() {
           on that page rather than repeating here. */}
       {missionPage && (
         <Reveal>
-        <section className="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between gap-6 px-6 py-8 sm:px-12">
+        <section className="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between gap-8 px-6 py-12 sm:px-12">
           <div
             className="prose max-w-[70ch] text-ink-soft"
             dangerouslySetInnerHTML={{ __html: missionPage.contentHtml }}
@@ -164,52 +164,72 @@ export default async function Home() {
         </Reveal>
       )}
 
-      {/* 5. Featured cause — a specific, current, named need converts better
-          than an abstract ask. Editor-controlled via the `featured` flag on
-          one program; deliberately shows nothing rather than a generic
-          program if none has been flagged, instead of faking urgency. */}
-      {/* 5b. Bold coral band — the other color-blocked section (see the
-          Stats strip comment above for why). The white card floating on the
-          coral background is a deliberate echo of how the reference site
-          floats content cards over colored bands. (Angled section edges
-          were tried and reverted — see dev-backlog.md #64 — straight edges
-          only now.) */}
+      {/* 5. Soft ask beside hard ask — isha.sadhguru.org pairs a
+          lower-friction ask (Volunteer) directly beside the higher-friction
+          one (Donate) in one bold band. There's no real volunteer program
+          in this org's content though (GetInvolvedBand.tsx's own comment,
+          dev-backlog.md #52 — a prior pass invented one and had to walk it
+          back), so the left column stays honest: "get in touch about
+          helping another way," not a fabricated program. The right column
+          is the existing Featured Cause hard ask, unchanged. (Angled
+          section edges were tried and reverted — see dev-backlog.md #64 —
+          straight edges only.) */}
       <Reveal>
-      <section className="bg-coral px-6 py-12 sm:px-12">
-        <div className="mx-auto max-w-6xl">
-          <h2 className="text-3xl leading-snug text-white">How You Can Help Right Now</h2>
-          {featuredProgram ? (
-            <div className="mt-6 flex flex-col gap-6 rounded-lg border border-black/10 bg-white shadow-md p-6 sm:flex-row sm:items-center">
-              <PhotoBox
-                image={featuredProgram.image}
-                placeholderLabel={featuredProgram.title}
-                recommendedSize="800×600"
-                className="flex h-40 flex-shrink-0 rounded-lg text-center text-xs sm:w-56"
-              />
-              <div className="flex-1">
-                <span className="inline-block rounded-full bg-[#e7ecf1] px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-[#3f5268]">
-                  {featuredProgram.category}
-                </span>
-                <h3 className="mt-2.5 text-xl font-semibold">{featuredProgram.title}</h3>
-                {featuredProgram.description && (
-                  <p className="mt-1.5 text-base text-ink-soft">{featuredProgram.description}</p>
-                )}
-                <Link
-                  href={`/donate/?cause=${featuredProgram.slug}`}
-                  className="mt-4 inline-block rounded-md bg-coral px-5 py-2.5 text-base font-semibold text-white hover:bg-coral-dark"
-                >
-                  Donate to This Cause
-                </Link>
+      <section className="bg-coral px-6 py-20 sm:px-12">
+        <div className="mx-auto grid max-w-6xl gap-10 md:grid-cols-2">
+          <div className="flex flex-col justify-center">
+            <div className="text-xs font-semibold uppercase tracking-wide text-white/70">Get Involved</div>
+            <h2 className="mt-1.5 text-2xl leading-snug text-white">
+              Money isn&rsquo;t the only way to help
+            </h2>
+            <p className="mt-2 max-w-[44ch] text-base text-white/85">
+              Want to give your time, skills or connections instead? We&rsquo;d still like to hear from
+              you.
+            </p>
+            <Link
+              href="/contact/?interest=volunteer"
+              className="mt-4 inline-block w-fit rounded-md bg-white px-5 py-2.5 text-base font-semibold text-coral hover:bg-white/90"
+            >
+              Get in Touch &rarr;
+            </Link>
+          </div>
+          <div>
+            <div className="text-xs font-semibold uppercase tracking-wide text-white/70">
+              How You Can Help Right Now
+            </div>
+            {featuredProgram ? (
+              <div className="mt-2.5 flex flex-col gap-6 rounded-lg border border-black/10 bg-white shadow-md p-6">
+                <PhotoBox
+                  image={featuredProgram.image}
+                  placeholderLabel={featuredProgram.title}
+                  recommendedSize="800×600"
+                  className="flex h-40 flex-shrink-0 rounded-lg text-center text-xs"
+                />
+                <div className="flex-1">
+                  <span className="inline-block rounded-full bg-[#e7ecf1] px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-[#3f5268]">
+                    {featuredProgram.category}
+                  </span>
+                  <h3 className="mt-2.5 text-xl font-semibold">{featuredProgram.title}</h3>
+                  {featuredProgram.description && (
+                    <p className="mt-1.5 text-base text-ink-soft">{featuredProgram.description}</p>
+                  )}
+                  <Link
+                    href={`/donate/?cause=${featuredProgram.slug}`}
+                    className="mt-4 inline-block rounded-md bg-coral px-5 py-2.5 text-base font-semibold text-white hover:bg-coral-dark"
+                  >
+                    Donate to This Cause
+                  </Link>
+                </div>
               </div>
-            </div>
-          ) : (
-            <div className="mt-6">
-              <EmptyState>
-                No cause is currently featured. Mark one program &quot;Feature on homepage&quot; in the
-                CMS to spotlight a specific, current need here.
-              </EmptyState>
-            </div>
-          )}
+            ) : (
+              <div className="mt-2.5">
+                <EmptyState>
+                  No cause is currently featured. Mark one program &quot;Feature on homepage&quot; in
+                  the CMS to spotlight a specific, current need here.
+                </EmptyState>
+              </div>
+            )}
+          </div>
         </div>
       </section>
       </Reveal>
@@ -221,7 +241,7 @@ export default async function Home() {
           more. The per-cause Donate link stays on the full /programs/ index
           (dev-backlog.md #19), where there's no adjacent ask to dilute. */}
       <Reveal>
-      <section className="bg-[#f3efe7] px-6 py-12 sm:px-12">
+      <section className="bg-[#f3efe7] px-6 py-20 sm:px-12">
         <div className="mx-auto max-w-6xl">
           <div className="flex items-baseline justify-between">
             <h2 className="text-3xl">Our Work</h2>
@@ -244,7 +264,7 @@ export default async function Home() {
               <EmptyState>Programs are being migrated from the current site — check back soon.</EmptyState>
             </div>
           ) : (
-            <div className="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="mt-8 grid grid-cols-1 gap-7 sm:grid-cols-2 lg:grid-cols-4">
               {programs.map((p) => (
                 <div key={p.slug} className="overflow-hidden rounded-lg border border-black/10 bg-white shadow-md">
                   <PhotoBox
@@ -282,7 +302,7 @@ export default async function Home() {
       {/* 8. Latest News — proof the org is active right now, immediately
           before the footer's contact details so a convinced visitor can act. */}
       <Reveal>
-      <section className="mx-auto w-full max-w-6xl px-6 py-12 sm:px-12">
+      <section className="mx-auto w-full max-w-6xl px-6 py-20 sm:px-12">
         <div className="flex items-baseline justify-between">
           <h2 className="text-3xl">News &amp; Updates</h2>
           {news.length > 0 && (
@@ -299,7 +319,7 @@ export default async function Home() {
             </EmptyState>
           </div>
         ) : (
-          <div className="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-3">
+          <div className="mt-8 grid grid-cols-1 gap-7 sm:grid-cols-3">
             {news.map((n) => (
               <Link
                 key={n.slug}
@@ -333,7 +353,7 @@ export default async function Home() {
           impact-claim fabrications (#53, #55). Add other platforms/numbers
           back only once the client confirms real, current handles. */}
       <Reveal>
-        <section className="border-t border-black/10 bg-white px-6 py-8 sm:px-12">
+        <section className="border-t border-black/10 bg-white px-6 py-12 sm:px-12">
           <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4">
             <div>
               <h2 className="text-base font-semibold">Follow Our Work</h2>

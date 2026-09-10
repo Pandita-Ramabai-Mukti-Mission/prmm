@@ -89,10 +89,15 @@ export function SiteHeader({ hq }: { hq?: RegionalContact }) {
               </a>
             )}
           </div>
-          <div className="flex gap-2">
-            {VERIFIED_SOCIAL_LINKS.map((s) => (
-              <SocialIcon key={s.label} link={s} className="text-ink-soft hover:text-coral" />
-            ))}
+          <div className="flex items-center gap-4">
+            <Link href="/reports/" className="hover:text-coral">
+              Reports &amp; Transparency
+            </Link>
+            <div className="flex gap-2">
+              {VERIFIED_SOCIAL_LINKS.map((s) => (
+                <SocialIcon key={s.label} link={s} className="text-ink-soft hover:text-coral" />
+              ))}
+            </div>
           </div>
         </div>
 
