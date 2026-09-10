@@ -28,6 +28,43 @@ collections:
       - { label: Title, name: title, widget: string }
       - { label: Body, name: body, widget: markdown }
 
+  - name: home_hero
+    label: Homepage Hero
+    files:
+      - name: home_hero_slides
+        label: Homepage Hero Slides
+        file: content/hero/home-hero.md
+        fields:
+          - label: Slides
+            name: slides
+            widget: list
+            collapsed: false
+            summary: "{{fields.heading}}"
+            label_singular: Slide
+            hint: "The homepage hero rotates through these in order. Each slide falls back to a placeholder graphic until a photo is uploaded here."
+            fields:
+              - label: Eyebrow (small text above the heading)
+                name: eyebrow
+                widget: string
+                required: false
+              - { label: Heading, name: heading, widget: string }
+              - { label: Body Text, name: body, widget: text }
+              - label: Button Label
+                name: cta_label
+                widget: string
+                required: false
+              - label: Button Link
+                name: cta_href
+                widget: string
+                required: false
+                hint: "A path on this site, e.g. /about-mukti-mission/"
+              - { label: Photo, name: image, widget: image, required: false }
+              - label: Photo Description
+                name: image_alt
+                widget: string
+                required: false
+                hint: "Describe the photo in one short sentence — read aloud to visitors using a screen reader. Required if you added a photo above."
+
   - name: posts
     label: Posts
     folder: content/posts

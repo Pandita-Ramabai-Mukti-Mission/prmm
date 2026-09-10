@@ -24,12 +24,18 @@ export function LegacyMotif({ className }: { className?: string }) {
       <circle cx="100" cy="100" r="90" strokeWidth={1} opacity={0.5} />
       <circle cx="100" cy="100" r="66" strokeWidth={1} opacity={0.7} />
       <circle cx="100" cy="100" r="42" strokeWidth={1.5} />
+      {/* Coordinates rounded to 2dp: Math.cos/sin can return a last-digit-
+          different double on the server's V8 vs the browser's, which
+          otherwise serializes as a different attribute string and breaks
+          hydration (react.dev/link/hydration-mismatch) — rounding gives
+          server and client an identical string every time. */}
       {Array.from({ length: 16 }).map((_, i) => {
         const angle = (i / 16) * 2 * Math.PI;
-        const x1 = 100 + Math.cos(angle) * 96;
-        const y1 = 100 + Math.sin(angle) * 96;
-        const x2 = 100 + Math.cos(angle) * 108;
-        const y2 = 100 + Math.sin(angle) * 108;
+        const round = (n: number) => Math.round(n * 100) / 100;
+        const x1 = round(100 + Math.cos(angle) * 96);
+        const y1 = round(100 + Math.sin(angle) * 96);
+        const x2 = round(100 + Math.cos(angle) * 108);
+        const y2 = round(100 + Math.sin(angle) * 108);
         return <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} strokeWidth={1.5} />;
       })}
     </svg>

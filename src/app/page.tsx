@@ -4,6 +4,7 @@ import {
   getPageBySlug,
   getAllProgramsMeta,
   getAllNewsMeta,
+  getHomeHeroSlides,
 } from "@/lib/content";
 import { GetInvolvedBand } from "@/components/GetInvolvedBand";
 import { EmptyState } from "@/components/EmptyState";
@@ -12,6 +13,76 @@ import { Reveal } from "@/components/Reveal";
 import { CountUp } from "@/components/CountUp";
 import { SocialIcon, VERIFIED_SOCIAL_LINKS } from "@/components/socialLinks";
 import { LegacyMotif } from "@/components/LegacyMotif";
+import { RootGrowthMotif } from "@/components/RootGrowthMotif";
+import { HeroCarousel } from "@/components/HeroCarousel";
+
+// One thin line icon per stat, no circle/background — matches a reference
+// layout the client shared (plain line icons, heading above, single button
+// below), redrawn as original icons rather than reusing that reference's
+// actual icon set. Coral (not the reference's gold) since this section
+// moved to a white background — coral already reads as this site's own
+// single-accent color for numbers/CTAs everywhere else.
+// Redrawn as a genuinely curved, single-weight set (bezier curves
+// throughout, no straight-edged rectangles/triangles) after feedback that
+// the first pass — built from more geometric primitives (a rectangle
+// calendar, a triangular graduation cap) — didn't read as "curved."
+function HomeIcon() {
+  // A sheltering arc rather than an angular roofline — reads as
+  // "shelter/care" (residents) without a literal boxy house shape.
+  return (
+    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth={1.4} strokeLinecap="round" strokeLinejoin="round">
+      <path d="M3.5 12.5C3.5 7 7 3 12 3s8.5 4 8.5 9.5" />
+      <path d="M5.5 12v6.5c0 1.4 1.1 2.5 2.5 2.5h8c1.4 0 2.5-1.1 2.5-2.5V12" />
+      <path d="M9.5 21v-4.5c0-1.4 1.1-2.5 2.5-2.5s2.5 1.1 2.5 2.5V21" />
+    </svg>
+  );
+}
+function YearsIcon() {
+  // A laurel-sprig curl around a small core — "years of service / legacy"
+  // instead of a literal grid-lined calendar.
+  return (
+    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth={1.4} strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="10" r="4.5" />
+      <path d="M8 20c-2.5-1-4.5-2.7-5.5-5 1.8.3 3 0 3.8-1" />
+      <path d="M16 20c2.5-1 4.5-2.7 5.5-5-1.8.3-3 0-3.8-1" />
+      <path d="M9.5 20.5c1.6.7 3.4.7 5 0" />
+    </svg>
+  );
+}
+function HeartHandsIcon() {
+  return (
+    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth={1.4} strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 20.2C7 17 2.7 13.4 2.7 9.4 2.7 6.4 5 4.2 7.7 4.2c1.7 0 3.3.9 4.3 2.4 1-1.5 2.6-2.4 4.3-2.4 2.7 0 5 2.2 5 5.2 0 4-4.3 7.6-9.3 10.8z" />
+    </svg>
+  );
+}
+function LeafIcon() {
+  return (
+    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth={1.4} strokeLinecap="round" strokeLinejoin="round">
+      <path d="M4.5 19.5C3 12 7 4.5 19.5 4.5c1 12.5-6.5 16.5-15 15z" />
+      <path d="M4.8 19.2c3-4.5 6.5-7.8 11.7-10.4" />
+    </svg>
+  );
+}
+function PinIcon() {
+  return (
+    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth={1.4} strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 21.5c-4.5-4.8-7-8.6-7-12A7 7 0 0119 9.5c0 3.4-2.5 7.2-7 12z" />
+      <circle cx="12" cy="9.3" r="2.4" />
+    </svg>
+  );
+}
+function BookIcon() {
+  // An open book, all curved pages — reads as "education/students" without
+  // the earlier graduation cap's straight-edged triangle.
+  return (
+    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth={1.4} strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 6.5c-1.8-2-4.7-2.6-7.3-1.6a1 1 0 00-.7 1v11.6c0 .7.7 1.2 1.4.9 2.3-.8 4.9-.3 6.6 1.6" />
+      <path d="M12 6.5c1.8-2 4.7-2.6 7.3-1.6a1 1 0 01.7 1v11.6c0 .7-.7 1.2-1.4.9-2.3-.8-4.9-.3-6.6 1.6" />
+      <path d="M12 6.5v13" />
+    </svg>
+  );
+}
 
 // Six-tile stats strip: the most effective element on the current site
 // (docs/site-audit.md). Values are exactly what's already published on the
@@ -23,12 +94,12 @@ import { LegacyMotif } from "@/components/LegacyMotif";
 // Not CMS-managed yet; still worth the client re-confirming these are
 // current whenever they next update the source figures.
 const STATS = [
-  { value: "1,500", label: "residents cared for" },
-  { value: "130", label: "years of service", asOf: "since 1889" },
-  { value: "100,000+", label: "women & children helped" },
-  { value: "240+", label: "acres of farm & dairy" },
-  { value: "19", label: "locations across India" },
-  { value: "2,400+", label: "students enrolled K-12" },
+  { value: "1,500", label: "residents cared for", Icon: HomeIcon },
+  { value: "130", label: "years of service", asOf: "since 1889", Icon: YearsIcon },
+  { value: "100,000+", label: "women & children helped", Icon: HeartHandsIcon },
+  { value: "240+", label: "acres of farm & dairy", Icon: LeafIcon },
+  { value: "19", label: "locations across India", Icon: PinIcon },
+  { value: "2,400+", label: "students enrolled K-12", Icon: BookIcon },
 ];
 
 export default async function Home() {
@@ -41,48 +112,44 @@ export default async function Home() {
   const programs = allPrograms.slice(0, 4);
   const featuredProgram = allPrograms.find((p) => p.featured);
   const news = getAllNewsMeta().slice(0, 3);
+  const heroSlides = getHomeHeroSlides();
 
   return (
     <main id="main-content" className="flex flex-1 flex-col">
-      {/* 1. Hero — one primary CTA, per marketing-page convention. (A prior
-          pass tried a scattered generic-icon background here to echo other
-          NGO/wellness sites — pulled after review: that's not actually what
-          makes those sites feel rich, real large-format photography is, and
-          faking that with line-art icons was the wrong lever. See
-          dev-backlog.md #56.) */}
-      <section className="mx-auto flex w-full max-w-6xl flex-col items-center gap-14 px-6 py-20 sm:px-12 md:flex-row">
-        <div className="flex-1">
-          <h1 className="max-w-[14ch] text-4xl leading-tight text-ink sm:text-5xl">
-            {page.title}
-          </h1>
-          <div
-            className="prose mt-4 max-w-[60ch] text-ink-soft"
-            dangerouslySetInnerHTML={{ __html: page.contentHtml }}
-          />
-          <div className="mt-7 flex items-center gap-5">
-            <Link
-              href="/donate/"
-              className="rounded-md bg-coral px-6 py-3 font-semibold text-white hover:bg-coral-dark"
-            >
-              Donate Now
-            </Link>
-            <Link href="/programs/" className="text-sm font-semibold hover:text-coral">
-              See Our Programs &rarr;
-            </Link>
-          </div>
-          {/* Same registration/80G facts as the footer, just surfaced earlier
-              in the funnel — a first-time visitor deciding whether to trust
-              this org enough to keep scrolling shouldn't have to reach the
-              footer to see it. Not new copy, just repositioned. */}
-          <p className="mt-4 text-xs text-ink-soft">
-            Registered under the Societies Registration Act (1950) &amp; Bombay Public Trust Act
-            (1950) &middot; Donations are tax-exempt under Section 80G
+      {/* 1. Hero — restored as the real prmm.org.in homepage's own 3-slide
+          rotator (see HeroCarousel.tsx) instead of the single static hero
+          this rebuild used before. (A prior pass also tried a scattered
+          generic-icon background here to echo other NGO/wellness sites —
+          pulled after review, see dev-backlog.md #56 — unrelated to this
+          change, noted so the same mistake isn't retried.) */}
+      <HeroCarousel slides={heroSlides} />
+
+      {/* Highlighted trust callout — same "one bold, unmissable fact right
+          under the hero" treatment a reference site (isha.sadhguru.org)
+          uses for its own headline stats, applied here to PRMM's own real
+          legal/tax facts instead of a plain muted disclosure line. */}
+      <div className="border-b border-black/10 bg-[#e7ecf1] px-6 py-5 sm:px-12">
+        <div className="mx-auto flex max-w-6xl flex-col items-center justify-center gap-2.5 text-center sm:flex-row sm:gap-3.5">
+          <svg
+            width="22"
+            height="22"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="#3f5268"
+            strokeWidth={2}
+            className="flex-shrink-0"
+            aria-hidden="true"
+          >
+            <path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4z" />
+            <path d="M9 12l2 2 4-4" />
+          </svg>
+          <p className="text-sm font-semibold text-[#3f5268] sm:text-base">
+            Registered under the <span className="text-coral">Societies Registration Act (1950)</span> &amp;{" "}
+            <span className="text-coral">Bombay Public Trust Act (1950)</span> &middot; Donations are{" "}
+            <span className="text-coral">tax-exempt under Section 80G</span>
           </p>
         </div>
-        <div className="flex h-72 flex-1 items-center justify-center rounded-xl border border-dashed border-black/15 bg-[repeating-linear-gradient(45deg,#ece7dd,#ece7dd_10px,#dfd9cc_10px,#dfd9cc_20px)] p-4 text-center text-xs text-[#8a8170]">
-          Specific beneficiary photo/story — not a generic campus shot
-        </div>
-      </section>
+      </div>
 
       {/* 2. Stats strip — credibility signal right after the emotional hook.
           Bold dark band (bg-ink) rather than the previous plain white —
@@ -93,15 +160,31 @@ export default async function Home() {
           value shown at rest is identical to the source string, animation
           never changes what's actually claimed. */}
       <Reveal>
-        <section className="bg-ink px-6 py-20 sm:px-12">
-          <div className="mx-auto grid max-w-6xl grid-cols-2 gap-8 sm:grid-cols-3 md:grid-cols-6">
+        <section className="relative overflow-hidden bg-white px-6 py-20 sm:px-12">
+          {/* White, not the earlier bg-ink — this section sits directly
+              under the photo-heavy hero carousel, and the Legacy section
+              right after it is already the tan (#f3efe7) band; three heavy/
+              dark sections back to back would read flat instead of giving
+              the page rhythm, so this one stays light per
+              docs/design-system.md's "alternate bold with neutral" rule.
+              This section's one decorative motif — see RootGrowthMotif.tsx
+              (already used on Donate) — now a light coral tint rather than
+              white-on-dark, so it still reads against the white background. */}
+          <RootGrowthMotif className="pointer-events-none absolute -right-16 -bottom-16 h-72 w-72 text-coral/[0.08] sm:h-96 sm:w-96" />
+          <h2 className="relative mx-auto mb-14 max-w-3xl text-center text-2xl text-ink sm:text-3xl">
+            130 Years of Impact, By the Numbers
+          </h2>
+          <div className="relative mx-auto grid max-w-5xl grid-cols-2 gap-x-8 gap-y-12 sm:grid-cols-3">
             {STATS.map((s) => (
-              <div key={s.label} className="text-center">
+              <div key={s.label} className="flex flex-col items-center text-center">
+                <span className="mb-3 flex h-11 w-11 flex-shrink-0 items-center justify-center text-coral">
+                  <s.Icon />
+                </span>
                 <div className="text-3xl font-bold leading-tight tracking-tight text-coral">
                   <CountUp value={s.value} />
                 </div>
-                <div className="mt-1.5 text-sm leading-snug text-white">{s.label}</div>
-                {s.asOf && <div className="mt-0.5 text-xs italic leading-snug text-white/50">{s.asOf}</div>}
+                <div className="mt-1.5 text-sm leading-snug text-ink">{s.label}</div>
+                {s.asOf && <div className="mt-0.5 text-xs italic leading-snug text-ink-soft">{s.asOf}</div>}
               </div>
             ))}
           </div>
@@ -109,11 +192,14 @@ export default async function Home() {
               source anywhere (not the live site, not any doc) and made a
               checkable statement about fund usage; don't ship a number nobody
               verified. See dev-backlog.md #53. */}
-          <p className="mt-6 text-center text-base text-white/70">
-            <Link href="/donate/" className="font-semibold text-coral hover:text-white">
-              Donate now &rarr;
+          <div className="relative mt-14 text-center">
+            <Link
+              href="/donate/"
+              className="inline-block rounded-md bg-coral px-7 py-3 font-semibold text-white hover:bg-coral-dark"
+            >
+              Donate Now
             </Link>
-          </p>
+          </div>
         </section>
       </Reveal>
 

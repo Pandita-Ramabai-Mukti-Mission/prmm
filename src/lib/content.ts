@@ -27,6 +27,15 @@ export type ImageWithAlt = {
   alt: string;
 };
 
+export type HeroSlideContent = {
+  eyebrow?: string;
+  heading: string;
+  body: string;
+  ctaLabel?: string;
+  ctaHref?: string;
+  image?: ImageWithAlt;
+};
+
 export type ProgramMeta = {
   slug: string;
   title: string;
@@ -166,6 +175,31 @@ export async function getPageBySlug(slug: string): Promise<Page | null> {
     title: data.title ?? slug,
     contentHtml,
   };
+}
+
+// Homepage hero carousel — a dedicated single-file "files" collection
+// (content/hero/home-hero.md — its own folder, not content/pages, so it
+// never gets picked up as a generic page with a missing `title` field)
+// rather than image fields bolted onto the
+// generic `pages` collection, which would leak 3 irrelevant image fields
+// into every other singleton page's editing form (About Ramabai, Terms,
+// etc.). Follows the same list-widget-with-image-subfields shape the
+// `gallery` collection already uses. Each slide's image is optional —
+// falls back to a placeholder in the UI (HeroCarousel.tsx) exactly like
+// PhotoBox does elsewhere, until a real photo is uploaded via the CMS.
+export function getHomeHeroSlides(): HeroSlideContent[] {
+  const filePath = path.join(CONTENT_DIR, "hero", "home-hero.md");
+  if (!fs.existsSync(filePath)) return [];
+  const { data } = readMarkdownFile(filePath);
+  const slides = (data.slides as Record<string, unknown>[] | undefined) ?? [];
+  return slides.map((s) => ({
+    eyebrow: s.eyebrow as string | undefined,
+    heading: s.heading as string,
+    body: s.body as string,
+    ctaLabel: s.cta_label as string | undefined,
+    ctaHref: s.cta_href as string | undefined,
+    image: readImageWithAlt(s),
+  }));
 }
 
 export function getAllProgramSlugs(): string[] {
