@@ -2,6 +2,7 @@ import Link from "next/link";
 import { getAllReports } from "@/lib/content";
 import { EmptyState } from "@/components/EmptyState";
 import { ReportsTable } from "@/components/content-views/ReportsTable";
+import { Reveal } from "@/components/Reveal";
 
 // Gap-highlighting (dev-backlog.md #30 — e.g. flagging a missing 2023
 // Accounts row) needs a confirmed expected report calendar from the
@@ -11,7 +12,8 @@ export default function Reports() {
   const reports = getAllReports();
 
   return (
-    <main id="main-content" className="mx-auto w-full max-w-3xl flex-1 px-6 py-10 sm:px-12">
+    <main id="main-content" className="mx-auto w-full max-w-3xl flex-1 px-6 py-14 sm:px-12">
+      <Reveal>
       <div className="text-sm text-ink-soft">
         <Link href="/">Home</Link> / Reports
       </div>
@@ -23,8 +25,18 @@ export default function Reports() {
           <EmptyState>Reports are being migrated from the current site.</EmptyState>
         </div>
       ) : (
-        <ReportsTable reports={reports} />
+        <div className="mt-8">
+          <ReportsTable reports={reports} />
+        </div>
       )}
+
+      <p className="mt-8 text-sm">
+        Questions about our legal status or tax exemption?{" "}
+        <Link href="/about-mukti-mission/#transparency" className="font-semibold hover:text-coral">
+          See our registration &amp; tax details &rarr;
+        </Link>
+      </p>
+      </Reveal>
     </main>
   );
 }

@@ -2,12 +2,14 @@ import Link from "next/link";
 import { getAllGalleryPosts } from "@/lib/content";
 import { EmptyState } from "@/components/EmptyState";
 import { PhotoBox } from "@/components/content-views/PhotoBox";
+import { Reveal } from "@/components/Reveal";
 
 export default async function GalleryIndex() {
   const events = await getAllGalleryPosts();
 
   return (
-    <main id="main-content" className="mx-auto w-full max-w-6xl flex-1 px-6 py-10 sm:px-12">
+    <main id="main-content" className="mx-auto w-full max-w-6xl flex-1 px-6 py-14 sm:px-12">
+      <Reveal>
       <div className="text-sm text-ink-soft">
         <Link href="/">Home</Link> / Happenings at Mukti
       </div>
@@ -21,7 +23,7 @@ export default async function GalleryIndex() {
           <EmptyState>Gallery posts are being migrated from the current site.</EmptyState>
         </div>
       ) : (
-        <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-3">
+        <div className="mt-10 grid grid-cols-1 gap-7 sm:grid-cols-3">
           {events.map((g) => (
             <Link
               key={g.slug}
@@ -42,6 +44,7 @@ export default async function GalleryIndex() {
           ))}
         </div>
       )}
+      </Reveal>
     </main>
   );
 }

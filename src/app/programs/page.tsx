@@ -2,6 +2,7 @@ import Link from "next/link";
 import { getAllProgramsMeta } from "@/lib/content";
 import { EmptyState } from "@/components/EmptyState";
 import { PhotoBox } from "@/components/content-views/PhotoBox";
+import { Reveal } from "@/components/Reveal";
 
 // Must match the `category` select options in public/admin/config.yml.
 const CATEGORIES = [
@@ -24,7 +25,7 @@ export default async function ProgramsIndex({
   const urgentProgram = allPrograms.find((p) => p.featured);
 
   return (
-    <main id="main-content" className="mx-auto w-full max-w-6xl flex-1 px-6 py-10 sm:px-12">
+    <main id="main-content" className="mx-auto w-full max-w-6xl flex-1 px-6 py-14 sm:px-12">
       <div className="text-sm text-ink-soft">
         <Link href="/">Home</Link> / Programs
       </div>
@@ -32,6 +33,12 @@ export default async function ProgramsIndex({
       <p className="mt-2 max-w-[60ch] text-ink-soft">
         Ministries spanning education, health, agriculture and care for the vulnerable — filter by
         category to explore.
+      </p>
+      <p className="mt-2 text-sm">
+        Curious how funds are used?{" "}
+        <Link href="/reports/" className="font-semibold hover:text-coral">
+          See our Reports &amp; Transparency &rarr;
+        </Link>
       </p>
       {/* "14" is the org's own verified ministry count (content/pages/home.md,
           about-mukti-mission.md — sourced from site-audit.md's crawl of the
@@ -48,7 +55,8 @@ export default async function ProgramsIndex({
           category filter, since the whole point is that it doesn't get
           missed. */}
       {urgentProgram && (
-        <div className="mt-6 flex flex-col gap-4 rounded-lg border border-coral/40 bg-[#fff4f2] p-5 sm:flex-row sm:items-center">
+        <Reveal>
+        <div className="mt-8 flex flex-col gap-4 rounded-lg border border-coral/40 bg-[#fff4f2] p-6 sm:flex-row sm:items-center">
           <span className="inline-block flex-shrink-0 self-start rounded-full bg-coral px-3 py-1 text-[11px] font-bold uppercase tracking-wide text-white">
             Most Urgent Need
           </span>
@@ -65,11 +73,12 @@ export default async function ProgramsIndex({
             Donate to This Cause
           </Link>
         </div>
+        </Reveal>
       )}
 
       {/* URL-shareable filter (?category=...) — replaces the current site's
           anchor-only (#category) filter on /impact/. */}
-      <div className="mt-6 flex flex-wrap gap-2.5">
+      <div className="mt-8 flex flex-wrap gap-2.5">
         <Link
           href="/programs/"
           className={`rounded-full px-4 py-2 text-sm font-semibold ${
@@ -91,6 +100,7 @@ export default async function ProgramsIndex({
         ))}
       </div>
 
+      <Reveal>
       {programs.length === 0 ? (
         <div className="mt-8">
           <EmptyState>
@@ -100,7 +110,7 @@ export default async function ProgramsIndex({
           </EmptyState>
         </div>
       ) : (
-        <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-8 grid grid-cols-1 gap-7 sm:grid-cols-2 lg:grid-cols-4">
           {programs.map((p) => (
             <div key={p.slug} className="flex flex-col overflow-hidden rounded-lg border border-black/10 bg-white shadow-md">
               <PhotoBox
@@ -128,6 +138,7 @@ export default async function ProgramsIndex({
           ))}
         </div>
       )}
+      </Reveal>
     </main>
   );
 }

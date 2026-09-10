@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getAllGallerySlugs, getGalleryPostBySlug } from "@/lib/content";
 import { GalleryDetailCore } from "@/components/content-views/GalleryDetailCore";
+import { Reveal } from "@/components/Reveal";
 
 export async function generateStaticParams() {
   return getAllGallerySlugs().map((slug) => ({ slug }));
@@ -27,12 +28,14 @@ export default async function GalleryDetail({
         <Link href="/">Home</Link> / <Link href="/happenings-at-mukti/">Happenings</Link> / {post.title}
       </div>
 
+      <Reveal>
       <GalleryDetailCore
         title={post.title}
         date={post.date}
         images={post.images}
         body={<div dangerouslySetInnerHTML={{ __html: post.contentHtml }} />}
       />
+      </Reveal>
     </main>
   );
 }

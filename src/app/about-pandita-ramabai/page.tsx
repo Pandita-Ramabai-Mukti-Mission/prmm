@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getPageBySlug } from "@/lib/content";
 import { PageTitleBody } from "@/components/content-views/PageTitleBody";
+import { Reveal } from "@/components/Reveal";
 
 export default async function AboutRamabai() {
   const page = await getPageBySlug("about-pandita-ramabai");
@@ -13,7 +14,8 @@ export default async function AboutRamabai() {
         <Link href="/">Home</Link> / About / Pandita Ramabai
       </div>
 
-      <section className="mx-auto flex w-full max-w-6xl flex-col items-center gap-10 px-6 py-8 sm:px-12 md:flex-row">
+      <Reveal>
+      <section className="mx-auto flex w-full max-w-6xl flex-col items-center gap-14 px-6 py-12 sm:px-12 md:flex-row">
         <div className="flex h-80 flex-1 items-center justify-center rounded-xl border border-dashed border-black/15 bg-[repeating-linear-gradient(45deg,#ece7dd,#ece7dd_10px,#dfd9cc_10px,#dfd9cc_20px)] text-center text-xs text-[#8a8170]">
           Portrait — Pandita Ramabai
         </div>
@@ -26,20 +28,34 @@ export default async function AboutRamabai() {
           />
         </div>
       </section>
+      </Reveal>
 
-      <section className="mx-auto w-full max-w-6xl px-6 pb-10 sm:px-12">
+      <Reveal>
+      <section className="mx-auto w-full max-w-6xl px-6 pb-14 sm:px-12">
         <blockquote className="border-l-4 border-coral pl-5 text-xl italic">
           &ldquo;[A Ramabai quote — distinct from the one used on the Mukti Mission page]&rdquo;
         </blockquote>
       </section>
+      </Reveal>
 
-      <section className="mx-auto w-full max-w-6xl px-6 pb-10 sm:px-12">
-        <div className="flex flex-wrap gap-5 text-sm font-semibold">
+      {/* Story → Exploration & the Ask, so this page doesn't dead-end
+          after the biography — confirmed missing during today's
+          artifact-vs-dev review. */}
+      <Reveal>
+      <section className="mx-auto w-full max-w-6xl px-6 pb-14 sm:px-12">
+        <div className="flex flex-wrap gap-6 text-sm font-semibold">
           <Link href="/about-mukti-mission/" className="hover:text-coral">
             Read About Mukti Mission &rarr;
           </Link>
+          <Link href="/programs/" className="hover:text-coral">
+            See Her Legacy in Action &rarr;
+          </Link>
+          <Link href="/donate/" className="text-coral hover:text-coral-dark">
+            Support This Legacy &rarr;
+          </Link>
         </div>
       </section>
+      </Reveal>
     </main>
   );
 }

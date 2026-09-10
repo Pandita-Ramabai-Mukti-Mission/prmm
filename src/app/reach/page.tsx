@@ -3,6 +3,7 @@ import Link from "next/link";
 import { getPageBySlug, getRegionalContacts } from "@/lib/content";
 import { EmptyState } from "@/components/EmptyState";
 import { PageTitleBody } from "@/components/content-views/PageTitleBody";
+import { Reveal } from "@/components/Reveal";
 
 export default async function WhereWeWork() {
   const page = await getPageBySlug("reach");
@@ -11,7 +12,8 @@ export default async function WhereWeWork() {
   const contacts = getRegionalContacts();
 
   return (
-    <main id="main-content" className="mx-auto w-full max-w-6xl flex-1 px-6 py-10 sm:px-12">
+    <main id="main-content" className="mx-auto w-full max-w-6xl flex-1 px-6 py-14 sm:px-12">
+      <Reveal>
       <div className="text-sm text-ink-soft">
         <Link href="/">Home</Link> / Where We Work
       </div>
@@ -22,12 +24,14 @@ export default async function WhereWeWork() {
         body={<div dangerouslySetInnerHTML={{ __html: page.contentHtml }} />}
       />
 
-      <div className="mt-8 flex h-64 items-center justify-center rounded-xl border border-dashed border-black/15 bg-[repeating-linear-gradient(45deg,#ece7dd,#ece7dd_10px,#dfd9cc_10px,#dfd9cc_20px)] text-xs text-[#8a8170]">
+      <div className="mt-10 flex h-64 items-center justify-center rounded-xl border border-dashed border-black/15 bg-[repeating-linear-gradient(45deg,#ece7dd,#ece7dd_10px,#dfd9cc_10px,#dfd9cc_20px)] text-xs text-[#8a8170]">
         Map of India — locations
       </div>
+      </Reveal>
 
-      <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
-        <div className="rounded-lg border border-black/10 bg-white shadow-md p-4">
+      <Reveal>
+      <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-3">
+        <div className="rounded-lg border border-black/10 bg-white shadow-md p-5">
           <div className="text-sm font-semibold">Kedgaon Campus</div>
           <div className="mt-1 text-sm text-ink-soft">Founding campus &amp; headquarters</div>
         </div>
@@ -37,13 +41,25 @@ export default async function WhereWeWork() {
           </div>
         ) : (
           contacts.map((c) => (
-            <div key={c.slug} className="rounded-lg border border-black/10 bg-white shadow-md p-4">
+            <div key={c.slug} className="rounded-lg border border-black/10 bg-white shadow-md p-5">
               <div className="text-sm font-semibold">{c.region}</div>
               <div className="mt-1 text-sm text-ink-soft">Regional representative</div>
             </div>
           ))
         )}
       </div>
+
+      <p className="mt-10 text-sm">
+        Have a representative near you?{" "}
+        <Link href="/contact/" className="font-semibold hover:text-coral">
+          Get in touch &rarr;
+        </Link>{" "}
+        or{" "}
+        <Link href="/contact/?interest=volunteer" className="font-semibold hover:text-coral">
+          reach out about volunteering in your region &rarr;
+        </Link>
+      </p>
+      </Reveal>
     </main>
   );
 }

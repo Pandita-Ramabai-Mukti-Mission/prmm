@@ -2,6 +2,7 @@ import Link from "next/link";
 import { getRegionalContacts, getHeadquartersContact } from "@/lib/content";
 import { EmptyState } from "@/components/EmptyState";
 import { ContactCardView } from "@/components/content-views/ContactCardView";
+import { Reveal } from "@/components/Reveal";
 
 export default async function Contact({
   searchParams,
@@ -14,7 +15,8 @@ export default async function Contact({
 
   return (
     <main id="main-content" className="flex flex-1 flex-col">
-      <section className="mx-auto w-full max-w-6xl px-6 pt-8 sm:px-12">
+      <Reveal>
+      <section className="mx-auto w-full max-w-6xl px-6 pt-10 sm:px-12">
         <div className="text-sm text-ink-soft">
           <Link href="/">Home</Link> / Contact
         </div>
@@ -35,8 +37,10 @@ export default async function Contact({
           </Link>
         </p>
       </section>
+      </Reveal>
 
-      <section className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-6 py-8 sm:px-12 md:flex-row">
+      <Reveal>
+      <section className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-6 py-10 sm:px-12 md:flex-row">
         <div className="flex-1 rounded-lg border border-black/10 bg-white shadow-md p-6">
           <h2 className="text-lg">Send a Message</h2>
           <div className="mt-3 grid grid-cols-1 gap-3.5 sm:grid-cols-2">
@@ -78,8 +82,10 @@ export default async function Contact({
           </p>
         </div>
       </section>
+      </Reveal>
 
-      <section className="bg-[#f3efe7] px-6 py-10 sm:px-12">
+      <Reveal>
+      <section className="bg-[#f3efe7] px-6 py-14 sm:px-12">
         <div className="mx-auto max-w-6xl">
           <h2 className="text-xl">Our Regional Representatives</h2>
           {regions.length === 0 ? (
@@ -102,6 +108,7 @@ export default async function Contact({
           )}
         </div>
       </section>
+      </Reveal>
     </main>
   );
 }

@@ -4,6 +4,7 @@ import { getAllProgramSlugs, getAllProgramsMeta, getProgramBySlug } from "@/lib/
 import { GetInvolvedBand } from "@/components/GetInvolvedBand";
 import { ProgramDetailCore } from "@/components/content-views/ProgramDetailCore";
 import { PhotoBox } from "@/components/content-views/PhotoBox";
+import { Reveal } from "@/components/Reveal";
 
 export async function generateStaticParams() {
   return getAllProgramSlugs().map((slug) => ({ slug }));
@@ -32,6 +33,7 @@ export default async function ProgramDetail({
         <Link href="/">Home</Link> / <Link href="/programs/">Programs</Link> / {program.title}
       </div>
 
+      <Reveal>
       <ProgramDetailCore
         slug={program.slug}
         title={program.title}
@@ -39,12 +41,14 @@ export default async function ProgramDetail({
         image={program.image}
         body={<div dangerouslySetInnerHTML={{ __html: program.contentHtml }} />}
       />
+      </Reveal>
 
       {related.length > 0 && (
-        <section className="bg-[#f3efe7] px-6 py-10 sm:px-12">
+        <Reveal>
+        <section className="bg-[#f3efe7] px-6 py-14 sm:px-12">
           <div className="mx-auto max-w-6xl">
             <h2 className="text-xl">Similar Programs</h2>
-            <div className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
+            <div className="mt-7 grid grid-cols-1 gap-7 sm:grid-cols-3">
               {related.map((r) => (
                 <Link
                   key={r.slug}
@@ -68,9 +72,12 @@ export default async function ProgramDetail({
             </div>
           </div>
         </section>
+        </Reveal>
       )}
 
-      <GetInvolvedBand />
+      <Reveal>
+        <GetInvolvedBand />
+      </Reveal>
     </main>
   );
 }
