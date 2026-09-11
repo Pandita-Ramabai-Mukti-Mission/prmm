@@ -21,9 +21,9 @@ const TIMELINE = [
 ];
 
 const LEADERSHIP = [
-  { name: "Mrs. Elizabeth Robert", title: "Leadership" },
-  { name: "Dr. Lorraine Francis", title: "Leadership" },
-  { name: "Mr. Anil Francis", title: "Leadership" },
+  { name: "Mrs. Elizabeth Robert", title: "Chairperson" },
+  { name: "Dr. Lorraine Francis", title: "Mission Director" },
+  { name: "Mr. Anil Francis", title: "Chief Administrative Officer" },
 ];
 
 export default async function AboutMuktiMission() {
