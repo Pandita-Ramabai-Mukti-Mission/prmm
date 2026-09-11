@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { SectionFlourish } from "@/components/SectionFlourish";
 
 // Vision / Mission / Basis — Mukti's three core doctrinal statements.
 // Shared by the homepage's "Our Foundation" teaser and the About Mukti
@@ -67,29 +68,12 @@ const FOUNDATION = [
   },
 ];
 
-// Decorative flourish under the section heading — a flowing curved swash
-// with two small accent dots, echoing a reference layout's own scribble
-// under its section title (structure only — redrawn as an original mark).
-function FoundationFlourish({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 200 40" className={className} aria-hidden="true" fill="none" stroke="currentColor">
-      <path
-        d="M20 20c0-8 10-8 15 0s15 8 15 0-10-8-15 0 5 12 15 12 25-8 30-12 20-8 25 0 15 8 20 0-10-8-15 0 5 12 15 12 25-8 20-12"
-        strokeWidth={1.4}
-        strokeLinecap="round"
-      />
-      <circle cx="70" cy="14" r="1.6" fill="currentColor" stroke="none" />
-      <circle cx="130" cy="26" r="1.6" fill="currentColor" stroke="none" />
-    </svg>
-  );
-}
-
 export function MissionFoundationBand({ ctaHref }: { ctaHref?: string }) {
   return (
     <section className="bg-ink px-6 py-20 sm:px-12">
       <div className="mx-auto max-w-5xl text-center">
         <h2 className="text-2xl text-white sm:text-3xl">Our Foundation</h2>
-        <FoundationFlourish className="mx-auto mt-3 h-7 w-44 text-coral" />
+        <SectionFlourish className="mx-auto mt-3 h-7 w-44 text-coral" />
         <div className="mt-14 grid gap-12 text-left sm:grid-cols-3 sm:text-center">
           {FOUNDATION.map((f) => (
             <div key={f.title} className="flex flex-col items-start sm:items-center">

@@ -5,6 +5,7 @@ import { Reveal } from "@/components/Reveal";
 import { GetInvolvedBand } from "@/components/GetInvolvedBand";
 import { PhotoBox } from "@/components/content-views/PhotoBox";
 import { ThemeBannerSlider } from "@/components/ThemeBannerSlider";
+import { SectionFlourish } from "@/components/SectionFlourish";
 
 // Content below is paraphrased from the live prmm.org.in "Shaping the…"
 // pages (fetched 2026-09-11), not copied verbatim — each page there repeats
@@ -73,6 +74,7 @@ export function ShapingThemeTemplate({ theme }: { theme: ShapingTheme }) {
               {meta.label}
             </span>
             <h1 className="mt-3 text-4xl">Shaping the {theme}</h1>
+            <SectionFlourish className="mt-3 h-6 w-36 text-coral" />
           </div>
           <Link
             href="/donate/"
@@ -137,17 +139,21 @@ export function ShapingThemeTemplate({ theme }: { theme: ShapingTheme }) {
           during today's artifact-vs-dev review. No per-theme cause bucket
           exists in the donation form (causes are per-program), so this
           links to the general Donate page rather than inventing a
-          theme-scoped query param the backend doesn't support. */}
+          theme-scoped query param the backend doesn't support. Bold coral
+          band (not a plain white card) — the tan program-grid band above
+          and the dark GetInvolvedBand below otherwise sandwiched a flat
+          white section here, one color beat short of this site's other
+          rebuilt pages (site design audit, 2026-09-11). */}
       <Reveal>
-      <section className="mx-auto w-full max-w-6xl px-6 py-10 sm:px-12">
-        <div className="flex flex-wrap items-center justify-between gap-4 rounded-lg border border-black/10 bg-white shadow-md p-6">
-          <div>
-            <h3 className="font-semibold">Support the programs shaping the {theme.toLowerCase()}</h3>
-            <p className="mt-1 text-sm text-ink-soft">Your gift helps fund every ministry in this theme.</p>
-          </div>
+      <section className="bg-coral px-6 py-12 text-center sm:px-12">
+        <div className="mx-auto flex max-w-3xl flex-col items-center gap-4">
+          <h3 className="text-xl font-semibold text-white">
+            Support the programs shaping the {theme.toLowerCase()}
+          </h3>
+          <p className="text-sm text-white/85">Your gift helps fund every ministry in this theme.</p>
           <Link
             href="/donate/"
-            className="whitespace-nowrap rounded-md bg-coral px-5 py-2.5 text-sm font-semibold text-white hover:bg-coral-dark"
+            className="whitespace-nowrap rounded-md bg-white px-6 py-3 text-sm font-semibold text-coral hover:bg-white/90"
           >
             Donate Now &rarr;
           </Link>

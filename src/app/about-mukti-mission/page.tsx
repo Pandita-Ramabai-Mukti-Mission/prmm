@@ -6,6 +6,7 @@ import { PhotoBox } from "@/components/content-views/PhotoBox";
 import { LegacyMotif } from "@/components/LegacyMotif";
 import { Reveal } from "@/components/Reveal";
 import { MissionFoundationBand } from "@/components/MissionFoundationBand";
+import { SectionFlourish } from "@/components/SectionFlourish";
 
 // History timeline, Leadership, Why We Exist, Character, Women's
 // Leadership and Mukti Operations are not CMS-managed yet — they resolve
@@ -237,7 +238,8 @@ export default async function AboutMuktiMission() {
           Confirmed missing from this rebuild entirely (client feedback). */}
       <Reveal>
       <section className="mx-auto w-full max-w-6xl px-6 py-14 sm:px-12">
-        <h2 className="mb-8 text-xl">Mukti Operations</h2>
+        <h2 className="text-xl">Mukti Operations</h2>
+        <SectionFlourish className="mb-8 mt-3 h-6 w-36 text-coral" />
         <div className="grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-5">
           {OPERATIONS.map((o) => (
             <Link
