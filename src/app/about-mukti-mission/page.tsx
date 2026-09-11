@@ -95,14 +95,14 @@ export default async function AboutMuktiMission() {
           for a visitor who lands on About directly. */}
       <Reveal>
       <section className="mx-auto w-full max-w-6xl px-6 py-14 sm:px-12">
-        <div className="grid grid-cols-1 overflow-hidden rounded-lg border border-black/10 sm:grid-cols-3">
-          <div>
+        <div className="grid grid-cols-1 gap-7 sm:grid-cols-3">
+          <div className="overflow-hidden rounded-lg border border-black/10 bg-white shadow-md">
             <PhotoBox
               placeholderLabel="Pandita Ramabai portrait/archival photo"
               recommendedSize="800×600"
               className="flex h-48 w-full text-xs"
             />
-            <div className="bg-white p-5">
+            <div className="p-5">
               <div className="text-xs font-semibold uppercase tracking-wide text-ink-soft">1858 &ndash; 1922</div>
               <h3 className="mt-1.5 font-semibold">Pandita Ramabai</h3>
               <p className="mt-1.5 text-sm text-ink-soft">
@@ -111,13 +111,13 @@ export default async function AboutMuktiMission() {
               </p>
             </div>
           </div>
-          <div className="sm:border-x sm:border-black/10">
+          <div className="overflow-hidden rounded-lg border border-black/10 bg-white shadow-md">
             <PhotoBox
               placeholderLabel="Mukti Mission campus/community photo"
               recommendedSize="800×600"
               className="flex h-48 w-full text-xs"
             />
-            <div className="bg-white p-5">
+            <div className="p-5">
               <div className="text-xs font-semibold uppercase tracking-wide text-ink-soft">130 Years</div>
               <h3 className="mt-1.5 font-semibold">Mukti Mission Today</h3>
               <p className="mt-1.5 text-sm text-ink-soft">
@@ -126,13 +126,13 @@ export default async function AboutMuktiMission() {
               </p>
             </div>
           </div>
-          <div>
+          <div className="overflow-hidden rounded-lg border border-black/10 bg-white shadow-md">
             <PhotoBox
               placeholderLabel="A specific program in action — real photo"
               recommendedSize="800×600"
               className="flex h-48 w-full text-xs"
             />
-            <div className="bg-white p-5">
+            <div className="p-5">
               <div className="text-xs font-semibold uppercase tracking-wide text-ink-soft">Right Now</div>
               <h3 className="mt-1.5 font-semibold">Impact Today</h3>
               <p className="mt-1.5 text-sm text-ink-soft">
