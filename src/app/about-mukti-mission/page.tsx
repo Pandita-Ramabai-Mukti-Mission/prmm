@@ -5,8 +5,10 @@ import { GetInvolvedBand } from "@/components/GetInvolvedBand";
 import { PhotoBox } from "@/components/content-views/PhotoBox";
 import { LegacyMotif } from "@/components/LegacyMotif";
 import { Reveal } from "@/components/Reveal";
+import { MissionFoundationBand } from "@/components/MissionFoundationBand";
 
-// History timeline and Leadership are not CMS-managed yet — they resolve
+// History timeline, Leadership, Why We Exist, Character, Women's
+// Leadership and Mukti Operations are not CMS-managed yet — they resolve
 // the "since 1889" vs. Ramabai's 1858-1922 dates confusion from the
 // current homepage (docs/site-audit.md) but need a real schema if the
 // client wants to edit them without a code change. Flagged, not silently
@@ -24,6 +26,38 @@ const LEADERSHIP = [
   { name: "Mrs. Elizabeth Robert", title: "Chairperson" },
   { name: "Dr. Lorraine Francis", title: "Mission Director" },
   { name: "Mr. Anil Francis", title: "Chief Administrative Officer" },
+];
+
+// "Why We Exist" — who Mukti's work serves, from the live site's own
+// list (prmm.org.in/about-mukti-mission/, fetched 2026-09-11).
+const WHY_WE_EXIST = [
+  "Orphans and special-needs women and children",
+  "Widows, single parents, unwed mothers and childless couples",
+  "People who are visually or physically challenged",
+  "Children from the streets and slums",
+  "Children of commercial sex workers",
+  "Children affected by natural disaster",
+  "Indigenous people groups",
+  "The poor in the surrounding community, through medical care and a day-care center",
+];
+
+const CHARACTER = [
+  "Christ-centred",
+  "Destitute child and women focused",
+  "Holistic and multi-faceted",
+  "Continuing Pandita Ramabai's founding vision",
+  "Fully governed by Indians",
+];
+
+// Mirrors the live site's own single-letter M/S/H/E/D operations nav —
+// the direct path from About Mukti Mission into the 5 "Shaping the…"
+// theme pages, missing from this rebuild until now.
+const OPERATIONS = [
+  { letter: "M", label: "Shaping the Mind", href: "/shaping-the-mind/" },
+  { letter: "S", label: "Shaping the Spirit", href: "/shaping-the-spirit/" },
+  { letter: "H", label: "Shaping the Heart", href: "/shaping-the-heart/" },
+  { letter: "E", label: "Shaping the Environment", href: "/shaping-the-environment/" },
+  { letter: "D", label: "Shaping the Destiny", href: "/shaping-the-destiny/" },
 ];
 
 export default async function AboutMuktiMission() {
@@ -110,6 +144,78 @@ export default async function AboutMuktiMission() {
       </section>
       </Reveal>
 
+      {/* Our Foundation — same Vision/Mission/Basis band the homepage
+          teases, shown here in full (see MissionFoundationBand.tsx). No
+          CTA here since this already is that "full story." */}
+      <Reveal>
+        <MissionFoundationBand />
+      </Reveal>
+
+      {/* Why We Exist — who Mukti's work serves, as a card grid rather
+          than a bullet list, matching the site's established card
+          treatment (rounded-lg, border, shadow-md) on a bold tan band for
+          page rhythm (docs/design-system.md's alternating-sections rule,
+          echoing isha.sadhguru.org's own bold-banding technique). */}
+      <Reveal>
+      <section className="bg-[#f3efe7] px-6 py-14 sm:px-12">
+        <div className="mx-auto max-w-6xl">
+          <h2 className="text-xl">Why We Exist</h2>
+          <p className="mt-2 max-w-[60ch] text-sm text-ink-soft">
+            Mukti exists to make a difference in the lives of:
+          </p>
+          <div className="mt-7 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {WHY_WE_EXIST.map((w) => (
+              <div key={w} className="rounded-lg border border-black/10 bg-white shadow-md p-4 text-sm">
+                {w}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+      </Reveal>
+
+      {/* Character of Mukti — five short descriptors as a pill row rather
+          than a paragraph, since each is a standalone label, not
+          connected prose. */}
+      <Reveal>
+      <section className="mx-auto w-full max-w-6xl px-6 py-14 sm:px-12">
+        <h2 className="mb-6 text-xl">Character of Mukti</h2>
+        <div className="flex flex-wrap gap-3">
+          {CHARACTER.map((c) => (
+            <span
+              key={c}
+              className="rounded-full border border-coral/30 bg-[#fff4f2] px-4 py-2 text-sm font-semibold text-coral"
+            >
+              {c}
+            </span>
+          ))}
+        </div>
+      </section>
+      </Reveal>
+
+      {/* Women's Leadership — Mukti's founding-by-a-woman-for-women
+          philosophy, as a bold pull-quote band (bg-coral) rather than
+          another plain paragraph, so its own defining line gets the same
+          weight the Isaiah 61 citation gets elsewhere on the site. */}
+      <Reveal>
+      <section className="bg-coral px-6 py-16 text-center sm:px-12">
+        <div className="mx-auto max-w-3xl">
+          <span className="text-xs font-semibold uppercase tracking-widest text-white/80">
+            Women&rsquo;s Leadership
+          </span>
+          <p className="mt-3 text-2xl leading-snug text-white sm:text-3xl">
+            &ldquo;If you empower a man, you empower none; if you empower a girl, you empower the
+            nation.&rdquo;
+          </p>
+          <p className="mt-5 text-sm leading-relaxed text-white/85">
+            Mukti was started by a woman, for women, in 1889 — reaching women in the community,
+            affirming the rightful place of women in God&rsquo;s plan, and the conviction that women
+            can change the destiny of the nation.
+          </p>
+        </div>
+      </section>
+      </Reveal>
+
       <Reveal>
       <section className="mx-auto w-full max-w-6xl px-6 py-14 sm:px-12">
         <h2 className="mb-8 text-xl">Our History</h2>
@@ -121,6 +227,29 @@ export default async function AboutMuktiMission() {
               <div className="text-sm font-bold">{t.year}</div>
               <div className="mt-1 text-xs text-ink-soft">{t.label}</div>
             </div>
+          ))}
+        </div>
+      </section>
+      </Reveal>
+
+      {/* Mukti Operations — direct navigation into the 5 "Shaping the…"
+          theme pages, mirroring the live site's own M/S/H/E/D nav band.
+          Confirmed missing from this rebuild entirely (client feedback). */}
+      <Reveal>
+      <section className="mx-auto w-full max-w-6xl px-6 py-14 sm:px-12">
+        <h2 className="mb-8 text-xl">Mukti Operations</h2>
+        <div className="grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-5">
+          {OPERATIONS.map((o) => (
+            <Link
+              key={o.href}
+              href={o.href}
+              className="flex flex-col items-center gap-3 rounded-lg border border-black/10 bg-white p-5 text-center shadow-md hover:border-coral/40"
+            >
+              <span className="flex h-12 w-12 items-center justify-center rounded-full bg-coral text-lg font-bold text-white">
+                {o.letter}
+              </span>
+              <span className="text-sm font-semibold">{o.label}</span>
+            </Link>
           ))}
         </div>
       </section>
