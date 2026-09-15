@@ -85,7 +85,7 @@ export default async function Contact({
             title="Map showing the Pandita Ramabai Mukti Mission campus at Kedgaon"
             className="rounded-lg"
           />
-          <div className="rounded-lg border border-black/10 bg-white shadow-md p-5 text-sm text-ink-soft">
+          <div id="hq-address" className="scroll-mt-24 rounded-lg border border-black/10 bg-white shadow-md p-5 text-sm text-ink-soft">
             <div className="text-xs font-semibold uppercase tracking-wide text-ink-soft">Address</div>
             {hq ? (
               <>

@@ -38,9 +38,17 @@ export default async function WhereWeWork() {
       </Reveal>
 
       <Reveal>
-      <div className="mt-10 rounded-lg border border-black/10 bg-white shadow-md p-5">
-        <div className="text-sm font-semibold">Kedgaon Campus</div>
-        <div className="mt-1 text-sm text-ink-soft">Founding campus &amp; headquarters</div>
+      <div className="mt-10 flex flex-wrap items-center justify-between gap-3 rounded-lg border border-black/10 bg-white shadow-md p-5">
+        <div>
+          <div className="text-sm font-semibold">Kedgaon Campus</div>
+          <div className="mt-1 text-sm text-ink-soft">Founding campus &amp; headquarters</div>
+        </div>
+        {/* Full address, phone and the real map live once, on Contact —
+            linking there instead of repeating them avoids the two pages
+            drifting out of sync with each other. */}
+        <Link href="/contact/#hq-address" className="text-sm font-semibold hover:text-coral">
+          View address &amp; map &rarr;
+        </Link>
       </div>
 
       <h2 className="mt-10 text-xl">Our Regional Representatives</h2>
