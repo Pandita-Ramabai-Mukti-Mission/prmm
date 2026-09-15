@@ -2,7 +2,7 @@ backend:
   name: github
   repo: Pandita-Ramabai-Mukti-Mission/prmm
   branch: master
-  base_url: https://your-vercel-app.vercel.app # TODO: replace with your deployed site URL
+  base_url: https://prmm.vercel.app
   auth_endpoint: api/decap/auth
 
 # Editorial workflow: content edits go through draft -> in review -> ready

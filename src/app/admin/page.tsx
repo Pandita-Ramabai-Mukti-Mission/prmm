@@ -35,6 +35,17 @@ export default function AdminPage() {
       // second mount sees initialized.current already true and no-ops,
       // leaving this in-flight run as the sole one to call CMS.init().
       registerPreviewTemplates(CMS as unknown as Parameters<typeof registerPreviewTemplates>[0]);
+
+      // Without this, preview panes render the real components (via
+      // registerPreviewTemplates above) with zero CSS — right markup, no
+      // Tailwind, so nothing looks like the live site. This page's own
+      // <head> already has the app's compiled Tailwind stylesheet (from
+      // globals.css via the root layout), so reuse that exact built file
+      // instead of hand-maintaining a second copy for the preview iframe.
+      document.querySelectorAll<HTMLLinkElement>('link[rel="stylesheet"]').forEach((link) => {
+        CMS.registerPreviewStyle(link.href);
+      });
+
       CMS.init();
     })();
   }, []);

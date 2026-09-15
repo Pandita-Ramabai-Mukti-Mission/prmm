@@ -60,17 +60,9 @@ function TextField({
   );
 }
 
-export function DonateForm({
-  causes,
-  initialCause,
-}: {
-  causes: { slug: string; title: string; donateVerb?: string }[];
-  initialCause?: string;
-}) {
-  const [cause, setCause] = useState(
-    initialCause && causes.some((c) => c.slug === initialCause) ? initialCause : "general"
-  );
-  const [otherCause, setOtherCause] = useState("");
+export function DonateForm() {
+  const cause = "general";
+  const otherCause = "";
   const [amount, setAmount] = useState(1000);
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
@@ -130,98 +122,8 @@ export function DonateForm({
           <div className="rounded-lg border border-black/10 bg-white shadow-md p-7">
             <h2 className="text-lg">Your Details</h2>
 
+            <input type="hidden" name="cause" value={cause} />
             <div className="mt-4 grid grid-cols-1 gap-5 sm:grid-cols-2">
-              <div className="sm:col-span-2">
-                <span
-                  id="donate-cause-label"
-                  className="mb-1.5 block text-[11px] font-semibold uppercase tracking-wide text-ink-soft"
-                >
-                  Donating To
-                </span>
-                {/* Outcome-framed chips, not a plain dropdown listing program
-                    titles — isha.sadhguru.org's donation hub segments giving
-                    by specific outcome ("Educate a Child") rather than
-                    repeating a generic label across every cause. Each
-                    program's `donateVerb` (Decap field `donate_verb`) is
-                    optional and falls back to "Support {title}" so a new
-                    program never blocks this UI. A real <select name="cause">
-                    stays behind the chips (visually hidden, not display:none)
-                    so /api/payu/initiate/ keeps receiving `cause` as a plain
-                    form field — no client-side JS required server-side. */}
-                <div role="radiogroup" aria-labelledby="donate-cause-label" className="flex flex-wrap gap-2">
-                  <button
-                    type="button"
-                    role="radio"
-                    aria-checked={cause === "general"}
-                    onClick={() => setCause("general")}
-                    className={`rounded-md border px-4 py-2 text-sm font-semibold ${
-                      cause === "general"
-                        ? "border-coral bg-coral text-white"
-                        : "border-black/15 bg-white text-ink hover:border-coral/50"
-                    }`}
-                  >
-                    Where Most Needed
-                  </button>
-                  {causes.map((c) => (
-                    <button
-                      key={c.slug}
-                      type="button"
-                      role="radio"
-                      aria-checked={cause === c.slug}
-                      onClick={() => setCause(c.slug)}
-                      className={`rounded-md border px-4 py-2 text-sm font-semibold ${
-                        cause === c.slug
-                          ? "border-coral bg-coral text-white"
-                          : "border-black/15 bg-white text-ink hover:border-coral/50"
-                      }`}
-                    >
-                      {c.donateVerb || `Support ${c.title}`}
-                    </button>
-                  ))}
-                  <button
-                    type="button"
-                    role="radio"
-                    aria-checked={cause === "other"}
-                    onClick={() => setCause("other")}
-                    className={`rounded-md border px-4 py-2 text-sm font-semibold ${
-                      cause === "other"
-                        ? "border-coral bg-coral text-white"
-                        : "border-black/15 bg-white text-ink hover:border-coral/50"
-                    }`}
-                  >
-                    Other
-                  </button>
-                </div>
-                <select
-                  aria-hidden
-                  tabIndex={-1}
-                  name="cause"
-                  value={cause}
-                  onChange={() => {}}
-                  className="pointer-events-none absolute h-px w-px overflow-hidden opacity-0"
-                >
-                  <option value="general">General Fund</option>
-                  {causes.map((c) => (
-                    <option key={c.slug} value={c.slug}>
-                      {c.title}
-                    </option>
-                  ))}
-                  <option value="other">Other</option>
-                </select>
-              </div>
-
-              {cause === "other" && (
-                <TextField
-                  id="donate-other-cause"
-                  label="Please specify"
-                  name="otherCause"
-                  value={otherCause}
-                  onChange={(e) => setOtherCause(e.target.value)}
-                  error={errors.otherCause}
-                  className="sm:col-span-2"
-                />
-              )}
-
               <TextField
                 id="donate-amount"
                 label="Amount (₹)"

@@ -27,11 +27,18 @@ export function PhotoBox({
   className: string;
 }) {
   if (image?.src) {
+    // A background image on a block-level div (not an <img>) so a box given
+    // only a height (the common case: `h-40`, no `w-*`) still fills its
+    // container's full width by ordinary block layout, then `bg-cover`
+    // crops to fill that box with no stretching/squashing — an <img> with
+    // only a height set instead auto-scales its width to the image's own
+    // intrinsic ratio, which is what produced the patchy/stretched cards.
     return (
-      <img
-        src={image.src}
-        alt={image.alt}
-        className={`${className} ${ANGLED_CORNER_CLIP} object-cover`}
+      <div
+        role="img"
+        aria-label={image.alt}
+        style={{ backgroundImage: `url(${image.src})` }}
+        className={`${className} ${ANGLED_CORNER_CLIP} bg-cover bg-center bg-no-repeat`}
       />
     );
   }
