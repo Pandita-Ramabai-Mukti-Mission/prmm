@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getPageBySlug } from "@/lib/content";
+import { getPageBySlug, getAboutMuktiExtras } from "@/lib/content";
 import { Reveal } from "@/components/Reveal";
 import { LegacyMotif } from "@/components/LegacyMotif";
+import { PhotoBox } from "@/components/content-views/PhotoBox";
 
 // Editorial redesign of this page (2026-09-11), matching a layout the
 // client shared (hero + quick facts, sticky chapter nav, two-column
@@ -50,6 +51,7 @@ const CHAPTERS = [
 export default async function AboutRamabai() {
   const page = await getPageBySlug("about-pandita-ramabai");
   if (!page) notFound();
+  const { ramabaiImage } = getAboutMuktiExtras();
 
   return (
     <main id="main-content" className="flex flex-1 flex-col bg-paper">
@@ -88,9 +90,12 @@ export default async function AboutRamabai() {
             </div>
             <div className="w-full flex-shrink-0 sm:w-80">
               <div className="rounded-xl bg-white p-2 shadow-md">
-                <div className="flex aspect-[4/5] w-full items-center justify-center rounded-lg border border-dashed border-black/15 bg-[repeating-linear-gradient(45deg,#ece7dd,#ece7dd_10px,#dfd9cc_10px,#dfd9cc_20px)] text-center text-xs text-[#8a8170]">
-                  Portrait — Pandita Ramabai
-                </div>
+                <PhotoBox
+                  image={ramabaiImage}
+                  placeholderLabel="Portrait — Pandita Ramabai"
+                  recommendedSize="800×1000"
+                  className="flex aspect-[4/5] w-full text-xs"
+                />
                 <p className="px-2 py-3 text-center text-sm italic text-ink-soft">
                   Pandita Ramabai (1858 – 1922)
                 </p>
@@ -226,10 +231,15 @@ export default async function AboutRamabai() {
         </aside>
       </div>
 
-      {/* Archival gallery — placeholders, not fabricated photos: no real
-          archival photos have been supplied yet, and the site's imagery
-          policy (docs/design-system.md) rules out generating stand-ins for
-          documentary photos of a real person/place. */}
+      {/* Archival gallery — 2 of 3 slots now have real images (fetched
+          2026-09-15, both already published on the org's own live site, not
+          generated): a 1989 Government of India postal stamp commemorating
+          Ramabai, and the Kedgaon campus photo already used on About Mukti
+          Mission. No real photo of "early mission life" (historical, not
+          present-day) was found anywhere on the live site, so that slot
+          stays an honest placeholder rather than a fabricated stand-in —
+          the site's imagery policy (docs/design-system.md) rules out
+          generating one for a documentary photo of a real person/place. */}
       <Reveal>
         <section id="gallery" className="scroll-mt-32 bg-[#f3efe7] px-6 py-16 sm:px-12">
           <div className="mx-auto max-w-6xl">
@@ -241,21 +251,29 @@ export default async function AboutRamabai() {
                 <h2 className="mt-1 text-2xl text-ink sm:text-3xl">The Kedgaon Archive</h2>
               </div>
               <p className="max-w-md text-sm text-ink-soft">
-                Placeholders awaiting real photographs from the mission&rsquo;s own archive —
-                nothing here is a stand-in photo.
+                Real photographs from the mission&rsquo;s own archive, where available — the rest are
+                honest placeholders, not stand-in photos.
               </p>
             </div>
             <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-              {["Early mission life at Kedgaon", "Community & residents", "The Kedgaon campus"].map(
-                (label) => (
-                  <div key={label} className="rounded-xl bg-white p-2 shadow-md">
-                    <div className="flex aspect-[4/3] w-full items-center justify-center rounded-lg border border-dashed border-black/15 bg-[repeating-linear-gradient(45deg,#ece7dd,#ece7dd_10px,#dfd9cc_10px,#dfd9cc_20px)] text-center text-xs text-[#8a8170]">
-                      Photo pending
-                    </div>
-                    <p className="px-2 py-3 text-sm text-ink-soft">{label}</p>
-                  </div>
-                )
-              )}
+              {[
+                {
+                  label: "1989 Indian postal stamp commemorating Pandita Ramabai",
+                  image: { src: "/images/uploads/ramabai-postal-stamp.jpg", alt: "1989 Indian postal stamp depicting Pandita Ramabai" },
+                },
+                { label: "Early mission life at Kedgaon", image: undefined },
+                { label: "The Kedgaon campus", image: undefined },
+              ].map((item) => (
+                <div key={item.label} className="rounded-xl bg-white p-2 shadow-md">
+                  <PhotoBox
+                    image={item.image}
+                    placeholderLabel="Photo pending"
+                    recommendedSize="800×600"
+                    className="flex aspect-[4/3] w-full text-xs"
+                  />
+                  <p className="px-2 py-3 text-sm text-ink-soft">{item.label}</p>
+                </div>
+              ))}
             </div>
           </div>
         </section>

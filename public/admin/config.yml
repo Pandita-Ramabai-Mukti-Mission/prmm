@@ -255,8 +255,8 @@ collections:
             widget: string
             required: false
             hint: "Read aloud to visitors using a screen reader. Required if you added a photo above."
-          - { label: Campus Photo, name: campus_image, widget: image, required: false }
-          - label: Campus Photo Description
+          - { label: "\"Mukti Mission Today\" Photo", name: campus_image, widget: image, required: false }
+          - label: "\"Mukti Mission Today\" Photo Description"
             name: campus_image_alt
             widget: string
             required: false
