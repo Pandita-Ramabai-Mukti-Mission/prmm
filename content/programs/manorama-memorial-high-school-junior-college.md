@@ -2,8 +2,8 @@
 title: Manorama Memorial High School & Junior College
 category: School
 theme: Mind
-image:
-image_alt:
+image: /images/uploads/program-manorama-memorial-high-school-junior-college.jpg
+image_alt: Manorama Memorial High School & Junior College building
 description: A girls' high school and junior college, in its fifth decade of opening up higher education to girls from rural Kedgaon.
 donate_verb: Support a Student
 ---

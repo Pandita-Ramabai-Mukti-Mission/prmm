@@ -2,8 +2,8 @@
 title: Priti Sadan – Home for the Aged
 category: Home for Aged and Blind
 theme: Heart
-image:
-image_alt:
+image: /images/uploads/program-priti-sadan-home-for-the-aged.jpg
+image_alt: Elderly women residents at Priti Sadan
 description: A home for elderly women at Kedgaon, part of the original family of homes built during the 1896–97 famine relief effort.
 donate_verb: Support This Home
 ---

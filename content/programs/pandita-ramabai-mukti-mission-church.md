@@ -2,8 +2,8 @@
 title: Pandita Ramabai Mukti Mission Church
 category: Church and Bible College
 theme: Destiny
-image:
-image_alt:
+image: /images/uploads/program-pandita-ramabai-mukti-mission-church.png
+image_alt: Interior of the Pandita Ramabai Mukti Mission Church
 description: The Mission's own church at the heart of the Kedgaon campus, its cornerstone laid in 1899 and seating around 2,500.
 donate_verb: Support the Church
 ---

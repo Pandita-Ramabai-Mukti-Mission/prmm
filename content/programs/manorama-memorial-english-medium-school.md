@@ -2,8 +2,8 @@
 title: Manorama Memorial English Medium School
 category: School
 theme: Mind
-image:
-image_alt:
+image: /images/uploads/program-manorama-memorial-english-medium-school.jpg
+image_alt: Manorama Memorial English Medium School campus
 description: An English-medium school on the Mission's farmland campus serving around 800 students from pre-primary upward.
 donate_verb: Support a Student
 ---

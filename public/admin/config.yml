@@ -207,3 +207,43 @@ collections:
         widget: string
         required: false
         hint: "Describe the photo in one short sentence — this is read aloud to visitors using a screen reader. Required if you added a photo above."
+
+  - name: leadership
+    label: Leadership Team
+    folder: content/leadership
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: Name, name: name, widget: string }
+      - { label: Title / Role, name: title, widget: string }
+      - { label: Photo, name: image, widget: image, required: false }
+      - label: Photo Description
+        name: image_alt
+        widget: string
+        required: false
+        hint: "Describe the photo in one short sentence — this is read aloud to visitors using a screen reader. Required if you added a photo above."
+      - label: Short Bio
+        name: bio
+        widget: text
+        required: false
+        hint: "1–2 lines. Shown on the About Mukti Mission page. Leave blank to show a placeholder until one is written."
+
+  - name: about_mukti_extras
+    label: "About Mukti Mission — Photos"
+    files:
+      - name: about_mukti_photos
+        label: Photos
+        file: content/about-mukti-extras.md
+        fields:
+          - { label: Pandita Ramabai Portrait, name: ramabai_image, widget: image, required: false }
+          - label: Portrait Description
+            name: ramabai_image_alt
+            widget: string
+            required: false
+            hint: "Read aloud to visitors using a screen reader. Required if you added a photo above."
+          - { label: Campus Photo, name: campus_image, widget: image, required: false }
+          - label: Campus Photo Description
+            name: campus_image_alt
+            widget: string
+            required: false
+            hint: "Read aloud to visitors using a screen reader. Required if you added a photo above."

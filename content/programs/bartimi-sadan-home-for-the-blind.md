@@ -2,8 +2,8 @@
 title: Bartimi Sadan – Home for the Blind
 category: Home for Aged and Blind
 theme: Heart
-image:
-image_alt:
+image: /images/uploads/program-bartimi-sadan-home-for-the-blind.jpg
+image_alt: Bartimi Sadan, a home for blind and visually special-needs women and children
 description: A residential home and care community for blind and visually special-needs women and children at Kedgaon.
 donate_verb: Support This Home
 ---

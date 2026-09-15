@@ -2,8 +2,8 @@
 title: Krupa Sadan
 category: Home for Aged and Blind
 theme: Heart
-image:
-image_alt:
+image: /images/uploads/program-krupa-sadan.jpg
+image_alt: Residents of Krupa Sadan together
 description: One of Mukti's original residential homes at Kedgaon, established alongside Priti and Bartimi Sadan during the 1896–97 famine relief effort.
 donate_verb: Support This Home
 ---

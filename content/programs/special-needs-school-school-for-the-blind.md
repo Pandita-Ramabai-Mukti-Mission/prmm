@@ -2,8 +2,8 @@
 title: Special Needs School & School for the Blind
 category: School
 theme: Mind
-image:
-image_alt:
+image: /images/uploads/program-special-needs-school-school-for-the-blind.jpg
+image_alt: Students at the Special Needs School and School for the Blind
 description: A dedicated special-needs school on the Mukti campus, tracing back to the Mission's work with blind children in the 1890s.
 donate_verb: Support a Student
 ---

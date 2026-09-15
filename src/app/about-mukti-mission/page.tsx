@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getPageBySlug } from "@/lib/content";
+import { getPageBySlug, getAllLeadership, getAboutMuktiExtras } from "@/lib/content";
 import { GetInvolvedBand } from "@/components/GetInvolvedBand";
 import { PhotoBox } from "@/components/content-views/PhotoBox";
 import { LegacyMotif } from "@/components/LegacyMotif";
@@ -21,12 +21,6 @@ const TIMELINE = [
   { year: "1993", label: "Manorama Memorial School opens" },
   { year: "2011", label: "Agape Bible Institute founded" },
   { year: "2020", label: "The Boys Home opens" },
-];
-
-const LEADERSHIP = [
-  { name: "Mrs. Elizabeth Robert", title: "Chairperson" },
-  { name: "Dr. Lorraine Francis", title: "Mission Director" },
-  { name: "Mr. Anil Francis", title: "Chief Administrative Officer" },
 ];
 
 // "Why We Exist" — who Mukti's work serves, from the live site's own
@@ -64,6 +58,8 @@ const OPERATIONS = [
 export default async function AboutMuktiMission() {
   const page = await getPageBySlug("about-mukti-mission");
   if (!page) notFound();
+  const leadership = getAllLeadership();
+  const { ramabaiImage, campusImage } = getAboutMuktiExtras();
 
   return (
     <main id="main-content" className="flex flex-1 flex-col">
@@ -98,6 +94,7 @@ export default async function AboutMuktiMission() {
         <div className="grid grid-cols-1 gap-7 sm:grid-cols-3">
           <div className="overflow-hidden rounded-lg border border-black/10 bg-white shadow-md">
             <PhotoBox
+              image={ramabaiImage}
               placeholderLabel="Pandita Ramabai portrait/archival photo"
               recommendedSize="800×600"
               className="flex h-48 w-full text-xs"
@@ -113,6 +110,7 @@ export default async function AboutMuktiMission() {
           </div>
           <div className="overflow-hidden rounded-lg border border-black/10 bg-white shadow-md">
             <PhotoBox
+              image={campusImage}
               placeholderLabel="Mukti Mission campus/community photo"
               recommendedSize="800×600"
               className="flex h-48 w-full text-xs"
@@ -262,14 +260,19 @@ export default async function AboutMuktiMission() {
         <div className="mx-auto max-w-6xl">
           <h2 className="mb-8 text-xl">Leadership</h2>
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-3">
-            {LEADERSHIP.map((l) => (
-              <div key={l.name} className="rounded-lg border border-black/10 bg-white shadow-md p-5 text-center">
-                <div className="mx-auto mb-3.5 flex h-24 w-24 items-center justify-center rounded-full border border-dashed border-black/15 bg-[repeating-linear-gradient(45deg,#ece7dd,#ece7dd_10px,#dfd9cc_10px,#dfd9cc_20px)] text-[10px] text-[#8a8170]">
-                  Photo
-                </div>
+            {leadership.map((l) => (
+              <div key={l.slug} className="rounded-lg border border-black/10 bg-white shadow-md p-5 text-center">
+                <PhotoBox
+                  image={l.image}
+                  placeholderLabel="Photo"
+                  recommendedSize="400×400"
+                  className="mx-auto mb-3.5 flex h-24 w-24 rounded-full text-[10px]"
+                />
                 <h3 className="font-semibold">{l.name}</h3>
                 <div className="mb-2 text-sm text-ink-soft">{l.title}</div>
-                <p className="text-sm italic text-ink-soft">[1–2 line bio — request from client]</p>
+                <p className="text-sm italic text-ink-soft">
+                  {l.bio || "[1–2 line bio — request from client]"}
+                </p>
               </div>
             ))}
           </div>

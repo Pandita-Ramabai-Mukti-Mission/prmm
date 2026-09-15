@@ -1,8 +1,8 @@
 ---
 title: The Boys Home
 category: Boys Home
-image:
-image_alt:
+image: /images/uploads/program-the-boys-home.jpg
+image_alt: Mission Director Dr. Lorraine Francis with children from Hebron Boys Home
 description: A home for boys at Handalwadi, opened in December 2020 and now caring for 26 boys under resident house-parents.
 donate_verb: Support a Boy
 ---

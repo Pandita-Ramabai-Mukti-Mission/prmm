@@ -2,8 +2,8 @@
 title: Mukti Farm
 category: Farming
 theme: Environment
-image:
-image_alt:
+image: /images/uploads/program-mukti-farm.jpg
+image_alt: Mukti Farm's cultivated fields at Kedgaon
 description: Decades-fallow acreage at Kedgaon restored to productive farmland growing sugarcane, wheat, jowar, maize and vegetables.
 donate_verb: Support the Farm
 ---

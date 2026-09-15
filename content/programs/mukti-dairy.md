@@ -2,8 +2,8 @@
 title: Mukti Dairy
 category: Farming
 theme: Environment
-image:
-image_alt:
+image: /images/uploads/program-mukti-dairy.png
+image_alt: Cows from the Mukti Dairy herd
 description: A small dairy herd of Indian-breed cows, cared for and milked by Mukti farm staff.
 donate_verb: Support the Farm
 ---

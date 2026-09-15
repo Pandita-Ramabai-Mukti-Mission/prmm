@@ -2,8 +2,8 @@
 title: Sharada Sadan Primary School
 category: School
 theme: Mind
-image:
-image_alt:
+image: /images/uploads/program-sharada-sadan-primary-school.jpg
+image_alt: Sharada Sadan Primary School building
 description: Pandita Ramabai's original 1889 school for widows and girls, still teaching at Kedgaon today with a 100% exam pass record.
 donate_verb: Support a Student
 ---

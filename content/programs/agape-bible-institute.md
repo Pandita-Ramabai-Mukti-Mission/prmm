@@ -2,8 +2,8 @@
 title: Agape Bible Institute
 category: Church and Bible College
 theme: Destiny
-image:
-image_alt:
+image: /images/uploads/program-agape-bible-institute.jpg
+image_alt: Students seated together at Agape Bible Institute
 description: A theology college founded in 2011, training people for ministry across eight centers in Maharashtra including a campus at Kedgaon.
 donate_verb: Support Ministry Training
 ---

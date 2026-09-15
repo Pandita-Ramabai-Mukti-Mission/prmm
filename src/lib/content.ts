@@ -104,6 +104,19 @@ export type Testimonial = {
   image?: ImageWithAlt;
 };
 
+export type LeadershipMember = {
+  slug: string;
+  name: string;
+  title: string;
+  image?: ImageWithAlt;
+  bio?: string;
+};
+
+export type AboutMuktiExtras = {
+  ramabaiImage?: ImageWithAlt;
+  campusImage?: ImageWithAlt;
+};
+
 function readMarkdownFile(filePath: string) {
   const raw = fs.readFileSync(filePath, "utf8");
   return matter(raw);
@@ -112,9 +125,10 @@ function readMarkdownFile(filePath: string) {
 // Decap stores each photo as two flat frontmatter fields (`image` +
 // `image_alt`) rather than a nested object, so editors see two plain
 // fields instead of a collapsible sub-form — see docs/dev-backlog.md.
-function readImageWithAlt(data: Record<string, unknown>): ImageWithAlt | undefined {
-  if (!data.image) return undefined;
-  return { src: data.image as string, alt: (data.image_alt as string) ?? "" };
+function readImageWithAlt(data: Record<string, unknown>, prefix = "image"): ImageWithAlt | undefined {
+  const src = data[prefix];
+  if (!src) return undefined;
+  return { src: src as string, alt: (data[`${prefix}_alt`] as string) ?? "" };
 }
 
 async function markdownToHtml(markdown: string) {
@@ -391,4 +405,33 @@ export function getAllTestimonials(): Testimonial[] {
       image: readImageWithAlt(data),
     };
   });
+}
+
+export function getAllLeadership(): LeadershipMember[] {
+  return getSlugsIn("leadership").map((slug) => {
+    const filePath = path.join(CONTENT_DIR, "leadership", `${slug}.md`);
+    const { data } = readMarkdownFile(filePath);
+    return {
+      slug,
+      name: data.name,
+      title: data.title,
+      image: readImageWithAlt(data),
+      bio: data.bio,
+    };
+  });
+}
+
+// Dedicated single-file "files" collection (content/about-mukti-extras.md),
+// same reasoning as getHomeHeroSlides — these two photos belong only to
+// the About Mukti Mission page and would otherwise mean bolting image
+// fields onto the generic `pages` collection shared by 6 unrelated
+// singleton pages.
+export function getAboutMuktiExtras(): AboutMuktiExtras {
+  const filePath = path.join(CONTENT_DIR, "about-mukti-extras.md");
+  if (!fs.existsSync(filePath)) return {};
+  const { data } = readMarkdownFile(filePath);
+  return {
+    ramabaiImage: readImageWithAlt(data, "ramabai_image"),
+    campusImage: readImageWithAlt(data, "campus_image"),
+  };
 }
