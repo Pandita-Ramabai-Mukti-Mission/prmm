@@ -3,6 +3,7 @@ import Link from "next/link";
 import { getPageBySlug, getRegionalContacts, getReachExtras } from "@/lib/content";
 import { EmptyState } from "@/components/EmptyState";
 import { PageTitleBody } from "@/components/content-views/PageTitleBody";
+import { WhereWeWorkMap } from "@/components/WhereWeWorkMap";
 import { Reveal } from "@/components/Reveal";
 
 export default async function WhereWeWork() {
@@ -26,17 +27,9 @@ export default async function WhereWeWork() {
       />
 
       {mapImage?.src ? (
-        // A labelled diagram, not a photo — location names sit right at
-        // the edges, so this needs `contain` (whole map always visible,
-        // letterboxed if needed) rather than PhotoBox's `cover` crop,
-        // which would cut labels like "Mount Abu" or "Miraj" off the
-        // edges depending on the box's aspect ratio.
-        <div
-          role="img"
-          aria-label={mapImage.alt}
-          style={{ backgroundImage: `url(${mapImage.src})` }}
-          className="mt-10 h-64 w-full rounded-xl border border-black/10 bg-white bg-contain bg-center bg-no-repeat sm:h-96"
-        />
+        <div className="mt-10">
+          <WhereWeWorkMap mapSrc={mapImage.src} mapAlt={mapImage.alt} />
+        </div>
       ) : (
         <div className="mt-10 flex h-64 items-center justify-center rounded-xl border border-dashed border-black/15 bg-[repeating-linear-gradient(45deg,#ece7dd,#ece7dd_10px,#dfd9cc_10px,#dfd9cc_20px)] text-xs text-[#8a8170] sm:h-96">
           Map of India — locations
