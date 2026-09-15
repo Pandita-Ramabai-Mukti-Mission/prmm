@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { IBM_Plex_Sans, Source_Serif_4, Geist_Mono } from "next/font/google";
 import { ChromeGate } from "@/components/ChromeGate";
 import { RecaptchaScript } from "@/components/RecaptchaScript";
+import { GlobalLoader } from "@/components/GlobalLoader";
 import { getHeadquartersContact, getSiteBranding } from "@/lib/content";
 import "./globals.css";
 
@@ -46,6 +48,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="flex min-h-full flex-col bg-paper text-ink">
         <RecaptchaScript />
+        {/* useSearchParams requires a Suspense boundary; an empty fallback
+            is correct here since the loader has nothing to show until it
+            mounts anyway. */}
+        <Suspense fallback={null}>
+          <GlobalLoader />
+        </Suspense>
         <ChromeGate hq={hq} logo={logo}>{children}</ChromeGate>
       </body>
     </html>

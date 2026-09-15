@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { ImageWithAlt, RegionalContact } from "@/lib/content";
@@ -72,6 +72,16 @@ export function SiteHeader({ hq, logo }: { hq?: RegionalContact; logo?: ImageWit
   // fires in the same instant as a navigation-triggered close; a real
   // hover shortly after still opens it normally.
   const suppressHoverUntilRef = useRef(0);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    function onScroll() {
+      setIsScrolled(window.scrollY > 8);
+    }
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   // The header is part of the shared layout, so it never unmounts across a
   // client-side navigation — clicking a submenu link doesn't move the
@@ -102,37 +112,45 @@ export function SiteHeader({ hq, logo }: { hq?: RegionalContact; logo?: ImageWit
       >
         Skip to main content
       </a>
-      <header className="border-b border-black/10">
-        {/* Thin utility micro-strip, desktop only — real contact info +
-            verified social, not the login/subscribe links a reference site
-            (isha.sadhguru.org) uses; there's no donor-account system on this
-            site, so this row carries what we actually have instead of
-            copying that row's specific content. */}
-        <div className="hidden items-center justify-between bg-paper px-6 py-1.5 text-xs text-ink-soft sm:px-12 md:flex">
-          <div className="flex items-center gap-4">
-            {hq?.phone && (
-              <a href={`tel:${hq.phone.replace(/\s+/g, "")}`} className="hover:text-coral">
-                {hq.phone}
-              </a>
-            )}
-            {hq?.email && (
-              <a href={`mailto:${hq.email}`} className="hover:text-coral">
-                {hq.email}
-              </a>
-            )}
-          </div>
-          <div className="flex items-center gap-4">
-            <Link href="/reports/" className="hover:text-coral">
-              Reports &amp; Transparency
-            </Link>
-            <div className="flex gap-2">
-              {VERIFIED_SOCIAL_LINKS.map((s) => (
-                <SocialIcon key={s.label} link={s} className="text-ink-soft hover:text-coral" />
-              ))}
-            </div>
+      {/* Thin utility micro-strip, desktop only — real contact info +
+          verified social, not the login/subscribe links a reference site
+          (isha.sadhguru.org) uses; there's no donor-account system on this
+          site, so this row carries what we actually have instead of
+          copying that row's specific content. A plain sibling ABOVE
+          <header>, not inside it — it scrolls away with the page while
+          only the header below stays pinned, and keeping it outside
+          <header> avoids putting `sticky` on a nested flex item (which is
+          what silently failed to stick here the first time — computed
+          style showed `position: sticky` correctly, but the box still
+          scrolled 1:1 with the page instead of pinning at top:0). Sticky
+          directly on the semantic <header> element is both the fix and
+          the more conventional pattern anyway. */}
+      <div className="hidden items-center justify-between border-b border-black/10 bg-paper px-6 py-1.5 text-xs text-ink-soft sm:px-12 md:flex">
+        <div className="flex items-center gap-4">
+          {hq?.phone && (
+            <a href={`tel:${hq.phone.replace(/\s+/g, "")}`} className="hover:text-coral">
+              {hq.phone}
+            </a>
+          )}
+          {hq?.email && (
+            <a href={`mailto:${hq.email}`} className="hover:text-coral">
+              {hq.email}
+            </a>
+          )}
+        </div>
+        <div className="flex items-center gap-4">
+          <Link href="/reports/" className="hover:text-coral">
+            Reports &amp; Transparency
+          </Link>
+          <div className="flex gap-2">
+            {VERIFIED_SOCIAL_LINKS.map((s) => (
+              <SocialIcon key={s.label} link={s} className="text-ink-soft hover:text-coral" />
+            ))}
           </div>
         </div>
+      </div>
 
+      <header className={`sticky top-0 z-40 border-b border-black/10 bg-coral ${isScrolled ? "shadow-md" : ""}`}>
         {/* One dense combined bar — logo, nav, and Donate together in a
             single row. Logo gets real space here (h-14, not h-8): the mark
             is meant to hold a photographic portrait (Pandita Ramabai), and
