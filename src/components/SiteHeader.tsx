@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import type { RegionalContact } from "@/lib/content";
 import { SocialIcon, VERIFIED_SOCIAL_LINKS } from "@/components/socialLinks";
 
@@ -61,6 +62,38 @@ function ChevronDown() {
 
 export function SiteHeader({ hq }: { hq?: RegionalContact }) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const pathname = usePathname();
+  const [lastPathname, setLastPathname] = useState(pathname);
+  // After the reset below, the browser re-evaluates which element is under
+  // the (unmoved) cursor once the page's DOM/layout changes post-navigation
+  // and fires a fresh, purely synthetic `mouseenter` even though the mouse
+  // never actually moved — which immediately reopens the dropdown right
+  // back up. This timestamp lets onMouseEnter ignore any such event that
+  // fires in the same instant as a navigation-triggered close; a real
+  // hover shortly after still opens it normally.
+  const suppressHoverUntilRef = useRef(0);
+
+  // The header is part of the shared layout, so it never unmounts across a
+  // client-side navigation — clicking a submenu link doesn't move the
+  // mouse, so pure CSS `:hover` has no way to know the dropdown should
+  // close. Resetting during render when the route actually changes (React's
+  // documented pattern for "adjust state when a prop changes") covers both
+  // that case and the equivalent keyboard/focus one, regardless of whether
+  // the cursor or focus is still sitting on the trigger — and avoids the
+  // extra render pass a useEffect-based reset would cost here.
+  if (pathname !== lastPathname) {
+    setLastPathname(pathname);
+    setOpenDropdown(null);
+  }
+
+  // Closing on click (not just the pathname-diff reset above) handles the
+  // common case synchronously, in a normal event-handler context where
+  // mutating a ref/reading the clock is allowed.
+  function closeDropdownForNavigation() {
+    setOpenDropdown(null);
+    suppressHoverUntilRef.current = Date.now() + 400;
+  }
 
   return (
     <>
@@ -127,16 +160,37 @@ export function SiteHeader({ hq }: { hq?: RegionalContact }) {
           <nav className="hidden flex-1 items-center justify-end gap-7 text-[15px] font-semibold tracking-normal text-white md:flex">
             {NAV_ITEMS.map((item) =>
               item.children ? (
-                <div key={item.label} className="group relative">
-                  <Link href={item.href!} className="flex items-center gap-1 py-2 hover:text-white/75">
+                <div
+                  key={item.label}
+                  className="relative"
+                  onMouseEnter={() => {
+                    if (Date.now() < suppressHoverUntilRef.current) return;
+                    setOpenDropdown(item.label);
+                  }}
+                  onMouseLeave={() => setOpenDropdown(null)}
+                  onFocus={() => setOpenDropdown(item.label)}
+                  onBlur={(e) => {
+                    if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setOpenDropdown(null);
+                  }}
+                >
+                  <Link
+                    href={item.href!}
+                    onClick={closeDropdownForNavigation}
+                    className="flex items-center gap-1 py-2 hover:text-white/75"
+                  >
                     {item.label}
                     <ChevronDown />
                   </Link>
-                  <div className="invisible absolute left-0 top-full z-20 min-w-[220px] rounded-md border border-black/10 bg-white py-2 opacity-0 shadow-lg transition-opacity group-focus-within:visible group-focus-within:opacity-100 group-hover:visible group-hover:opacity-100">
+                  <div
+                    className={`absolute left-0 top-full z-20 min-w-[220px] rounded-md border border-black/10 bg-white py-2 shadow-lg transition-opacity ${
+                      openDropdown === item.label ? "visible opacity-100" : "invisible opacity-0"
+                    }`}
+                  >
                     {item.children.map((c) => (
                       <Link
                         key={c.href}
                         href={c.href}
+                        onClick={closeDropdownForNavigation}
                         className="block px-4 py-2 text-sm font-medium text-ink hover:bg-paper hover:text-coral"
                       >
                         {c.label}
