@@ -23,25 +23,131 @@ const TIMELINE = [
   { year: "2020", label: "The Boys Home opens" },
 ];
 
+// Single-weight curved-line icon set (24x24, hand-drawn originals — not
+// copied from any icon library) matching MissionFoundationBand's existing
+// aesthetic, so this page's two plainest sections (previously a bare text
+// grid and a row of flat pills) pick up the same restrained icon language
+// already established elsewhere on this page instead of inventing a new
+// visual system. Deliberately generic/symbolic (heart, home, shield…), not
+// literal depictions of any group — see docs/design-system.md's imagery
+// policy on why a real photo would be the wrong call for sensitive
+// categories like this, where icons are the appropriate abstraction.
+function IconIntersectingCircles() {
+  return (
+    <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" strokeWidth={1.4} strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="9.5" cy="12" r="6.5" />
+      <circle cx="14.5" cy="12" r="6.5" />
+    </svg>
+  );
+}
+function IconHeart() {
+  return (
+    <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" strokeWidth={1.4} strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 20.3S3.5 15 3.5 9.2A4.7 4.7 0 0112 6.4a4.7 4.7 0 018.5 2.8C20.5 15 12 20.3 12 20.3z" />
+    </svg>
+  );
+}
+function IconHome() {
+  return (
+    <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" strokeWidth={1.4} strokeLinecap="round" strokeLinejoin="round">
+      <path d="M4 11.5L12 4l8 7.5" />
+      <path d="M6 10v9.5h12V10" />
+      <path d="M10 19.5v-6h4v6" />
+    </svg>
+  );
+}
+function IconEye() {
+  return (
+    <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" strokeWidth={1.4} strokeLinecap="round" strokeLinejoin="round">
+      <path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z" />
+      <circle cx="12" cy="12" r="3" />
+    </svg>
+  );
+}
+function IconUmbrella() {
+  return (
+    <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" strokeWidth={1.4} strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 3c4.5 0 8 3 8 6.5H4C4 6 7.5 3 12 3z" />
+      <path d="M12 3v15.5a2 2 0 01-3.5 1.3" />
+    </svg>
+  );
+}
+function IconShield() {
+  return (
+    <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" strokeWidth={1.4} strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 3.5l7 2.7v5.6c0 4.6-3 7.6-7 8.7-4-1.1-7-4.1-7-8.7V6.2z" />
+    </svg>
+  );
+}
+function IconSunCloud() {
+  return (
+    <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" strokeWidth={1.4} strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="9" cy="7" r="3" />
+      <path d="M9 2v1.4M13 4.3l-1 1M5 4.3l1 1" />
+      <path d="M6.5 18.5h10a3.2 3.2 0 000-6.4 4.6 4.6 0 00-8.6-1.7 3.6 3.6 0 00-1.4 8.1z" />
+    </svg>
+  );
+}
+function IconGlobe() {
+  return (
+    <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" strokeWidth={1.4} strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="12" r="8.5" />
+      <path d="M3.5 12h17M12 3.5c2.5 2.4 3.8 5.3 3.8 8.5s-1.3 6.1-3.8 8.5c-2.5-2.4-3.8-5.3-3.8-8.5S9.5 5.9 12 3.5z" />
+    </svg>
+  );
+}
+function IconMedicalCross() {
+  return (
+    <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" strokeWidth={1.4} strokeLinecap="round" strokeLinejoin="round">
+      <rect x="3.5" y="3.5" width="17" height="17" rx="4" />
+      <path d="M12 8v8M8 12h8" />
+    </svg>
+  );
+}
+function IconCross() {
+  return (
+    <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" strokeWidth={1.4} strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 3v18M6 9h12" />
+    </svg>
+  );
+}
+function IconTorch() {
+  return (
+    <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" strokeWidth={1.4} strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 2.5c1.6 1.8 2.4 3.4 2.4 5 0 1.3-1 2.2-2.4 2.2S9.6 8.8 9.6 7.5c0-1 .4-2 1.2-3" />
+      <path d="M9 10.8a4.5 4.5 0 106 0" />
+      <path d="M12 15v6.5" />
+    </svg>
+  );
+}
+function IconCircleOfHands() {
+  return (
+    <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" strokeWidth={1.4} strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="12" r="8.5" strokeDasharray="2.2 3.4" />
+      <circle cx="12" cy="12" r="2.6" />
+    </svg>
+  );
+}
+
 // "Why We Exist" — who Mukti's work serves, from the live site's own
 // list (prmm.org.in/about-mukti-mission/, fetched 2026-09-11).
 const WHY_WE_EXIST = [
-  "Orphans and special-needs women and children",
-  "Widows, single parents, unwed mothers and childless couples",
-  "People who are visually or physically challenged",
-  "Children from the streets and slums",
-  "Children of commercial sex workers",
-  "Children affected by natural disaster",
-  "Indigenous people groups",
-  "The poor in the surrounding community, through medical care and a day-care center",
+  { label: "Orphans and special-needs women and children", icon: <IconHeart /> },
+  { label: "Widows, single parents, unwed mothers and childless couples", icon: <IconHome /> },
+  { label: "People who are visually or physically challenged", icon: <IconEye /> },
+  { label: "Children from the streets and slums", icon: <IconUmbrella /> },
+  { label: "Children of commercial sex workers", icon: <IconShield /> },
+  { label: "Children affected by natural disaster", icon: <IconSunCloud /> },
+  { label: "Indigenous people groups", icon: <IconGlobe /> },
+  { label: "The poor in the surrounding community, through medical care and a day-care center", icon: <IconMedicalCross /> },
 ];
 
 const CHARACTER = [
-  "Christ-centred",
-  "Destitute child and women focused",
-  "Holistic and multi-faceted",
-  "Continuing Pandita Ramabai's founding vision",
-  "Fully governed by Indians",
+  { label: "Christ-centred", icon: <IconCross /> },
+  { label: "Destitute child and women focused", icon: <IconHeart /> },
+  { label: "Holistic and multi-faceted", icon: <IconIntersectingCircles /> },
+  { label: "Continuing Pandita Ramabai's founding vision", icon: <IconTorch /> },
+  { label: "Fully governed by Indians", icon: <IconCircleOfHands /> },
 ];
 
 // Mirrors the live site's own single-letter M/S/H/E/D operations nav —
@@ -150,22 +256,31 @@ export default async function AboutMuktiMission() {
         <MissionFoundationBand />
       </Reveal>
 
-      {/* Why We Exist — who Mukti's work serves, as a card grid rather
-          than a bullet list, matching the site's established card
-          treatment (rounded-lg, border, shadow-md) on a bold tan band for
-          page rhythm (docs/design-system.md's alternating-sections rule,
-          echoing isha.sadhguru.org's own bold-banding technique). */}
+      {/* Why We Exist — icon + label cards rather than a bare text grid
+          (client feedback: previous version "looks very basic"), on a bold
+          tan band for page rhythm (docs/design-system.md's
+          alternating-sections rule). Each card gets a small circular
+          coral-tinted icon badge, matching the site's established
+          icon-badge language (GetInvolvedBand's action icons), plus a
+          hover lift so the grid feels tactile instead of static. */}
       <Reveal>
       <section className="bg-[#f3efe7] px-6 py-14 sm:px-12">
         <div className="mx-auto max-w-6xl">
           <h2 className="text-xl">Why We Exist</h2>
-          <p className="mt-2 max-w-[60ch] text-sm text-ink-soft">
+          <SectionFlourish className="mt-3 h-6 w-36 text-coral" />
+          <p className="mt-4 max-w-[60ch] text-sm text-ink-soft">
             Mukti exists to make a difference in the lives of:
           </p>
-          <div className="mt-7 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {WHY_WE_EXIST.map((w) => (
-              <div key={w} className="rounded-lg border border-black/10 bg-white shadow-md p-4 text-sm">
-                {w}
+              <div
+                key={w.label}
+                className="flex flex-col gap-3.5 rounded-lg border border-black/10 bg-white p-5 shadow-md transition-all hover:-translate-y-0.5 hover:shadow-lg"
+              >
+                <span className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full bg-[#fff4f2] text-coral">
+                  {w.icon}
+                </span>
+                <p className="text-sm leading-relaxed">{w.label}</p>
               </div>
             ))}
           </div>
@@ -173,20 +288,26 @@ export default async function AboutMuktiMission() {
       </section>
       </Reveal>
 
-      {/* Character of Mukti — five short descriptors as a pill row rather
-          than a paragraph, since each is a standalone label, not
-          connected prose. */}
+      {/* Character of Mukti — icon + label cards, upgraded from a flat
+          pill row for the same reason as Why We Exist above. Kept visually
+          lighter (smaller icons, horizontal layout) than that section
+          since these are five short standalone descriptors, not full
+          sentences needing the same visual weight. */}
       <Reveal>
       <section className="mx-auto w-full max-w-6xl px-6 py-14 sm:px-12">
-        <h2 className="mb-6 text-xl">Character of Mukti</h2>
-        <div className="flex flex-wrap gap-3">
+        <h2 className="text-xl">Character of Mukti</h2>
+        <SectionFlourish className="mb-8 mt-3 h-6 w-36 text-coral" />
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
           {CHARACTER.map((c) => (
-            <span
-              key={c}
-              className="rounded-full border border-coral/30 bg-[#fff4f2] px-4 py-2 text-sm font-semibold text-coral"
+            <div
+              key={c.label}
+              className="flex flex-col items-center gap-3 rounded-lg border border-coral/30 bg-[#fff4f2] p-5 text-center transition-all hover:-translate-y-0.5 hover:shadow-md"
             >
-              {c}
-            </span>
+              <span className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full bg-white text-coral">
+                {c.icon}
+              </span>
+              <span className="text-sm font-semibold text-coral">{c.label}</span>
+            </div>
           ))}
         </div>
       </section>
