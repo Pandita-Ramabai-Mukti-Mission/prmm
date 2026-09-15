@@ -28,6 +28,20 @@ collections:
       - { label: Title, name: title, widget: string }
       - { label: Body, name: body, widget: markdown }
 
+  - name: site_branding
+    label: Site Branding
+    files:
+      - name: logo
+        label: Logo
+        file: content/site-branding.md
+        fields:
+          - { label: Logo, name: logo, widget: image, required: false }
+          - label: Logo Description
+            name: logo_alt
+            widget: string
+            required: false
+            hint: "Read aloud to visitors using a screen reader. Required if you added a logo above."
+
   - name: home_hero
     label: Homepage Hero
     files:

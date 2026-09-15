@@ -5,6 +5,7 @@ import {
   getAllProgramsMeta,
   getAllNewsMeta,
   getHomeHeroSlides,
+  getAboutMuktiExtras,
 } from "@/lib/content";
 import { GetInvolvedBand } from "@/components/GetInvolvedBand";
 import { EmptyState } from "@/components/EmptyState";
@@ -107,6 +108,7 @@ export default async function Home() {
   const page = await getPageBySlug("home");
   const ramabaiPage = await getPageBySlug("about-pandita-ramabai");
   const missionPage = await getPageBySlug("about-mukti-mission");
+  const { ramabaiImage } = getAboutMuktiExtras();
   if (!page) notFound();
 
   const allPrograms = getAllProgramsMeta();
@@ -194,22 +196,35 @@ export default async function Home() {
 
       {/* 3. Legacy — Pandita Ramabai's own story is the site's strongest, most
           distinctive trust/brand asset (a named historical figure, not
-          generic NGO copy). Reuses the real About Pandita Ramabai copy
-          instead of restating it, so the two pages can't drift apart. */}
+          generic NGO copy). The paragraph below is the live homepage's own
+          wording for this exact section (prmm.org.in, fetched 2026-09-15) —
+          shorter and phrased differently than the About Pandita Ramabai
+          page's own copy, so it's kept as this section's own text rather
+          than reusing that page's contentHtml, which drifted from what the
+          homepage itself actually says here. */}
       {ramabaiPage && (
         <Reveal>
         <section className="relative overflow-hidden bg-[#f3efe7] px-6 py-20 sm:px-12">
           <LegacyMotif className="pointer-events-none absolute -right-16 -top-16 h-80 w-80 text-coral/[0.14] md:h-96 md:w-96" />
           <div className="relative z-10 mx-auto flex max-w-6xl flex-col items-center gap-14 md:flex-row">
-            <div className="flex h-56 w-full flex-shrink-0 items-center justify-center rounded-xl border border-dashed border-black/15 bg-[repeating-linear-gradient(45deg,#ece7dd,#ece7dd_10px,#dfd9cc_10px,#dfd9cc_20px)] text-center text-xs text-[#8a8170] md:h-64 md:w-64">
-              Portrait of Pandita Ramabai
-            </div>
+            <PhotoBox
+              image={ramabaiImage}
+              placeholderLabel="Portrait of Pandita Ramabai"
+              recommendedSize="800×600"
+              className="mx-auto aspect-[71/85] w-full max-w-[220px] flex-shrink-0 rounded-xl text-xs md:max-w-[260px]"
+            />
             <div className="flex-1">
-              <h2 className="text-3xl text-ink">The Life of Pandita Ramabai</h2>
-              <div
-                className="prose mt-3 max-w-[65ch] text-ink-soft"
-                dangerouslySetInnerHTML={{ __html: ramabaiPage.contentHtml }}
-              />
+              <div className="text-xs font-semibold uppercase tracking-wide text-ink-soft">1858 &ndash; 1922</div>
+              <p className="mt-1 text-lg italic text-coral">
+                &ldquo;If you empower a girl, you empower the nation.&rdquo;
+              </p>
+              <h2 className="mt-3 text-3xl text-ink">The Life of Pandita Ramabai</h2>
+              <p className="prose mt-3 max-w-[65ch] text-ink-soft">
+                Way back in the 1800s, a young woman named Ramabai Dongre-Medhavi — a champion for the
+                emancipation of women and a pioneer in education — saw the need and began a home for
+                widows. This home for widows then, as Mukti Mission, gradually opened its doors to
+                every needy soul and sheltered them.
+              </p>
               <Link
                 href="/about-pandita-ramabai/"
                 className="mt-4 inline-block text-base font-semibold hover:text-coral"

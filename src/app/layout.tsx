@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { IBM_Plex_Sans, Source_Serif_4, Geist_Mono } from "next/font/google";
 import { ChromeGate } from "@/components/ChromeGate";
 import { RecaptchaScript } from "@/components/RecaptchaScript";
-import { getHeadquartersContact } from "@/lib/content";
+import { getHeadquartersContact, getSiteBranding } from "@/lib/content";
 import "./globals.css";
 
 // Two-family system (replaced the single-family Geist Sans decision,
@@ -37,6 +37,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   const hq = getHeadquartersContact();
+  const { logo } = getSiteBranding();
 
   return (
     <html
@@ -45,7 +46,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="flex min-h-full flex-col bg-paper text-ink">
         <RecaptchaScript />
-        <ChromeGate hq={hq}>{children}</ChromeGate>
+        <ChromeGate hq={hq} logo={logo}>{children}</ChromeGate>
       </body>
     </html>
   );

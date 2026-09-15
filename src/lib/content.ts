@@ -216,6 +216,17 @@ export function getHomeHeroSlides(): HeroSlideContent[] {
   }));
 }
 
+// Dedicated single-file "files" collection (content/site-branding.md),
+// same reasoning as getHomeHeroSlides/getAboutMuktiExtras — a sitewide
+// logo isn't a "page", so it doesn't belong in the generic `pages`
+// collection.
+export function getSiteBranding(): { logo?: ImageWithAlt } {
+  const filePath = path.join(CONTENT_DIR, "site-branding.md");
+  if (!fs.existsSync(filePath)) return {};
+  const { data } = readMarkdownFile(filePath);
+  return { logo: readImageWithAlt(data, "logo") };
+}
+
 export function getAllProgramSlugs(): string[] {
   return getSlugsIn("programs");
 }

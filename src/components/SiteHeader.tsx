@@ -3,7 +3,7 @@
 import { useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import type { RegionalContact } from "@/lib/content";
+import type { ImageWithAlt, RegionalContact } from "@/lib/content";
 import { SocialIcon, VERIFIED_SOCIAL_LINKS } from "@/components/socialLinks";
 
 type NavChild = { href: string; label: string };
@@ -60,7 +60,7 @@ function ChevronDown() {
   );
 }
 
-export function SiteHeader({ hq }: { hq?: RegionalContact }) {
+export function SiteHeader({ hq, logo }: { hq?: RegionalContact; logo?: ImageWithAlt }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const pathname = usePathname();
@@ -147,9 +147,25 @@ export function SiteHeader({ hq }: { hq?: RegionalContact }) {
             previous pass's 13px for legibility on a colored bar. */}
         <div className="flex items-center justify-between gap-6 bg-coral px-6 py-4 sm:px-12">
           <Link href="/" className="flex flex-shrink-0 items-center gap-3.5">
-            <span className="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-full border-2 border-white/70 bg-white/10 text-center text-[10px] font-medium text-white/90">
-              PHOTO
-            </span>
+            {logo?.src ? (
+              // The org's real logo is a portrait of Pandita Ramabai in an
+              // oval frame — a photo, not a wordmark — so it gets the same
+              // cover-crop-in-a-circle treatment this badge was always
+              // designed for, background-image based (same technique as
+              // PhotoBox) so the portrait fills the circle with no
+              // stretching regardless of the source image's own aspect
+              // ratio.
+              <span
+                role="img"
+                aria-label={logo.alt}
+                style={{ backgroundImage: `url(${logo.src})` }}
+                className="h-14 w-14 flex-shrink-0 rounded-full border-2 border-white/70 bg-cover bg-center bg-no-repeat"
+              />
+            ) : (
+              <span className="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-full border-2 border-white/70 bg-white/10 text-center text-[10px] font-medium text-white/90">
+                PHOTO
+              </span>
+            )}
             <span className="whitespace-nowrap text-lg font-bold leading-tight text-white">
               Pandita Ramabai
               <br />
