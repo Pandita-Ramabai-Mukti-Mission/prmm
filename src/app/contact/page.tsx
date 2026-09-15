@@ -1,7 +1,5 @@
 import Link from "next/link";
-import { getRegionalContacts, getHeadquartersContact } from "@/lib/content";
-import { EmptyState } from "@/components/EmptyState";
-import { RegionalOfficesMap } from "@/components/RegionalOfficesMap";
+import { getHeadquartersContact } from "@/lib/content";
 import { Reveal } from "@/components/Reveal";
 
 export default async function Contact({
@@ -10,7 +8,6 @@ export default async function Contact({
   searchParams: Promise<{ interest?: string }>;
 }) {
   const { interest } = await searchParams;
-  const regions = getRegionalContacts();
   const hq = getHeadquartersContact();
 
   return (
@@ -22,7 +19,11 @@ export default async function Contact({
         </div>
         <h1 className="mt-3 text-4xl">Get in Touch</h1>
         <p className="mt-2 max-w-[60ch] text-ink-soft">
-          Reach the Kedgaon campus directly, or connect with one of our regional representatives.
+          Reach the Kedgaon campus directly, or find a regional representative on our{" "}
+          <Link href="/reach/" className="font-semibold hover:text-coral">
+            Where We Work
+          </Link>{" "}
+          page.
         </p>
         {interest === "volunteer" && (
           <p className="mt-3 max-w-[60ch] rounded-md bg-[#e7ecf1] px-4 py-2.5 text-sm text-[#3f5268]">
@@ -107,23 +108,6 @@ export default async function Contact({
               <p className="mt-1">Kedgaon Campus — [headquarters contact not set in CMS]</p>
             )}
           </div>
-        </div>
-      </section>
-      </Reveal>
-
-      <Reveal>
-      <section className="bg-[#f3efe7] px-6 py-14 sm:px-12">
-        <div className="mx-auto max-w-6xl">
-          <h2 className="text-xl">Our Regional Representatives</h2>
-          {regions.length === 0 ? (
-            <div className="mt-5">
-              <EmptyState>Regional contact details are being migrated from the current site.</EmptyState>
-            </div>
-          ) : (
-            <div className="mt-5">
-              <RegionalOfficesMap regions={regions} />
-            </div>
-          )}
         </div>
       </section>
       </Reveal>

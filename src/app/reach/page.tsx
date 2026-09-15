@@ -1,9 +1,9 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { getPageBySlug, getRegionalContacts, getReachExtras } from "@/lib/content";
-import { EmptyState } from "@/components/EmptyState";
 import { PageTitleBody } from "@/components/content-views/PageTitleBody";
 import { WhereWeWorkMap } from "@/components/WhereWeWorkMap";
+import { RegionalOfficesMap } from "@/components/RegionalOfficesMap";
 import { Reveal } from "@/components/Reveal";
 
 export default async function WhereWeWork() {
@@ -38,27 +38,18 @@ export default async function WhereWeWork() {
       </Reveal>
 
       <Reveal>
-      <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-3">
-        <div className="rounded-lg border border-black/10 bg-white shadow-md p-5">
-          <div className="text-sm font-semibold">Kedgaon Campus</div>
-          <div className="mt-1 text-sm text-ink-soft">Founding campus &amp; headquarters</div>
-        </div>
-        {contacts.length === 0 ? (
-          <div className="col-span-2">
-            <EmptyState>Regional locations are being migrated from the current site.</EmptyState>
-          </div>
-        ) : (
-          contacts.map((c) => (
-            <div key={c.slug} className="rounded-lg border border-black/10 bg-white shadow-md p-5">
-              <div className="text-sm font-semibold">{c.region}</div>
-              <div className="mt-1 text-sm text-ink-soft">Regional representative</div>
-            </div>
-          ))
-        )}
+      <div className="mt-10 rounded-lg border border-black/10 bg-white shadow-md p-5">
+        <div className="text-sm font-semibold">Kedgaon Campus</div>
+        <div className="mt-1 text-sm text-ink-soft">Founding campus &amp; headquarters</div>
       </div>
 
-      <p className="mt-10 text-sm">
-        Have a representative near you?{" "}
+      <h2 className="mt-10 text-xl">Our Regional Representatives</h2>
+      <div className="mt-5">
+        <RegionalOfficesMap regions={contacts} />
+      </div>
+
+      <p className="mt-8 text-sm">
+        Don&rsquo;t see a representative near you?{" "}
         <Link href="/contact/" className="font-semibold hover:text-coral">
           Get in touch &rarr;
         </Link>{" "}
