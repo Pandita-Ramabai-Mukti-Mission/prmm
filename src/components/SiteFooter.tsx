@@ -9,7 +9,6 @@ export function SiteFooter({ hq }: { hq?: RegionalContact }) {
         <FooterColumn title="Quick Links">
           <FooterLink href="/about-pandita-ramabai/">About Pandita Ramabai</FooterLink>
           <FooterLink href="/news/">News &amp; Updates</FooterLink>
-          <FooterLink href="/testimonials/">Testimonials</FooterLink>
           <FooterLink href="/reports/">Reports</FooterLink>
           <FooterLink href="/contact/">Contact Us</FooterLink>
         </FooterColumn>

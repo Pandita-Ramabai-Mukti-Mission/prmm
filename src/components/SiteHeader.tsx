@@ -48,7 +48,6 @@ const NAV_ITEMS: NavItem[] = [
     ],
   },
   { href: "/reach/", label: "Where We Work" },
-  { href: "/testimonials/", label: "Testimonials" },
   { href: "/contact/", label: "Contact" },
 ];
 

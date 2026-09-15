@@ -6,8 +6,10 @@ import {
   getAllNewsMeta,
   getHomeHeroSlides,
   getAboutMuktiExtras,
+  getAllTestimonials,
 } from "@/lib/content";
 import { GetInvolvedBand } from "@/components/GetInvolvedBand";
+import { TestimonialsCarousel } from "@/components/TestimonialsCarousel";
 import { EmptyState } from "@/components/EmptyState";
 import { PhotoBox } from "@/components/content-views/PhotoBox";
 import { Reveal } from "@/components/Reveal";
@@ -109,6 +111,7 @@ export default async function Home() {
   const ramabaiPage = await getPageBySlug("about-pandita-ramabai");
   const missionPage = await getPageBySlug("about-mukti-mission");
   const { ramabaiImage } = getAboutMuktiExtras();
+  const testimonials = getAllTestimonials();
   if (!page) notFound();
 
   const allPrograms = getAllProgramsMeta();
@@ -383,6 +386,20 @@ export default async function Home() {
         </div>
       </section>
       </Reveal>
+
+      {/* 6.5 Testimonials — a trust strip between the breadth of Our Work
+          and the Donate CTA that follows: real voices vouching for the
+          org right before asking for money, rather than a separate page
+          few visitors would find on their own. Single-file "pages"-style
+          collection (content/testimonials/*.md) already existed for the
+          now-removed standalone /testimonials/ page; reused as-is here. */}
+      {testimonials.length > 0 && (
+        <Reveal>
+          <section className="bg-white px-6 py-20 sm:px-12">
+            <TestimonialsCarousel testimonials={testimonials} />
+          </section>
+        </Reveal>
+      )}
 
       {/* 7. Get Involved — broad CTA once breadth of work is established */}
       <Reveal>

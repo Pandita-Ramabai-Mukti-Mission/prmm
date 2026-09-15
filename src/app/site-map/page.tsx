@@ -26,7 +26,6 @@ export default function Sitemap() {
           <SitemapLink href="/about-mukti-mission/">About Mukti Mission</SitemapLink>
           <SitemapLink href="/reach/">Where We Work</SitemapLink>
           <SitemapLink href="/reports/">Reports &amp; Transparency</SitemapLink>
-          <SitemapLink href="/testimonials/">Testimonials</SitemapLink>
         </SitemapColumn>
         <SitemapColumn title={`Programs (${programs.length})`}>
           <SitemapLink href="/programs/">View all programs</SitemapLink>
