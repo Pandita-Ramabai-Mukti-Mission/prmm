@@ -28,6 +28,20 @@ collections:
       - { label: Title, name: title, widget: string }
       - { label: Body, name: body, widget: markdown }
 
+  - name: reach_extras
+    label: "Where We Work — Map"
+    files:
+      - name: map
+        label: Locations Map
+        file: content/reach-extras.md
+        fields:
+          - { label: Map Image, name: map_image, widget: image, required: false }
+          - label: Map Image Description
+            name: map_image_alt
+            widget: string
+            required: false
+            hint: "Read aloud to visitors using a screen reader. Required if you added a map image above."
+
   - name: site_branding
     label: Site Branding
     files:

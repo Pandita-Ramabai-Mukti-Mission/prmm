@@ -227,6 +227,15 @@ export function getSiteBranding(): { logo?: ImageWithAlt } {
   return { logo: readImageWithAlt(data, "logo") };
 }
 
+// Same reasoning as getSiteBranding/getAboutMuktiExtras — a locations map
+// belongs to this one page, not the generic `pages` collection.
+export function getReachExtras(): { mapImage?: ImageWithAlt } {
+  const filePath = path.join(CONTENT_DIR, "reach-extras.md");
+  if (!fs.existsSync(filePath)) return {};
+  const { data } = readMarkdownFile(filePath);
+  return { mapImage: readImageWithAlt(data, "map_image") };
+}
+
 export function getAllProgramSlugs(): string[] {
   return getSlugsIn("programs");
 }
