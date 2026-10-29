@@ -51,7 +51,7 @@ const FALLBACK_PHONE = "02119 223 122";
 
 function MapPinIcon() {
   return (
-    <svg width="26" height="34" viewBox="0 0 24 32" fill="currentColor" aria-hidden="true">
+    <svg viewBox="0 0 24 32" className="h-[34px] w-[26px] lg:h-7 lg:w-5 xl:h-[34px] xl:w-[26px]" fill="currentColor" aria-hidden="true">
       <path d="M12 0C5.4 0 0 5.4 0 12c0 9 12 20 12 20s12-11 12-20C24 5.4 18.6 0 12 0zm0 17a5 5 0 1 1 0-10 5 5 0 0 1 0 10z" />
     </svg>
   );
@@ -59,7 +59,7 @@ function MapPinIcon() {
 
 function PhoneIcon() {
   return (
-    <svg width="26" height="34" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <svg viewBox="0 0 24 24" className="h-[34px] w-[26px] lg:h-7 lg:w-5 xl:h-[34px] xl:w-[26px]" fill="currentColor" aria-hidden="true">
       <path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z" />
     </svg>
   );
@@ -133,7 +133,7 @@ export function SiteHeader({ hq, logo }: { hq?: RegionalContact; logo?: ImageWit
         className={`sticky top-0 z-40 bg-coral text-white ${isScrolled ? "shadow-md" : ""}`}
       >
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 lg:justify-center">
-          <ul className="hidden items-center text-[15px] font-bold uppercase lg:flex">
+          <ul className="hidden items-center text-[13px] font-bold uppercase lg:flex xl:text-sm 2xl:text-[15px]">
             {NAV_ITEMS.map((item) =>
               item.children ? (
                 <li
@@ -152,7 +152,7 @@ export function SiteHeader({ hq, logo }: { hq?: RegionalContact; logo?: ImageWit
                   <Link
                     href={item.href!}
                     onClick={closeDropdownForNavigation}
-                    className="block px-6 py-5 hover:bg-coral-dark"
+                    className="block px-3 py-5 hover:bg-coral-dark xl:px-5 2xl:px-6"
                   >
                     {item.label}
                   </Link>
@@ -175,7 +175,7 @@ export function SiteHeader({ hq, logo }: { hq?: RegionalContact; logo?: ImageWit
                 </li>
               ) : (
                 <li key={item.href}>
-                  <Link href={item.href!} className="block px-6 py-5 hover:bg-coral-dark">
+                  <Link href={item.href!} className="block px-3 py-5 hover:bg-coral-dark xl:px-5 2xl:px-6">
                     {item.label}
                   </Link>
                 </li>
@@ -183,7 +183,7 @@ export function SiteHeader({ hq, logo }: { hq?: RegionalContact; logo?: ImageWit
             )}
           </ul>
 
-          <div className="ml-6 hidden items-center gap-6 lg:flex">
+          <div className="ml-3 hidden items-center gap-6 lg:flex xl:ml-6">
             {VERIFIED_SOCIAL_LINKS.map((s) => (
               <SocialIcon key={s.label} link={s} className="text-white hover:text-white/75" />
             ))}
@@ -241,59 +241,68 @@ export function SiteHeader({ hq, logo }: { hq?: RegionalContact; logo?: ImageWit
 
       {/* White brand band — production's second row: portrait logo, org
           name + tagline, location and phone, outlined Donate, and the
-          "Shaping lives" emblem. One row only on very wide screens (2xl);
-          below that it splits into brand on top and contact/Donate/emblem
-          underneath, the way production reflows at tablet width. The name
-          and tagline are each held to a single line (whitespace-nowrap),
-          with phone-width sizes in vw so they shrink instead of wrapping. */}
+          "Shaping lives" emblem. One row from lg (1024px) up, with type and
+          spacing stepping down at lg/xl so everything still fits on that
+          row; below lg it splits into brand on top and contact/Donate/emblem
+          underneath. The name and tagline are each held to a single line
+          (whitespace-nowrap), with phone-width sizes in vw so they shrink
+          instead of wrapping. */}
       <header className="border-b border-black/10 bg-white">
-        <div className="mx-auto max-w-[1600px] px-4 py-4 sm:px-6 2xl:flex 2xl:items-center 2xl:gap-8">
+        <div className="mx-auto max-w-[1600px] px-4 py-4 sm:px-6 lg:flex lg:items-center lg:gap-4 xl:gap-6 2xl:gap-8">
           <Link
             href="/"
-            className="flex min-w-0 flex-col items-center gap-3 text-center sm:flex-row sm:gap-6 sm:text-left 2xl:flex-1"
+            className="flex min-w-0 flex-col items-center gap-3 text-center sm:flex-row sm:gap-6 sm:text-left lg:flex-1 lg:gap-3 xl:gap-5"
           >
             {logo?.src ? (
               // site-logo.png already includes the oval black frame, so it's
               // shown as-is rather than cropped into a circle.
               // eslint-disable-next-line @next/next/no-img-element
-              <img src={logo.src} alt={logo.alt} className="h-20 w-auto flex-shrink-0 sm:h-[106px]" />
+              <img
+                src={logo.src}
+                alt={logo.alt}
+                className="h-20 w-auto flex-shrink-0 sm:h-[106px] lg:h-[72px] xl:h-[90px] 2xl:h-[106px]"
+              />
             ) : null}
             <span className="min-w-0">
-              <span className="block whitespace-nowrap font-serif text-[5vw] font-bold uppercase leading-tight text-coral sm:text-[28px] md:text-[32px] 2xl:text-[30px]">
+              <span className="block whitespace-nowrap font-serif text-[5vw] font-bold uppercase leading-tight text-coral sm:text-[28px] md:text-[32px] lg:text-[19px] xl:text-[24px] 2xl:text-[30px]">
                 Pandita Ramabai Mukti Mission
               </span>
-              <span className="mt-1 block whitespace-nowrap text-[3vw] text-ink-soft sm:text-sm md:text-base">
+              <span className="mt-1 block whitespace-nowrap text-[3vw] text-ink-soft sm:text-sm md:text-base lg:text-xs xl:text-sm 2xl:text-base">
                 An NGO Committed to Empowering Women and Children since 1889
               </span>
             </span>
           </Link>
 
-          <div className="mt-5 flex flex-wrap items-center justify-center gap-x-6 gap-y-4 sm:justify-start lg:gap-x-8 2xl:mt-0 2xl:flex-nowrap 2xl:justify-end">
+          <div className="mt-5 flex flex-wrap items-center justify-center gap-x-6 gap-y-4 sm:justify-start lg:mt-0 lg:flex-shrink-0 lg:flex-nowrap lg:justify-end lg:gap-x-4 xl:gap-x-6 2xl:gap-x-8">
             <a
               href={MAP_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-3 text-[#8a96a3]"
+              className="flex items-center gap-3 text-[#8a96a3] lg:gap-2 xl:gap-3"
             >
               <MapPinIcon />
               <span className="leading-tight">
-                <span className="block text-sm uppercase">We are here</span>
-                <span className="block whitespace-nowrap text-lg font-bold uppercase text-ink">Pune, India</span>
+                <span className="block text-sm uppercase lg:text-[11px] xl:text-xs 2xl:text-sm">We are here</span>
+                <span className="block whitespace-nowrap text-lg font-bold uppercase text-ink lg:text-sm xl:text-base 2xl:text-lg">
+                  Pune, India
+                </span>
               </span>
             </a>
             <a
               href={`tel:${phone.replace(/\s+/g, "")}`}
-              className="flex items-center gap-3 text-[#8a96a3] sm:border-l sm:border-black/10 sm:pl-6 lg:pl-8"
+              className="flex items-center gap-3 text-[#8a96a3] sm:border-l sm:border-black/10 sm:pl-6 lg:gap-2 lg:pl-4 xl:gap-3 xl:pl-6 2xl:pl-8"
             >
               <PhoneIcon />
               <span className="leading-tight">
-                <span className="block text-sm uppercase">Call us now</span>
-                <span className="block whitespace-nowrap text-xl font-bold text-ink sm:text-2xl">{phone}</span>
+                <span className="block text-sm uppercase lg:text-[11px] xl:text-xs 2xl:text-sm">Call us now</span>
+                <span className="block whitespace-nowrap text-xl font-bold text-ink sm:text-2xl lg:text-base xl:text-xl 2xl:text-2xl">
+                  {phone}
+                </span>
               </span>
             </a>
             <Link
               href="/donate/"
-              className="w-full flex-shrink-0 border border-coral px-6 py-3 text-center text-base font-bold uppercase text-coral transition-colors hover:bg-coral hover:text-white sm:w-auto sm:py-4 2xl:px-9"
+              className="w-full flex-shrink-0 border border-coral px-6 py-3 text-center text-base font-bold uppercase text-coral transition-colors hover:bg-coral hover:text-white sm:w-auto sm:py-4 lg:px-4 lg:py-2.5 lg:text-sm xl:px-6 xl:py-3 xl:text-base 2xl:px-9 2xl:py-4"
             >
               Donate
             </Link>
@@ -302,7 +311,7 @@ export function SiteHeader({ hq, logo }: { hq?: RegionalContact; logo?: ImageWit
               <img
                 src="/images/uploads/shaping-lives.jpg"
                 alt="Shaping lives: shaping the mind, heart, spirit, environment and destiny"
-                className="h-24 w-[110px] border border-coral object-fill 2xl:h-[144px] 2xl:w-[172px]"
+                className="h-24 w-[110px] border border-coral object-fill lg:h-[72px] lg:w-[84px] xl:h-24 xl:w-[110px] 2xl:h-[144px] 2xl:w-[172px]"
               />
             </Link>
           </div>

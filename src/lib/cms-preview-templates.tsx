@@ -144,7 +144,7 @@ export function registerPreviewTemplates(CMS: CmsRegistrar) {
         reports={[
           {
             slug: "preview",
-            year: Number(text(props.entry, "year", "0")) || 0,
+            title: text(props.entry, "title", "Untitled report"),
             type: text(props.entry, "type", "—"),
             file: text(props.entry, "file", ""),
           },

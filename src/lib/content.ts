@@ -365,7 +365,12 @@ export function getAllReports(): Report[] {
         file: data.file,
       };
     })
-    .sort((a, b) => b.year - a.year);
+    // Within a year, accounts (incl. "Signed Accounts") before certificates.
+    .sort((a, b) => b.year - a.year || isCertificate(a) - isCertificate(b));
+}
+
+function isCertificate(r: Report): number {
+  return (r.type ?? "").includes("Certificate") ? 1 : 0;
 }
 
 export function getAllNewsletters(): Newsletter[] {
