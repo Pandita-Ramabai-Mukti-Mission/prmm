@@ -12,30 +12,36 @@ export default function Reports() {
   const reports = getAllReports();
 
   return (
-    <main id="main-content" className="mx-auto w-full max-w-3xl flex-1 px-6 py-14 sm:px-12">
+    <main id="main-content" className="flex-1">
+      <section className="bg-[#f3efe7] px-6 py-14 sm:px-12">
+        <div className="mx-auto max-w-6xl">
+          <div className="text-sm text-ink-soft">
+            <Link href="/">Home</Link> / Reports
+          </div>
+          <h1 className="mt-3 text-4xl sm:text-5xl">Reports &amp; Transparency</h1>
+          <p className="mt-3 max-w-2xl text-ink-soft">
+            Audited accounts and trust certificates, published in full.
+          </p>
+        </div>
+      </section>
+
       <Reveal>
-      <div className="text-sm text-ink-soft">
-        <Link href="/">Home</Link> / Reports
-      </div>
-      <h1 className="mt-3 text-4xl">Reports &amp; Transparency</h1>
-      <p className="mt-2 text-ink-soft">Audited accounts and trust certificates, published in full.</p>
+        <div className="px-6 py-14 sm:px-12">
+        <div className="mx-auto max-w-6xl">
+          {reports.length === 0 ? (
+            <EmptyState>Reports are being migrated from the current site.</EmptyState>
+          ) : (
+            <ReportsTable reports={reports} />
+          )}
 
-      {reports.length === 0 ? (
-        <div className="mt-8">
-          <EmptyState>Reports are being migrated from the current site.</EmptyState>
+          <p className="mt-12 text-sm">
+            Questions about our legal status or tax exemption?{" "}
+            <Link href="/about-mukti-mission/#transparency" className="font-semibold hover:text-coral">
+              See our registration &amp; tax details &rarr;
+            </Link>
+          </p>
         </div>
-      ) : (
-        <div className="mt-8">
-          <ReportsTable reports={reports} />
         </div>
-      )}
-
-      <p className="mt-8 text-sm">
-        Questions about our legal status or tax exemption?{" "}
-        <Link href="/about-mukti-mission/#transparency" className="font-semibold hover:text-coral">
-          See our registration &amp; tax details &rarr;
-        </Link>
-      </p>
       </Reveal>
     </main>
   );
