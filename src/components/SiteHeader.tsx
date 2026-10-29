@@ -9,25 +9,26 @@ import { SocialIcon, VERIFIED_SOCIAL_LINKS } from "@/components/socialLinks";
 type NavChild = { href: string; label: string };
 type NavItem = { label: string; href?: string; children?: NavChild[] };
 
-// Expanded from a flat 5-item nav back toward the original site's density,
-// but fixing the two specific IA problems site-audit.md flagged rather than
-// reverting to them: "Our Work" surfaces every program/theme page instead
-// of only 4 of the real 14 (the original nav's actual bug), and News/Mukti
-// Kiran/Happenings — three scattered top-level items on the original —
-// consolidate into one "News & Media" group instead of cluttering the bar.
+// Mirrors the production prmm.org.in header's top-level items, labels and
+// order exactly. Production's About dropdown only has the two About pages
+// and Impact is a single page; the extra children here (Reports, Where We
+// Work, the Shaping pages) are pages that only exist on this rebuild and
+// would otherwise have no nav entry — they live in dropdowns so the visible
+// bar still matches production.
 const NAV_ITEMS: NavItem[] = [
   { href: "/", label: "Home" },
   {
     label: "About",
     href: "/about-mukti-mission/",
     children: [
-      { href: "/about-mukti-mission/", label: "About Mukti Mission" },
-      { href: "/about-pandita-ramabai/", label: "About Pandita Ramabai" },
+      { href: "/about-pandita-ramabai/", label: "Pandita Ramabai" },
+      { href: "/about-mukti-mission/", label: "Mukti Mission" },
+      { href: "/reach/", label: "Where We Work" },
       { href: "/reports/", label: "Reports & Transparency" },
     ],
   },
   {
-    label: "Our Work",
+    label: "Impact",
     href: "/programs/",
     children: [
       { href: "/programs/", label: "All Programs" },
@@ -38,23 +39,28 @@ const NAV_ITEMS: NavItem[] = [
       { href: "/shaping-the-destiny/", label: "Shaping the Destiny" },
     ],
   },
-  {
-    label: "News & Media",
-    href: "/news/",
-    children: [
-      { href: "/news/", label: "News & Updates" },
-      { href: "/happenings-at-mukti/", label: "Happenings at Mukti" },
-      { href: "/mukti-kiran/", label: "Mukti Kiran Newsletter" },
-    ],
-  },
-  { href: "/reach/", label: "Where We Work" },
-  { href: "/contact/", label: "Contact" },
+  { href: "/news/", label: "News and Updates" },
+  { href: "/mukti-kiran/", label: "Mukti Kiran" },
+  { href: "/happenings-at-mukti/", label: "Happenings at Mukti" },
+  { href: "/contact/", label: "Contact Us" },
 ];
 
-function ChevronDown() {
+// Production links "We are here" to this Google Maps pin for the Kedgaon campus.
+const MAP_URL = "https://goo.gl/maps/RsWDPNYJiqP1zaGb7";
+const FALLBACK_PHONE = "02119 223 122";
+
+function MapPinIcon() {
   return (
-    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={3}>
-      <path d="M6 9l6 6 6-6" />
+    <svg width="26" height="34" viewBox="0 0 24 32" fill="currentColor" aria-hidden="true">
+      <path d="M12 0C5.4 0 0 5.4 0 12c0 9 12 20 12 20s12-11 12-20C24 5.4 18.6 0 12 0zm0 17a5 5 0 1 1 0-10 5 5 0 0 1 0 10z" />
+    </svg>
+  );
+}
+
+function PhoneIcon() {
+  return (
+    <svg width="26" height="34" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z" />
     </svg>
   );
 }
@@ -94,6 +100,7 @@ export function SiteHeader({ hq, logo }: { hq?: RegionalContact; logo?: ImageWit
   if (pathname !== lastPathname) {
     setLastPathname(pathname);
     setOpenDropdown(null);
+    setMenuOpen(false);
   }
 
   // Closing on click (not just the pathname-diff reset above) handles the
@@ -104,6 +111,8 @@ export function SiteHeader({ hq, logo }: { hq?: RegionalContact; logo?: ImageWit
     suppressHoverUntilRef.current = Date.now() + 400;
   }
 
+  const phone = hq?.phone ?? FALLBACK_PHONE;
+
   return (
     <>
       <a
@@ -112,88 +121,22 @@ export function SiteHeader({ hq, logo }: { hq?: RegionalContact; logo?: ImageWit
       >
         Skip to main content
       </a>
-      {/* Thin utility micro-strip, desktop only — real contact info +
-          verified social, not the login/subscribe links a reference site
-          (isha.sadhguru.org) uses; there's no donor-account system on this
-          site, so this row carries what we actually have instead of
-          copying that row's specific content. A plain sibling ABOVE
-          <header>, not inside it — it scrolls away with the page while
-          only the header below stays pinned, and keeping it outside
-          <header> avoids putting `sticky` on a nested flex item (which is
-          what silently failed to stick here the first time — computed
-          style showed `position: sticky` correctly, but the box still
-          scrolled 1:1 with the page instead of pinning at top:0). Sticky
-          directly on the semantic <header> element is both the fix and
-          the more conventional pattern anyway. */}
-      <div className="hidden items-center justify-between border-b border-black/10 bg-paper px-6 py-1.5 text-xs text-ink-soft sm:px-12 md:flex">
-        <div className="flex items-center gap-4">
-          {hq?.phone && (
-            <a href={`tel:${hq.phone.replace(/\s+/g, "")}`} className="hover:text-coral">
-              {hq.phone}
-            </a>
-          )}
-          {hq?.email && (
-            <a href={`mailto:${hq.email}`} className="hover:text-coral">
-              {hq.email}
-            </a>
-          )}
-        </div>
-        <div className="flex items-center gap-4">
-          <Link href="/reports/" className="hover:text-coral">
-            Reports &amp; Transparency
-          </Link>
-          <div className="flex gap-2">
-            {VERIFIED_SOCIAL_LINKS.map((s) => (
-              <SocialIcon key={s.label} link={s} className="text-ink-soft hover:text-coral" />
-            ))}
-          </div>
-        </div>
-      </div>
 
-      <header className={`sticky top-0 z-40 border-b border-black/10 bg-coral ${isScrolled ? "shadow-md" : ""}`}>
-        {/* One dense combined bar — logo, nav, and Donate together in a
-            single row. Logo gets real space here (h-14, not h-8): the mark
-            is meant to hold a photographic portrait (Pandita Ramabai), and
-            a face crops illegibly at icon-sized dimensions — a photo mark
-            needs the room a wordmark/icon wouldn't. Typography: unified to
-            the sitewide sans (Geist) — the previous font-serif heading
-            style fell back to the browser's generic system serif (no real
-            serif webfont was ever loaded), which read as less polished than
-            a deliberate single-family system. Removed sitewide, not just
-            here — see dev-backlog.md #60. Nav items sized up from the
-            previous pass's 13px for legibility on a colored bar. */}
-        <div className="flex items-center justify-between gap-6 bg-coral px-6 py-4 sm:px-12">
-          <Link href="/" className="flex flex-shrink-0 items-center gap-3.5">
-            {logo?.src ? (
-              // The org's real logo is a portrait of Pandita Ramabai in an
-              // oval frame — a photo, not a wordmark — so it gets the same
-              // cover-crop-in-a-circle treatment this badge was always
-              // designed for, background-image based (same technique as
-              // PhotoBox) so the portrait fills the circle with no
-              // stretching regardless of the source image's own aspect
-              // ratio.
-              <span
-                role="img"
-                aria-label={logo.alt}
-                style={{ backgroundImage: `url(${logo.src})` }}
-                className="h-14 w-14 flex-shrink-0 rounded-full border-2 border-white/70 bg-cover bg-center bg-no-repeat"
-              />
-            ) : (
-              <span className="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-full border-2 border-white/70 bg-white/10 text-center text-[10px] font-medium text-white/90">
-                PHOTO
-              </span>
-            )}
-            <span className="whitespace-nowrap text-lg font-bold leading-tight text-white">
-              Pandita Ramabai
-              <br />
-              Mukti Mission
-            </span>
-          </Link>
-
-          <nav className="hidden flex-1 items-center justify-end gap-7 text-[15px] font-semibold tracking-normal text-white md:flex">
+      {/* Coral nav bar — same layout as production: uppercase nav, social
+          icons on the right. Sticky on its own (the white brand band below
+          is a separate sibling that scrolls away), so the page keeps a
+          pinned nav without a ~180px header eating the viewport. Only
+          Facebook is shown: production's Twitter/Google+/LinkedIn icons all
+          point at `#` (see socialLinks.tsx). */}
+      <nav
+        aria-label="Main"
+        className={`sticky top-0 z-40 bg-coral text-white ${isScrolled ? "shadow-md" : ""}`}
+      >
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 lg:justify-center">
+          <ul className="hidden items-center text-[15px] font-bold uppercase lg:flex">
             {NAV_ITEMS.map((item) =>
               item.children ? (
-                <div
+                <li
                   key={item.label}
                   className="relative"
                   onMouseEnter={() => {
@@ -209,13 +152,12 @@ export function SiteHeader({ hq, logo }: { hq?: RegionalContact; logo?: ImageWit
                   <Link
                     href={item.href!}
                     onClick={closeDropdownForNavigation}
-                    className="flex items-center gap-1 py-2 hover:text-white/75"
+                    className="block px-6 py-5 hover:bg-coral-dark"
                   >
                     {item.label}
-                    <ChevronDown />
                   </Link>
                   <div
-                    className={`absolute left-0 top-full z-20 min-w-[220px] rounded-md border border-black/10 bg-white py-2 shadow-lg transition-opacity ${
+                    className={`absolute left-0 top-full z-20 min-w-[230px] bg-white py-2 shadow-lg transition-opacity ${
                       openDropdown === item.label ? "visible opacity-100" : "invisible opacity-0"
                     }`}
                   >
@@ -224,58 +166,56 @@ export function SiteHeader({ hq, logo }: { hq?: RegionalContact; logo?: ImageWit
                         key={c.href}
                         href={c.href}
                         onClick={closeDropdownForNavigation}
-                        className="block px-4 py-2 text-sm font-medium text-ink hover:bg-paper hover:text-coral"
+                        className="block px-4 py-2 text-sm font-semibold normal-case text-ink hover:bg-paper hover:text-coral"
                       >
                         {c.label}
                       </Link>
                     ))}
                   </div>
-                </div>
+                </li>
               ) : (
-                <Link key={item.href} href={item.href!} className="py-2 hover:text-white/75">
-                  {item.label}
-                </Link>
+                <li key={item.href}>
+                  <Link href={item.href!} className="block px-6 py-5 hover:bg-coral-dark">
+                    {item.label}
+                  </Link>
+                </li>
               )
             )}
-            <Link
-              href="/donate/"
-              className="ml-2 flex-shrink-0 rounded-md bg-white px-5 py-2 font-semibold text-coral hover:bg-white/90"
-            >
-              Donate
-            </Link>
-          </nav>
+          </ul>
 
-          <div className="flex items-center gap-3 md:hidden">
-            <Link href="/donate/" className="rounded-md bg-white px-4 py-2 text-sm font-semibold text-coral">
-              Donate
-            </Link>
-            <button
-              type="button"
-              aria-expanded={menuOpen}
-              aria-controls="mobile-nav"
-              aria-label={menuOpen ? "Close menu" : "Open menu"}
-              onClick={() => setMenuOpen((v) => !v)}
-              className="flex h-9 w-9 items-center justify-center rounded-md border border-white/40 text-white"
-            >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
-                {menuOpen ? (
-                  <path d="M18 6L6 18M6 6l12 12" />
-                ) : (
-                  <path d="M3 6h18M3 12h18M3 18h18" />
-                )}
-              </svg>
-            </button>
+          <div className="ml-6 hidden items-center gap-6 lg:flex">
+            {VERIFIED_SOCIAL_LINKS.map((s) => (
+              <SocialIcon key={s.label} link={s} className="text-white hover:text-white/75" />
+            ))}
+          </div>
+
+          <button
+            type="button"
+            aria-expanded={menuOpen}
+            aria-controls="mobile-nav"
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            onClick={() => setMenuOpen((v) => !v)}
+            className="my-2 flex h-10 w-10 items-center justify-center rounded-md border border-white/40 lg:hidden"
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+              {menuOpen ? <path d="M18 6L6 18M6 6l12 12" /> : <path d="M3 6h18M3 12h18M3 18h18" />}
+            </svg>
+          </button>
+          <div className="flex items-center gap-4 lg:hidden">
+            {VERIFIED_SOCIAL_LINKS.map((s) => (
+              <SocialIcon key={s.label} link={s} className="text-white" />
+            ))}
           </div>
         </div>
 
         {menuOpen && (
-          <nav id="mobile-nav" className="flex flex-col gap-1 border-t border-black/10 bg-white px-2 py-3 md:hidden">
+          <div id="mobile-nav" className="flex flex-col gap-1 border-t border-white/20 bg-white px-2 py-3 lg:hidden">
             {NAV_ITEMS.map((item) => (
               <div key={item.label}>
                 <Link
                   href={item.href ?? item.children![0].href}
                   onClick={() => setMenuOpen(false)}
-                  className="block rounded-md px-2 py-2.5 text-sm font-semibold text-ink hover:bg-paper hover:text-coral"
+                  className="block rounded-md px-2 py-2.5 text-sm font-bold uppercase text-ink hover:bg-paper hover:text-coral"
                 >
                   {item.label}
                 </Link>
@@ -295,16 +235,78 @@ export function SiteHeader({ hq, logo }: { hq?: RegionalContact; logo?: ImageWit
                 )}
               </div>
             ))}
-            {hq?.phone && (
-              <a
-                href={`tel:${hq.phone.replace(/\s+/g, "")}`}
-                className="rounded-md px-2 py-2.5 text-sm font-medium text-ink-soft hover:bg-paper hover:text-coral"
-              >
-                Call {hq.phone}
-              </a>
-            )}
-          </nav>
+          </div>
         )}
+      </nav>
+
+      {/* White brand band — production's second row: portrait logo, org
+          name + tagline, location and phone, outlined Donate, and the
+          "Shaping lives" emblem. One row only on very wide screens (2xl);
+          below that it splits into brand on top and contact/Donate/emblem
+          underneath, the way production reflows at tablet width. The name
+          and tagline are each held to a single line (whitespace-nowrap),
+          with phone-width sizes in vw so they shrink instead of wrapping. */}
+      <header className="border-b border-black/10 bg-white">
+        <div className="mx-auto max-w-[1600px] px-4 py-4 sm:px-6 2xl:flex 2xl:items-center 2xl:gap-8">
+          <Link
+            href="/"
+            className="flex min-w-0 flex-col items-center gap-3 text-center sm:flex-row sm:gap-6 sm:text-left 2xl:flex-1"
+          >
+            {logo?.src ? (
+              // site-logo.png already includes the oval black frame, so it's
+              // shown as-is rather than cropped into a circle.
+              // eslint-disable-next-line @next/next/no-img-element
+              <img src={logo.src} alt={logo.alt} className="h-20 w-auto flex-shrink-0 sm:h-[106px]" />
+            ) : null}
+            <span className="min-w-0">
+              <span className="block whitespace-nowrap font-serif text-[5vw] font-bold uppercase leading-tight text-coral sm:text-[28px] md:text-[32px] 2xl:text-[30px]">
+                Pandita Ramabai Mukti Mission
+              </span>
+              <span className="mt-1 block whitespace-nowrap text-[3vw] text-ink-soft sm:text-sm md:text-base">
+                An NGO Committed to Empowering Women and Children since 1889
+              </span>
+            </span>
+          </Link>
+
+          <div className="mt-5 flex flex-wrap items-center justify-center gap-x-6 gap-y-4 sm:justify-start lg:gap-x-8 2xl:mt-0 2xl:flex-nowrap 2xl:justify-end">
+            <a
+              href={MAP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-3 text-[#8a96a3]"
+            >
+              <MapPinIcon />
+              <span className="leading-tight">
+                <span className="block text-sm uppercase">We are here</span>
+                <span className="block whitespace-nowrap text-lg font-bold uppercase text-ink">Pune, India</span>
+              </span>
+            </a>
+            <a
+              href={`tel:${phone.replace(/\s+/g, "")}`}
+              className="flex items-center gap-3 text-[#8a96a3] sm:border-l sm:border-black/10 sm:pl-6 lg:pl-8"
+            >
+              <PhoneIcon />
+              <span className="leading-tight">
+                <span className="block text-sm uppercase">Call us now</span>
+                <span className="block whitespace-nowrap text-xl font-bold text-ink sm:text-2xl">{phone}</span>
+              </span>
+            </a>
+            <Link
+              href="/donate/"
+              className="w-full flex-shrink-0 border border-coral px-6 py-3 text-center text-base font-bold uppercase text-coral transition-colors hover:bg-coral hover:text-white sm:w-auto sm:py-4 2xl:px-9"
+            >
+              Donate
+            </Link>
+            <Link href="/" className="hidden flex-shrink-0 md:block" aria-label="Shaping lives — home">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/images/uploads/shaping-lives.jpg"
+                alt="Shaping lives: shaping the mind, heart, spirit, environment and destiny"
+                className="h-24 w-[110px] border border-coral object-fill 2xl:h-[144px] 2xl:w-[172px]"
+              />
+            </Link>
+          </div>
+        </div>
       </header>
     </>
   );
