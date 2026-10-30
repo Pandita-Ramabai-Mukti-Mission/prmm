@@ -8,7 +8,7 @@ export function SiteFooter({ hq }: { hq?: RegionalContact }) {
       <div className="mx-auto grid max-w-6xl grid-cols-2 gap-9 sm:grid-cols-4">
         <FooterColumn title="Quick Links">
           <FooterLink href="/about-pandita-ramabai/">About Pandita Ramabai</FooterLink>
-          <FooterLink href="/news/">News &amp; Updates</FooterLink>
+          {/* <FooterLink href="/news/">News &amp; Updates</FooterLink> */}
           <FooterLink href="/reports/">Reports</FooterLink>
           <FooterLink href="/contact/">Contact Us</FooterLink>
         </FooterColumn>

@@ -39,7 +39,7 @@ const NAV_ITEMS: NavItem[] = [
       { href: "/shaping-the-destiny/", label: "Shaping the Destiny" },
     ],
   },
-  { href: "/news/", label: "News and Updates" },
+  // { href: "/news/", label: "News and Updates" },
   { href: "/mukti-kiran/", label: "Mukti Kiran" },
   { href: "/happenings-at-mukti/", label: "Happenings at Mukti" },
   { href: "/contact/", label: "Contact Us" },
