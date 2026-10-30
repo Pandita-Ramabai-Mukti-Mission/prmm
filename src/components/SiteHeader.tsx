@@ -39,7 +39,7 @@ const NAV_ITEMS: NavItem[] = [
       { href: "/shaping-the-destiny/", label: "Shaping the Destiny" },
     ],
   },
-  { href: "/news/", label: "News and Updates" },
+  // { href: "/news/", label: "News and Updates" },
   { href: "/mukti-kiran/", label: "Mukti Kiran" },
   { href: "/happenings-at-mukti/", label: "Happenings at Mukti" },
   { href: "/contact/", label: "Contact Us" },
@@ -300,12 +300,12 @@ export function SiteHeader({ hq, logo }: { hq?: RegionalContact; logo?: ImageWit
                 </span>
               </span>
             </a>
-            <Link
+            {/* <Link
               href="/donate/"
               className="w-full flex-shrink-0 border border-coral px-6 py-3 text-center text-base font-bold uppercase text-coral transition-colors hover:bg-coral hover:text-white sm:w-auto sm:py-4 lg:px-4 lg:py-2.5 lg:text-sm xl:px-6 xl:py-3 xl:text-base 2xl:px-9 2xl:py-4"
             >
               Donate
-            </Link>
+            </Link> */}
             <Link href="/" className="hidden flex-shrink-0 md:block" aria-label="Shaping lives — home">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img

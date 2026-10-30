@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import {
   getPageBySlug,
   getAllProgramsMeta,
-  getAllNewsMeta,
+  // getAllNewsMeta,
   getHomeHeroSlides,
   getAboutMuktiExtras,
   getAllTestimonials,
@@ -117,7 +117,7 @@ export default async function Home() {
   const allPrograms = getAllProgramsMeta();
   const programs = allPrograms.slice(0, 4);
   const featuredProgram = allPrograms.find((p) => p.featured);
-  const news = getAllNewsMeta().slice(0, 3);
+  // const news = getAllNewsMeta().slice(0, 3);
   const heroSlides = getHomeHeroSlides();
 
   return (
@@ -306,12 +306,12 @@ export default async function Home() {
                   {featuredProgram.description && (
                     <p className="mt-1.5 text-base text-ink-soft">{featuredProgram.description}</p>
                   )}
-                  <Link
+                  {/* <Link
                     href={`/donate/?cause=${featuredProgram.slug}`}
                     className="mt-4 inline-block rounded-md bg-coral px-5 py-2.5 text-base font-semibold text-white hover:bg-coral-dark"
                   >
                     Donate to This Cause
-                  </Link>
+                  </Link> */}
                 </div>
               </div>
             ) : (
@@ -408,7 +408,7 @@ export default async function Home() {
 
       {/* 8. Latest News — proof the org is active right now, immediately
           before the footer's contact details so a convinced visitor can act. */}
-      <Reveal>
+      {/* <Reveal>
       <section className="mx-auto w-full max-w-6xl px-6 py-20 sm:px-12">
         <div className="flex items-baseline justify-between">
           <h2 className="text-3xl">News &amp; Updates</h2>
@@ -451,7 +451,7 @@ export default async function Home() {
           </div>
         )}
       </section>
-      </Reveal>
+      </Reveal> */}
 
       {/* 9. Follow us — honest version: real platform icon, no follower
           count. Facebook is the one channel site-audit.md confirms is

@@ -31,12 +31,12 @@ export default async function Contact({
             separate volunteer form yet, so this reaches the same team.
           </p>
         )}
-        <p className="mt-2 text-sm">
+        {/* <p className="mt-2 text-sm">
           Prefer to give directly?{" "}
           <Link href="/donate/" className="font-semibold hover:text-coral">
             Donate now &rarr;
           </Link>
-        </p>
+        </p> */}
       </section>
       </Reveal>
 

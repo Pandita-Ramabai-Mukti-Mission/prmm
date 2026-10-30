@@ -1,6 +1,6 @@
 import type { ImageWithAlt } from "@/lib/content";
 import { PhotoBox } from "@/components/content-views/PhotoBox";
-import { DonateCta } from "@/components/content-views/DonateCta";
+// import { DonateCta } from "@/components/content-views/DonateCta";
 
 // Shared by the real route (src/app/programs/[slug]/page.tsx) and the
 // Decap CMS preview (src/lib/cms-preview-templates.tsx) — one component,
@@ -28,7 +28,7 @@ export function ProgramDetailCore({
         </span>
         <h1 className="mt-3 text-3xl">{title}</h1>
         <div className="prose mt-4 max-w-none text-ink">{body}</div>
-        <DonateCta programTitle={title} programSlug={slug} />
+        {/* <DonateCta programTitle={title} programSlug={slug} /> */}
       </div>
       <PhotoBox
         image={image}

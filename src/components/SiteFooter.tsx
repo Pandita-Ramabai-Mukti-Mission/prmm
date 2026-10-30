@@ -8,7 +8,7 @@ export function SiteFooter({ hq }: { hq?: RegionalContact }) {
       <div className="mx-auto grid max-w-6xl grid-cols-2 gap-9 sm:grid-cols-4">
         <FooterColumn title="Quick Links">
           <FooterLink href="/about-pandita-ramabai/">About Pandita Ramabai</FooterLink>
-          <FooterLink href="/news/">News &amp; Updates</FooterLink>
+          {/* <FooterLink href="/news/">News &amp; Updates</FooterLink> */}
           <FooterLink href="/reports/">Reports</FooterLink>
           <FooterLink href="/contact/">Contact Us</FooterLink>
         </FooterColumn>
@@ -21,7 +21,7 @@ export function SiteFooter({ hq }: { hq?: RegionalContact }) {
           <FooterLink href="/shaping-the-destiny/">Shaping the Destiny</FooterLink>
         </FooterColumn>
         <FooterColumn title="Get Involved">
-          <FooterLink href="/donate/">Donate</FooterLink>
+          {/* <FooterLink href="/donate/">Donate</FooterLink> */}
           <FooterLink href="/mukti-kiran/">Mukti Kiran Newsletter</FooterLink>
         </FooterColumn>
         <FooterColumn title="Contact">

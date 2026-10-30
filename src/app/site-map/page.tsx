@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getAllProgramsMeta, getAllNewsMeta, getAllGalleryMeta } from "@/lib/content";
+import { getAllProgramsMeta, /* getAllNewsMeta, */ getAllGalleryMeta } from "@/lib/content";
 
 // Generated from the real content collections at build time, not
 // hand-maintained — the current site's sitemap is already out of sync
@@ -10,7 +10,7 @@ import { getAllProgramsMeta, getAllNewsMeta, getAllGalleryMeta } from "@/lib/con
 // a content collection are pulled dynamically.
 export default function Sitemap() {
   const programs = getAllProgramsMeta();
-  const news = getAllNewsMeta();
+  // const news = getAllNewsMeta();
   const gallery = getAllGalleryMeta();
 
   return (
@@ -40,13 +40,14 @@ export default function Sitemap() {
             </SitemapLink>
           ))}
         </SitemapColumn>
-        <SitemapColumn title={`News & Media (${news.length + gallery.length})`}>
-          <SitemapLink href="/news/">News &amp; Updates</SitemapLink>
+        {/* <SitemapColumn title={`News & Media (${news.length + gallery.length})`}> */}
+        <SitemapColumn title={`Media (${gallery.length})`}>
+          {/* <SitemapLink href="/news/">News &amp; Updates</SitemapLink>
           {news.map((n) => (
             <SitemapLink key={n.slug} href={`/news/${n.slug}/`}>
               {n.title}
             </SitemapLink>
-          ))}
+          ))} */}
           <SitemapLink href="/happenings-at-mukti/">Happenings at Mukti</SitemapLink>
           {gallery.map((g) => (
             <SitemapLink key={g.slug} href={`/happenings-at-mukti/${g.slug}/`}>
@@ -56,7 +57,7 @@ export default function Sitemap() {
           <SitemapLink href="/mukti-kiran/">Mukti Kiran Newsletter</SitemapLink>
         </SitemapColumn>
         <SitemapColumn title="Get Involved / Legal">
-          <SitemapLink href="/donate/">Donate</SitemapLink>
+          {/* <SitemapLink href="/donate/">Donate</SitemapLink> */}
           <SitemapLink href="/contact/">Contact Us</SitemapLink>
           <SitemapLink href="/terms-of-use/">Terms of Use</SitemapLink>
           <SitemapLink href="/privacy-policy/">Privacy Policy</SitemapLink>

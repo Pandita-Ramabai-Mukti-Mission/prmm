@@ -63,9 +63,9 @@ export default function NewsIndex() {
           <Link href="/programs/" className="text-sm font-semibold hover:text-coral">
             Explore Our Programs &rarr;
           </Link>
-          <Link href="/donate/" className="text-sm font-semibold text-coral hover:text-coral-dark">
+          {/* <Link href="/donate/" className="text-sm font-semibold text-coral hover:text-coral-dark">
             Donate Now &rarr;
-          </Link>
+          </Link> */}
         </div>
       </div>
       </Reveal>

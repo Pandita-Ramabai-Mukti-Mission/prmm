@@ -51,7 +51,7 @@ const SECONDARY_ACTIONS = [
 export function GetInvolvedBand() {
   return (
     <div className="flex items-center gap-4 bg-ink px-6 py-3.5 sm:px-12">
-      <Link
+      {/* <Link
         href="/donate/"
         className="flex flex-[1.3] items-center justify-center gap-3 rounded-lg bg-coral px-4 py-4 font-bold text-white hover:bg-coral-dark"
       >
@@ -59,7 +59,7 @@ export function GetInvolvedBand() {
           <path d="M12 21s-7-4.5-9.5-9A5.5 5.5 0 0112 5.5 5.5 5.5 0 0121.5 12c-2.5 4.5-9.5 9-9.5 9z" />
         </svg>
         Donate Now
-      </Link>
+      </Link> */}
       <div className="flex flex-[2]">
         {SECONDARY_ACTIONS.map((a) => (
           <Link
