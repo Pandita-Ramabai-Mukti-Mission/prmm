@@ -306,12 +306,12 @@ export default async function Home() {
                   {featuredProgram.description && (
                     <p className="mt-1.5 text-base text-ink-soft">{featuredProgram.description}</p>
                   )}
-                  <Link
+                  {/* <Link
                     href={`/donate/?cause=${featuredProgram.slug}`}
                     className="mt-4 inline-block rounded-md bg-coral px-5 py-2.5 text-base font-semibold text-white hover:bg-coral-dark"
                   >
                     Donate to This Cause
-                  </Link>
+                  </Link> */}
                 </div>
               </div>
             ) : (

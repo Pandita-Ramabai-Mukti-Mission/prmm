@@ -43,7 +43,7 @@ export default async function NewsDetail({
       {/* One nudge toward the Ask — generic, not cause-specific, since a
           news post isn't always tied to one program (unlike ProgramDetail's
           DonateCta). */}
-      <div className="mx-auto flex w-full max-w-3xl flex-wrap items-center justify-between gap-4 rounded-lg border border-black/10 bg-[#fff4f2] p-6 sm:mx-auto">
+      {/* <div className="mx-auto flex w-full max-w-3xl flex-wrap items-center justify-between gap-4 rounded-lg border border-black/10 bg-[#fff4f2] p-6 sm:mx-auto">
         <div className="font-semibold">Stories like this happen because of Mukti&rsquo;s supporters.</div>
         <Link
           href="/donate/"
@@ -51,7 +51,7 @@ export default async function NewsDetail({
         >
           Donate Now &rarr;
         </Link>
-      </div>
+      </div> */}
       </Reveal>
 
       {related.length > 0 && (

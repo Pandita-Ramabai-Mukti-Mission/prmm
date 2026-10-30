@@ -75,12 +75,12 @@ export default async function ProgramsIndex({
                 <p className="mt-1 text-sm text-ink-soft">{urgentProgram.description}</p>
               )}
             </div>
-            <Link
+            {/* <Link
               href={`/donate/?cause=${urgentProgram.slug}`}
               className="flex-shrink-0 rounded-md bg-coral px-5 py-2.5 text-sm font-semibold text-white hover:bg-coral-dark"
             >
               Donate to This Cause
-            </Link>
+            </Link> */}
           </div>
           </Reveal>
         )}
@@ -141,9 +141,9 @@ export default async function ProgramsIndex({
                       <Link href={`/programs/${p.slug}/`} className="hover:text-coral">
                         Read More &rarr;
                       </Link>
-                      <Link href={`/donate/?cause=${p.slug}`} className="text-coral hover:text-coral-dark">
+                      {/* <Link href={`/donate/?cause=${p.slug}`} className="text-coral hover:text-coral-dark">
                         Donate
-                      </Link>
+                      </Link> */}
                     </div>
                   </div>
                 </div>

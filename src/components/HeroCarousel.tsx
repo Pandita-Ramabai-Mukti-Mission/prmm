@@ -109,9 +109,9 @@ export function HeroCarousel({ slides }: { slides: HeroSlide[] }) {
                 {slide.ctaLabel ?? "Learn More"}
               </Link>
             )}
-            <Link href="/donate/" className="text-sm font-semibold text-white underline hover:text-white/80">
+            {/* <Link href="/donate/" className="text-sm font-semibold text-white underline hover:text-white/80">
               Donate Now &rarr;
-            </Link>
+            </Link> */}
           </div>
         </div>
       </div>

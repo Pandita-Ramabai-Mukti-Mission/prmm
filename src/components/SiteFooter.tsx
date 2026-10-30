@@ -21,7 +21,7 @@ export function SiteFooter({ hq }: { hq?: RegionalContact }) {
           <FooterLink href="/shaping-the-destiny/">Shaping the Destiny</FooterLink>
         </FooterColumn>
         <FooterColumn title="Get Involved">
-          <FooterLink href="/donate/">Donate</FooterLink>
+          {/* <FooterLink href="/donate/">Donate</FooterLink> */}
           <FooterLink href="/mukti-kiran/">Mukti Kiran Newsletter</FooterLink>
         </FooterColumn>
         <FooterColumn title="Contact">

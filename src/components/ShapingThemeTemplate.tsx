@@ -76,12 +76,12 @@ export function ShapingThemeTemplate({ theme }: { theme: ShapingTheme }) {
             <h1 className="mt-3 text-4xl">Shaping the {theme}</h1>
             <SectionFlourish className="mt-3 h-6 w-36 text-coral" />
           </div>
-          <Link
+          {/* <Link
             href="/donate/"
             className="rounded-md bg-coral px-5 py-2.5 text-sm font-semibold text-white hover:bg-coral-dark"
           >
             Support This Work &rarr;
-          </Link>
+          </Link> */}
         </div>
       </section>
       </Reveal>
@@ -144,7 +144,7 @@ export function ShapingThemeTemplate({ theme }: { theme: ShapingTheme }) {
           and the dark GetInvolvedBand below otherwise sandwiched a flat
           white section here, one color beat short of this site's other
           rebuilt pages (site design audit, 2026-09-11). */}
-      <Reveal>
+      {/* <Reveal>
       <section className="bg-coral px-6 py-12 text-center sm:px-12">
         <div className="mx-auto flex max-w-3xl flex-col items-center gap-4">
           <h3 className="text-xl font-semibold text-white">
@@ -159,7 +159,7 @@ export function ShapingThemeTemplate({ theme }: { theme: ShapingTheme }) {
           </Link>
         </div>
       </section>
-      </Reveal>
+      </Reveal> */}
 
       <Reveal>
         <GetInvolvedBand />

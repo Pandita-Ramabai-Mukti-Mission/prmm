@@ -160,12 +160,12 @@ export default async function AboutRamabai() {
 
           <Reveal>
             <div className="flex flex-wrap items-center gap-x-8 gap-y-4">
-              <Link
+              {/* <Link
                 href="/donate/"
                 className="inline-block rounded-md bg-coral px-7 py-3 text-sm font-semibold text-white hover:bg-coral-dark"
               >
                 Support This Legacy &rarr;
-              </Link>
+              </Link> */}
               <Link href="/about-mukti-mission/" className="text-sm font-semibold text-ink hover:text-coral">
                 Read About Mukti Mission &rarr;
               </Link>
@@ -373,12 +373,12 @@ export default async function AboutRamabai() {
                 >
                   Explore Our Programs
                 </Link>
-                <Link
+                {/* <Link
                   href="/donate/"
                   className="inline-flex items-center justify-center rounded-md bg-coral px-6 py-3 text-sm font-semibold text-white hover:bg-coral-dark"
                 >
                   Donate Today
-                </Link>
+                </Link> */}
               </div>
             </div>
           </div>

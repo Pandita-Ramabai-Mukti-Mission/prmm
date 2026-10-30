@@ -56,7 +56,7 @@ export default function Sitemap() {
           <SitemapLink href="/mukti-kiran/">Mukti Kiran Newsletter</SitemapLink>
         </SitemapColumn>
         <SitemapColumn title="Get Involved / Legal">
-          <SitemapLink href="/donate/">Donate</SitemapLink>
+          {/* <SitemapLink href="/donate/">Donate</SitemapLink> */}
           <SitemapLink href="/contact/">Contact Us</SitemapLink>
           <SitemapLink href="/terms-of-use/">Terms of Use</SitemapLink>
           <SitemapLink href="/privacy-policy/">Privacy Policy</SitemapLink>
