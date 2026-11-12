@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getHeadquartersContact } from "@/lib/content";
 import { Reveal } from "@/components/Reveal";
+import { ContactForm } from "./ContactForm";
 
 export default async function Contact({
   searchParams,
@@ -42,34 +43,7 @@ export default async function Contact({
 
       <Reveal>
       <section className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-6 py-10 sm:px-12 md:flex-row">
-        <div className="flex-1 rounded-lg border border-black/10 bg-white shadow-md p-6">
-          <h2 className="text-lg">Send a Message</h2>
-          <div className="mt-3 grid grid-cols-1 gap-3.5 sm:grid-cols-2">
-            <div className="rounded-md border border-black/15 px-3.5 py-2.5 text-sm text-ink-soft">
-              First name
-            </div>
-            <div className="rounded-md border border-black/15 px-3.5 py-2.5 text-sm text-ink-soft">
-              Last name
-            </div>
-          </div>
-          <div className="mt-3.5 rounded-md border border-black/15 px-3.5 py-2.5 text-sm text-ink-soft">
-            Email
-          </div>
-          <div className="mt-3.5 rounded-md border border-black/15 px-3.5 py-2.5 text-sm text-ink-soft">
-            Subject
-          </div>
-          <div className="mt-3.5 rounded-md border border-black/15 px-3.5 py-7 text-sm text-ink-soft">
-            Message
-          </div>
-          <button
-            type="button"
-            disabled
-            title="Contact-form backend not yet chosen — dev-backlog.md #15"
-            className="mt-4 cursor-not-allowed rounded-md bg-coral/60 px-6 py-3 text-sm font-semibold text-white"
-          >
-            Send Message
-          </button>
-        </div>
+        <ContactForm interest={interest} />
         <div className="flex flex-1 flex-col gap-3.5">
           {/* Real embed (org's own verified PRMM place pin on Google Maps —
               same URL already public on prmm.org.in's own Contact page),
