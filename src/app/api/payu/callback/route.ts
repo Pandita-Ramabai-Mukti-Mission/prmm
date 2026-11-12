@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { computeResponseHash, getPayuConfig } from "@/lib/payu";
 import { updateDonationStatus } from "@/lib/googleSheets";
+import { sendTemplateEmail } from "@/lib/msg91";
 
 export const runtime = "nodejs";
 
@@ -42,6 +43,24 @@ export async function POST(request: NextRequest) {
 
   const outcome = status === "success" ? "success" : "failure";
   await updateDonationStatus(txnid, outcome, mihpayid || undefined);
+
+  // Thank-you email only after a hash-verified success — sending it at
+  // /api/payu/initiate would thank donors who abandon or fail payment.
+  // Best-effort: a mail outage must not keep the donor from the thank-you
+  // page. Not an 80G receipt (still dev-backlog.md #14).
+  if (outcome === "success" && email) {
+    const sent = await sendTemplateEmail({
+      to: [{ email, name: firstname }],
+      templateId: process.env.MSG91_DONATION_TEMPLATE_ID,
+      variables: {
+        name: firstname,
+        amount: `₹${Number(amount).toLocaleString("en-IN")}`,
+        txnid,
+        cause: productinfo.replace(/^Donation - /, ""),
+      },
+    });
+    if (!sent.ok) console.error(`[payu/callback] donation email failed for ${txnid}:`, sent.error);
+  }
 
   const params = new URLSearchParams({ status: outcome, txnid, amount });
   return NextResponse.redirect(`${origin}/donate/thank-you/?${params.toString()}`);
