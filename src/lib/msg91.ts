@@ -24,6 +24,7 @@ export type SendResult = { ok: true } | { ok: false; error: string };
 
 type SendArgs = {
   to: EmailRecipient[];
+  cc?: EmailRecipient[];
   templateId: string | undefined;
   variables: Record<string, string>;
 };
@@ -32,10 +33,10 @@ export function isMsg91Configured(): boolean {
   return Boolean(process.env.MSG91_AUTH_KEY && process.env.MSG91_EMAIL_DOMAIN && process.env.MSG91_FROM_EMAIL);
 }
 
-function buildPayload({ to, templateId, variables }: SendArgs & { templateId: string }) {
+function buildPayload({ to, cc, templateId, variables }: SendArgs & { templateId: string }) {
   const fromName = process.env.MSG91_FROM_NAME;
   return {
-    recipients: [{ to, variables }],
+    recipients: [cc && cc.length > 0 ? { to, cc, variables } : { to, variables }],
     from: fromName
       ? { email: process.env.MSG91_FROM_EMAIL, name: fromName }
       : { email: process.env.MSG91_FROM_EMAIL },
