@@ -14,7 +14,7 @@ type NavItem = { label: string; href?: string; children?: NavChild[] };
 // and Impact is a single page; the extra children here (Reports, Where We
 // Work, the Shaping pages) are pages that only exist on this rebuild and
 // would otherwise have no nav entry — they live in dropdowns so the visible
-// bar still matches production.
+// bar still matches production....
 const NAV_ITEMS: NavItem[] = [
   { href: "/", label: "Home" },
   {
