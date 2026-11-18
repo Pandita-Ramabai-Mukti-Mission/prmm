@@ -6,6 +6,8 @@ import { getHeadquartersContact } from "@/lib/content";
 
 export const runtime = "nodejs";
 
+const CONTACT_CC_EMAIL = "gsa.prmuktimission@gmail.com";
+
 // Receives ContactForm.tsx submissions (JSON), re-validates them, checks
 // reCAPTCHA, then emails the message to the mission via MSG91. A public
 // POST target like /api/payu/initiate, so nothing from the browser is
@@ -55,6 +57,8 @@ export async function POST(request: NextRequest) {
   // message would be silently lost, so surface the error to them.
   const notify = await sendTemplateEmail({
     to: [{ email: notifyTo }],
+    // Client requirement: every contact submission is also copied here.
+    cc: notifyTo.toLowerCase() === CONTACT_CC_EMAIL ? undefined : [{ email: CONTACT_CC_EMAIL }],
     templateId: process.env.MSG91_CONTACT_TEMPLATE_ID,
     // Keys must match the {{placeholders}} in the approved MSG91 template
     // "contact_form_submission_email".
