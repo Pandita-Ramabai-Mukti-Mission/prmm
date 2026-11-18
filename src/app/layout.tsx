@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import { IBM_Plex_Sans, Source_Serif_4, Geist_Mono } from "next/font/google";
+import { IBM_Plex_Sans, Geist_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import { ChromeGate } from "@/components/ChromeGate";
 import { RecaptchaScript } from "@/components/RecaptchaScript";
 import { GlobalLoader } from "@/components/GlobalLoader";
@@ -20,10 +21,19 @@ const bodySans = IBM_Plex_Sans({
   weight: ["400", "500", "600", "700"],
 });
 
-const headingSerif = Source_Serif_4({
+// Self-hosted (2026-11-18): Google Fonts started answering next/font/google's
+// Source Serif 4 request with `fonts.gstatic.com/l/font?kit=…&…` URLs, which
+// Turbopack can't resolve ("next/font/google queries have exactly one entry"),
+// breaking the dev build. This is the same file Google serves — the latin
+// subset of the variable font, wght 500–700 — downloaded from
+// fonts.gstatic.com/s/sourceserif4/v15/.
+const headingSerif = localFont({
+  src: "./fonts/source-serif-4-latin-500-700.woff2",
   variable: "--font-source-serif-4",
-  subsets: ["latin"],
-  weight: ["500", "600", "700"],
+  weight: "500 700",
+  style: "normal",
+  display: "swap",
+  fallback: ["Georgia", "serif"],
 });
 
 const geistMono = Geist_Mono({
